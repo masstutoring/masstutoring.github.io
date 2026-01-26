@@ -429,8 +429,8 @@
         <p class="subtitle">By high schoolers, for high schoolers</p>
         <p>Quality SAT tutoring shouldn't cost $200/hour. We're students who believe everyone deserves access to test prep, regardless of their family's income.</p>
         <div class="cta-buttons">
-            <a href="https://forms.gle/your-student-form" class="btn btn-primary">Get Free Tutoring</a>
-            <a href="https://forms.gle/your-tutor-form" class="btn btn-secondary">Become a Tutor</a>
+            <a href="https://forms.gle/WnqwaEG56xS93jXi6" class="btn btn-primary">Get Free Tutoring</a>
+            <a href="https://forms.gle/mDHrQBg1azQn5DMk6" class="btn btn-secondary">Become a Tutor</a>
         </div>
     </section>
 
