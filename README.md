@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -548,8 +547,8 @@
             <li><a href="#problem">The Problem</a></li>
             <li><a href="#testimonials">Testimonials</a></li>
             <li><a href="#services">Services</a></li>
-            <li><a href="mission.html">Mission</a></li>
-            <li><a href="guide.html">Free Guide</a></li>
+            <li><a href="mission">Mission</a></li>
+            <li><a href="guide">Free Guide</a></li>
         </ul>
     </nav>
 
@@ -562,8 +561,8 @@
             <p>Get personalized SAT tutoring from high-scoring students (1530+) who just took the test and know exactly what works—completely free.</p>
            
             <div class="cta-buttons">
-                <a href="#services" class="btn btn-primary">Get Free Tutoring</a>
-                <a href="guide.html" class="btn btn-secondary">Free SAT Guide</a>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSd_44AwF3K59YjrAs7FtT8zBMCg3I9nET6Kx6Pfw5EAg9bphw/viewform" class="btn btn-primary">Get Free Tutoring</a>
+                <a href="guide" class="btn btn-secondary">Free SAT Guide</a>
             </div>
         </div>
     </section>
