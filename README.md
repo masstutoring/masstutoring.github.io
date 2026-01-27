@@ -589,8 +589,8 @@
  <li><a href="#problem">The Problem</a></li>
  <li><a href="#testimonials">Testimonials</a></li>
  <li><a href="#services">Services</a></li>
- <li><a href="mission.html">Mission</a></li>
- <li><a href="guide.html">Free Guide</a></li>
+ <li><a href="mission">Mission</a></li>
+ <li><a href="guide">Free Guide</a></li>
  </ul>
  </nav>
 
