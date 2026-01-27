@@ -3,6 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mass Tutoring - Free SAT Prep by Students, For Students</title>
+    <link rel="icon" type="image/png" href="https://i.imgur.com/4Fl92k3.png">
     <style>
         * {
             margin: 0;
@@ -543,7 +544,7 @@
             <span class="logo-text">Mass Tutoring</span>
         </div>
         <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
+            <li><a href="index.html">Home</a></li>
             <li><a href="#problem">The Problem</a></li>
             <li><a href="#testimonials">Testimonials</a></li>
             <li><a href="#services">Services</a></li>
