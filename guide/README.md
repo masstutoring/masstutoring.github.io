@@ -3,6 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Free SAT Study Guide - Mass Tutoring</title>
+    <link rel="icon" type="image/png" href="https://i.imgur.com/4Fl92k3.png">
     <style>
         * {
             margin: 0;
@@ -469,15 +470,15 @@
     <nav>
         <div class="logo-container">
             <img src="https://i.imgur.com/4Fl92k3.png" alt="Mass Tutoring Cat Logo">
-            <a href="index.html" class="logo-text">Mass Tutoring</a>
+            <a href="../index.html" class="logo-text">Mass Tutoring</a>
         </div>
         <ul class="nav-links">
-            <li><a href="www.masstutoring.com">Home</a></li>
-            <li><a href="www.masstutoring.com#problem">The Problem</a></li>
-            <li><a href="www.masstutoring.com#testimonials">Testimonials</a></li>
-            <li><a href="www.masstutoring.com#services">Services</a></li>
-            <li><a href="mission">Mission</a></li>
-            <li><a href="guide">Free Guide</a></li>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../index.html#problem">The Problem</a></li>
+            <li><a href="../index.html#testimonials">Testimonials</a></li>
+            <li><a href="../index.html#services">Services</a></li>
+            <li><a href="../mission">Mission</a></li>
+            <li><a href="../guide">Free Guide</a></li>
         </ul>
     </nav>
 
@@ -630,8 +631,8 @@
         <h2>Need Personalized Help?</h2>
         <p>Get free one-on-one tutoring from experienced high schoolers who scored 1530+</p>
         <div class="cta-buttons">
-            <a href="https://forms.gle/your-student-form" class="btn btn-primary">Get Free Tutoring</a>
-            <a href="https://forms.gle/your-tutor-form" class="btn btn-secondary">Become a Tutor</a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSd_44AwF3K59YjrAs7FtT8zBMCg3I9nET6Kx6Pfw5EAg9bphw/viewform" class="btn btn-primary">Get Free Tutoring</a>
+            <a href="[https://forms.gle/your-tutor-form](https://docs.google.com/forms/d/e/1FAIpQLSeKoQbKU6eqq6AaF3wdkfqWPHH0u3a5ggu-5eNA_uPe2h3lWg/viewform)" class="btn btn-secondary">Become a Tutor</a>
         </div>
     </section>
 
