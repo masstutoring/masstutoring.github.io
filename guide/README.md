@@ -632,7 +632,7 @@
         <p>Get free one-on-one tutoring from experienced high schoolers who scored 1530+</p>
         <div class="cta-buttons">
             <a href="https://docs.google.com/forms/d/e/1FAIpQLSd_44AwF3K59YjrAs7FtT8zBMCg3I9nET6Kx6Pfw5EAg9bphw/viewform" class="btn btn-primary">Get Free Tutoring</a>
-            <a href="[https://forms.gle/your-tutor-form](https://docs.google.com/forms/d/e/1FAIpQLSeKoQbKU6eqq6AaF3wdkfqWPHH0u3a5ggu-5eNA_uPe2h3lWg/viewform)" class="btn btn-secondary">Become a Tutor</a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKoQbKU6eqq6AaF3wdkfqWPHH0u3a5ggu-5eNA_uPe2h3lWg/viewform" class="btn btn-secondary">Become a Tutor</a>
         </div>
     </section>
 
