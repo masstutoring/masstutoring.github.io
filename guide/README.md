@@ -474,11 +474,11 @@
         </div>
         <ul class="nav-links">
             <li><a href="../index.html">Home</a></li>
-            <li><a href="../index.html#problem">The Problem</a></li>
-            <li><a href="../index.html#testimonials">Testimonials</a></li>
-            <li><a href="../index.html#services">Services</a></li>
+            <li><a href="../#testimonials">Testimonials</a></li>
             <li><a href="../mission">Mission</a></li>
+            <li><a href="../tutors">Tutors</a></li>
             <li><a href="../guide">Free Guide</a></li>
+            <li><a href="../sait">S(Ai)T</a></li>
         </ul>
     </nav>
 
