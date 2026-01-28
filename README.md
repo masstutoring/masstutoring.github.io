@@ -545,11 +545,11 @@
         </div>
         <ul class="nav-links">
             <li><a href="index.html">Home</a></li>
-            <li><a href="#problem">The Problem</a></li>
             <li><a href="#testimonials">Testimonials</a></li>
-            <li><a href="#services">Services</a></li>
             <li><a href="mission">Mission</a></li>
+            <li><a href="tutors">Tutors</a></li>
             <li><a href="guide">Free Guide</a></li>
+            <li><a href="sait">S(Ai)T</a></li>
         </ul>
     </nav>
 
@@ -558,9 +558,9 @@
         <div class="hero-content">
             <img src="https://i.imgur.com/4Fl92k3.png" alt="Mass Tutoring Cat" class="hero-cat">
             <h1>Free SAT Tutoring.<br>By Students, For Students.</h1>
-            <p class="subtitle">Quality test prep shouldn't cost $200</p>
-            <p>Get personalized SAT tutoring from high-scoring students (1520+) who just took the test and know exactly what works—completely free.</p>
-           
+            <p class="subtitle">Quality test prep shouldn't cost $10,000</p>
+            <p>Get personalized SAT tutoring from high-scoring students (1530+) who just took the test and know exactly what works—completely free.</p>
+            
             <div class="cta-buttons">
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLSd_44AwF3K59YjrAs7FtT8zBMCg3I9nET6Kx6Pfw5EAg9bphw/viewform" class="btn btn-primary">Get Free Tutoring</a>
                 <a href="guide" class="btn btn-secondary">Free SAT Guide</a>
@@ -604,7 +604,7 @@
                 <div class="stat-label">Cost Per Hour</div>
             </div>
             <div class="stat">
-                <div class="stat-number">1520+</div>
+                <div class="stat-number">1530+</div>
                 <div class="stat-label">Tutor SAT Scores</div>
             </div>
             <div class="stat">
@@ -661,7 +661,7 @@
             <div class="feature-card">
                 <div class="feature-icon">💯</div>
                 <h3>Proven Results</h3>
-                <p>All our tutors scored 1520+ on the SAT. They know the strategies and shortcuts that lead to top scores—and they share them for free.</p>
+                <p>All our tutors scored 1530+ on the SAT. They know the strategies and shortcuts that lead to top scores—and they share them for free.</p>
             </div>
         </div>
     </section>
