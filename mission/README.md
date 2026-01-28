@@ -386,11 +386,11 @@
         </div>
         <ul class="nav-links">
             <li><a href="../index.html">Home</a></li>
-            <li><a href="../index.html#problem">The Problem</a></li>
-            <li><a href="../index.html#testimonials">Testimonials</a></li>
-            <li><a href="../index.html#services">Services</a></li>
+            <li><a href="../#testimonials">Testimonials</a></li>
             <li><a href="../mission">Mission</a></li>
+            <li><a href="../tutors">Tutors</a></li>
             <li><a href="../guide">Free Guide</a></li>
+            <li><a href="../sait">S(Ai)T</a></li>
         </ul>
     </nav>
 
@@ -482,7 +482,7 @@
             <h2>Ready to start your SAT journey?</h2>
             <div class="cta-buttons">
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLSd_44AwF3K59YjrAs7FtT8zBMCg3I9nET6Kx6Pfw5EAg9bphw/viewform" class="btn btn-primary">Get Free Tutoring</a>
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKoQbKU6eqq6AaF3wdkfqWPHH0u3a5ggu-5eNA_uPe2h3lWg/viewform" class="btn btn-secondary">Become a Tutor</a>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKoQbKU6eqq6AaF3wdkfqWPHH0u3a5ggu-5eNA_uPe2h3lWg/viewform class="btn btn-secondary">Become a Tutor</a>
             </div>
         </div>
     </section>
