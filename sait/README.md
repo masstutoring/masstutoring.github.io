@@ -152,6 +152,19 @@
             font-weight: 700;
         }
 
+        /* Free Badge */
+        .free-badge-banner {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            box-shadow: 0 5px 20px rgba(16, 185, 129, 0.3);
+        }
+
         /* Chat Container */
         .chat-container {
             background: white;
@@ -229,15 +242,15 @@
 
         .message-content strong {
             font-weight: 700;
-            color: #f59e0b;
-        }
-
-        .ai-message .message-content strong {
             color: #1f2937;
         }
 
         .user-message .message-content {
             background: #f59e0b;
+            color: white;
+        }
+
+        .user-message .message-content strong {
             color: white;
         }
 
@@ -433,6 +446,11 @@
 
     <!-- Main Content -->
     <div class="main-content">
+        <!-- Free Badge -->
+        <div class="free-badge-banner">
+            ✨ 100% FREE - Powered by Google Gemini AI - No Cost, No Limits! ✨
+        </div>
+
         <!-- Features Banner -->
         <div class="features-banner">
             <div class="feature-badge">
@@ -456,14 +474,16 @@
         <!-- Chat Container -->
         <div class="chat-container">
             <div class="chat-header">
-                <h2>Chat with S(Ai)T - Your AI SAT Tutor</h2>
+                <h2>Chat with S(Ai)T - Your Free AI SAT Tutor</h2>
             </div>
 
             <div class="chat-messages" id="chatMessages">
                 <div class="message ai-message">
                     <div class="message-avatar">AI</div>
                     <div class="message-content">
-                        Hi! I'm <strong>S(Ai)T</strong>, your AI SAT tutor. I can help you with:
+                        Hi! I'm <strong>S(Ai)T</strong>, your completely free AI SAT tutor powered by Google Gemini! 🎓
+                        <br><br>
+                        I can help you with:
                         <br><br>
                         📚 Answering SAT questions (Math, Reading & Writing)<br>
                         🎯 Creating practice problems for specific topics<br>
@@ -488,7 +508,7 @@
                         type="text" 
                         id="userInput" 
                         class="chat-input" 
-                        placeholder="Ask me anything about the SAT..."
+                        placeholder="Ask me anything about the SAT... (Free!)"
                         onkeypress="handleKeyPress(event)"
                     >
                     <button class="send-btn" id="sendBtn" onclick="sendMessage()">Send</button>
@@ -507,6 +527,13 @@
         const chatMessages = document.getElementById('chatMessages');
         const userInput = document.getElementById('userInput');
         const sendBtn = document.getElementById('sendBtn');
+        
+        // Store conversation history
+        let conversationHistory = [];
+
+        // Google Gemini API key
+        const GEMINI_API_KEY = 'AIzaSyC9P3kCMwxReztbrca7KVuOaC6NWMbdelA';
+        const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
 
         function addMessage(content, isUser = false) {
             const messageDiv = document.createElement('div');
@@ -554,71 +581,137 @@
             addMessage(message, true);
             userInput.value = '';
 
+            // Add to history
+            conversationHistory.push({
+                role: 'user',
+                parts: [{ text: message }]
+            });
+
             // Disable input while processing
             sendBtn.disabled = true;
             userInput.disabled = true;
             showTypingIndicator();
 
             try {
-                // Call Claude API
-                const response = await fetch('https://api.anthropic.com/v1/messages', {
+                const systemPrompt = `You are S(Ai)T, an AI SAT tutor for Mass Tutoring. You help students with SAT prep by:
+1. Answering questions about SAT Math, Reading & Writing
+2. Creating practice problems when asked
+3. Explaining concepts clearly and thoroughly
+4. Providing study strategies and test-taking tips
+5. Being encouraging, supportive, and patient
+
+IMPORTANT FORMATTING RULES:
+- Use **bold text** for key terms, important concepts, and emphasis
+- Use emojis liberally to make responses engaging (📚 📝 ✅ 💡 🎯 ⭐ 🔥 ✨ etc.)
+- Break up long responses with line breaks for readability
+- Use bullet points when listing items
+- Number practice problems clearly (1., 2., 3.)
+- For math problems, format equations clearly and explain step-by-step
+- Use section headers like "**Here's how:**", "**Key Strategy:**", "**Practice Problem:**"
+- Be warm, encouraging, and use an upbeat tone
+- When explaining concepts, use analogies and examples
+- Celebrate student understanding with positive reinforcement
+
+Keep responses helpful, clear, and visually appealing.`;
+
+                // Call Google Gemini API with proper configuration
+                const response = await fetch(GEMINI_API_URL, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        model: 'claude-sonnet-4-20250514',
-                        max_tokens: 1000,
-                        messages: [{
-                            role: 'user',
-                            content: `You are S(Ai)T, an AI SAT tutor for Mass Tutoring. You help students with SAT prep by:
-1. Answering questions about SAT Math, Reading & Writing
-2. Creating practice problems when asked
-3. Explaining concepts clearly
-4. Providing study strategies and test-taking tips
-5. Being encouraging and supportive
-
-IMPORTANT FORMATTING RULES:
-- Use **bold text** for key terms, important concepts, and emphasis
-- Use emojis liberally to make responses engaging (📚 📝 ✅ 💡 🎯 ⭐ etc.)
-- Break up long responses with line breaks for readability
-- Use bullet points when listing items
-- Number practice problems clearly
-- For math problems, format equations clearly
-- Use section headers like "**Here's how:**" or "**Key Strategy:**"
-- Be warm, encouraging, and use an upbeat tone
-
-Keep responses concise but helpful and visually appealing. When creating practice problems, format them clearly with questions and answer choices if applicable.
-
-Student question: ${message}`
-                        }]
+                        contents: [
+                            {
+                                role: 'user',
+                                parts: [{ text: systemPrompt + '\n\nStudent question: ' + message }]
+                            }
+                        ],
+                        generationConfig: {
+                            temperature: 0.7,
+                            maxOutputTokens: 2048,
+                        },
+                        safetySettings: [
+                            {
+                                category: "HARM_CATEGORY_HARASSMENT",
+                                threshold: "BLOCK_NONE"
+                            },
+                            {
+                                category: "HARM_CATEGORY_HATE_SPEECH",
+                                threshold: "BLOCK_NONE"
+                            },
+                            {
+                                category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+                                threshold: "BLOCK_NONE"
+                            },
+                            {
+                                category: "HARM_CATEGORY_DANGEROUS_CONTENT",
+                                threshold: "BLOCK_NONE"
+                            }
+                        ]
                     })
                 });
 
-                const data = await response.json();
                 removeTypingIndicator();
 
-                // Extract text from response
-                const aiResponse = data.content
-                    .filter(block => block.type === 'text')
-                    .map(block => block.text)
-                    .join('\n\n');
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('API Error Response:', errorText);
+                    
+                    let errorData;
+                    try {
+                        errorData = JSON.parse(errorText);
+                    } catch (e) {
+                        errorData = { error: { message: errorText } };
+                    }
+                    
+                    if (response.status === 429) {
+                        addMessage('⏱️ <strong>Rate Limit</strong>: Too many requests. Please wait a moment and try again!');
+                    } else if (response.status === 403 || response.status === 401) {
+                        addMessage('🔑 <strong>API Key Error</strong>: Your API key may be invalid or restricted. Please check:<br><br>1. Key is correct<br>2. API is enabled at <a href="https://console.cloud.google.com/apis/library/generativelanguage.googleapis.com" target="_blank" style="color: #f59e0b;">Google Cloud Console</a><br>3. No IP/domain restrictions blocking this request');
+                    } else if (response.status === 400) {
+                        const errorMsg = errorData?.error?.message || 'Bad request';
+                        addMessage(`⚠️ <strong>API Error</strong>: ${errorMsg}<br><br>This might be because the Gemini API needs to be enabled. Visit <a href="https://console.cloud.google.com/apis/library/generativelanguage.googleapis.com" target="_blank" style="color: #f59e0b; font-weight: bold;">Google Cloud Console</a> to enable it.`);
+                    } else {
+                        addMessage(`⚠️ <strong>Error ${response.status}</strong>: Unable to connect. Please try again or check out our <a href="guide.html" style="color: #f59e0b; font-weight: bold;">Free Guide</a>!`);
+                    }
+                    return;
+                }
 
-                if (aiResponse) {
-                    // Format the response with line breaks and bold text
+                const data = await response.json();
+                console.log('API Response:', data);
+
+                if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+                    const aiResponse = data.candidates[0].content.parts[0].text;
+                    
+                    // Add to history
+                    conversationHistory.push({
+                        role: 'model',
+                        parts: [{ text: aiResponse }]
+                    });
+
+                    // Format the response
                     let formattedResponse = aiResponse
-                        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>') // Convert **text** to bold
-                        .replace(/\n/g, '<br>'); // Convert line breaks
+                        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>') // Bold text
+                        .replace(/\n/g, '<br>'); // Line breaks
                     
                     addMessage(formattedResponse);
+                } else if (data.error) {
+                    addMessage(`⚠️ <strong>API Error</strong>: ${data.error.message}<br><br>Please visit <a href="https://console.cloud.google.com/apis/library/generativelanguage.googleapis.com" target="_blank" style="color: #f59e0b; font-weight: bold;">Google Cloud Console</a> to enable the Gemini API.`);
                 } else {
-                    addMessage('I apologize, but I encountered an error. Please try again!');
+                    addMessage('I apologize, but I received an unexpected response. Please try again!');
                 }
 
             } catch (error) {
                 removeTypingIndicator();
-                console.error('Error:', error);
-                addMessage('Sorry, I encountered an error. Please try again!');
+                console.error('Full Error:', error);
+                
+                // More detailed error message
+                if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+                    addMessage('🌐 <strong>Connection Error</strong>: Unable to reach Google Gemini API.<br><br><strong>Possible fixes:</strong><br>1. Check your internet connection<br>2. Make sure the Gemini API is enabled at <a href="https://console.cloud.google.com/apis/library/generativelanguage.googleapis.com" target="_blank" style="color: #f59e0b;">Google Cloud Console</a><br>3. Try opening this page using a web server (not just file://)<br>4. Check browser console for CORS errors<br><br>Meanwhile, check out our <a href="guide.html" style="color: #f59e0b; font-weight: bold;">Free Guide</a>!');
+                } else {
+                    addMessage(`❌ <strong>Error</strong>: ${error.message}<br><br>Please try again or use our <a href="guide.html" style="color: #f59e0b; font-weight: bold;">Free Guide</a>!`);
+                }
             } finally {
                 // Re-enable input
                 sendBtn.disabled = false;
