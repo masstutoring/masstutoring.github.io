@@ -737,7 +737,7 @@
             <li><a href="mission">Mission</a></li>
             <li><a href="tutors">Tutors</a></li>
             <li><a href="guide">Free Guide</a></li>
-            <li><a href="sait" class="nav-cta">get started</a></li>
+            <li><a href="betterq" class="nav-cta">BetterQ</a></li>
         </ul>
     </nav>
 
@@ -750,8 +750,8 @@
             <p>Get personalized SAT tutoring from high-scoring students (1540+) who just took the test and know exactly what works—completely free.</p>
            
             <div class="cta-buttons">
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSd_44AwF3K59YjrAs7FtT8zBMCg3I9nET6Kx6Pfw5EAg9bphw/viewform" class="btn btn-primary">Get Free Tutoring</a>
-                <a href="guide.html" class="btn btn-secondary">Free SAT Guide</a>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSd_44AwF3K59YjrAs7FtT8zBMCg3I9nET6Kx6Pfw5EAg9bphw/viewform" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Book Free Tutoring</a>
+                <a href="betterq" class="btn btn-secondary" target="_blank">Practice Questions</a>
             </div>
         </div>
     </section>
@@ -763,7 +763,7 @@
 
         <div class="problem-grid">
             <div class="problem-card" style="grid-column: span 2; max-width: 900px; margin: 0 auto;">
-                <div class="problem-icon">💸</div>
+                <img src="https://v6m3i6g9.delivery.rocketcdn.me/wp-content/uploads/2021/01/Princeton-Review-logo.png" alt="Princeton Review Logo" style="width: 200px; margin: 0 auto 1.5rem; display: block;">
                 <h3>Princeton Review Pricing</h3>
                 <p style="margin: 1.5rem 0 1rem; font-size: 1.15rem; color: #4b5563;">Check out what they actually charge for SAT prep:</p>
                 <img src="/mnt/user-data/uploads/Screenshot_2026-01-31_at_12_12_57_PM.png" alt="Princeton Review SAT Pricing" style="width: 100%; max-width: 700px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.15); margin: 1rem auto; display: block;">
@@ -772,13 +772,13 @@
             </div>
 
             <div class="problem-card">
-                <div class="problem-icon">📊</div>
+                <img src="https://static01.nyt.com/images/2023/10/20/multimedia/2023-10-13-sat-scores-index/2023-10-13-sat-scores-index-superJumbo-v5.png" alt="SAT Scores vs Parent Income - NYT Graph" style="width: 100%; max-width: 400px; border-radius: 12px; margin: 0 auto 1rem; display: block; box-shadow: 0 3px 15px rgba(0,0,0,0.1);">
                 <h3>Wealth = Higher Scores</h3>
                 <p>There's a clear correlation between family income and SAT scores. Students from families earning $200k+ score on average 200+ points higher than those from families earning under $40k.</p>
             </div>
 
             <div class="problem-card">
-                <div class="problem-icon">🚫</div>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTydUo-ItHHvLBZE5h4ZDc49200P6UQMwXwHw&s" alt="College Rejection Letter" style="width: 100%; max-width: 350px; border-radius: 12px; margin: 0 auto 1rem; display: block; box-shadow: 0 3px 15px rgba(0,0,0,0.1);">
                 <h3>Only for the Top 1%</h3>
                 <p>Premium tutoring is only accessible to the wealthiest families, leaving 99% of students without affordable help—even though the SAT can determine your college future.</p>
             </div>
@@ -910,7 +910,7 @@
                 </div>
             </div>
 
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKoQbKU6eqq6AaF3wdkfqWPHH0u3a5ggu-5eNA_uPe2h3lWg/viewform" class="btn-white">Become a Tutor</a>
+            <a href="https://forms.gle/your-tutor-form" class="btn-white" target="_blank" rel="noopener noreferrer">Become a Tutor</a>
         </div>
     </section>
 
