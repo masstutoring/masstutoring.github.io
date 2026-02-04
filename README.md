@@ -746,7 +746,7 @@
         <div class="hero-content">
             <img src="https://i.imgur.com/4Fl92k3.png" alt="Mass Tutoring Cat" class="hero-cat">
             <h1>Free SAT Tutoring.<br>By Students, For Students.</h1>
-            <p class="subtitle">Quality test prep shouldn't cost $10,000</p>
+            <p class="subtitle">Quality test prep shouldn't cost hundreds of dollars</p>
             <p>Get personalized SAT tutoring from high-scoring students (1540+) who just took the test and know exactly what works—completely free.</p>
            
             <div class="cta-buttons">
@@ -767,7 +767,7 @@
                 <h3>Princeton Review Pricing</h3>
                 <p style="margin: 1.5rem 0 1rem; font-size: 1.15rem; color: #4b5563;">Check out what they actually charge for SAT prep:</p>
                 <img src="https://edureviewer.com/wp-content/uploads/2023/08/Princeton-SAT-pricing.jpg" alt="Princeton Review SAT Pricing" style="width: 100%; max-width: 700px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.15); margin: 1rem auto; display: block;">
-                <p style="margin-top: 1.5rem; font-weight: 600; color: #e63946; font-size: 1.1rem;">That's $2,000-$3,150 for basic tutoring packages!</p>
+                <p style="margin-top: 1.5rem; font-weight: 600; color: #e63946; font-size: 1.1rem;">That's hundreds of dollars for basic tutoring packages!</p>
                 <p style="margin-top: 0.5rem;">Most families simply can't afford this kind of pricing.</p>
             </div>
 
