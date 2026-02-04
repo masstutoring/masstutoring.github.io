@@ -470,10 +470,10 @@
     <nav>
         <div class="logo-container">
             <img src="https://i.imgur.com/4Fl92k3.png" alt="Mass Tutoring Cat Logo">
-            <a href="../index.html" class="logo-text">Mass Tutoring</a>
+            <a href="../" class="logo-text">Mass Tutoring</a>
         </div>
         <ul class="nav-links">
-            <li><a href="../index.html">Home</a></li>
+            <li><a href="../">Home</a></li>
             <li><a href="../#testimonials">Testimonials</a></li>
             <li><a href="../mission">Mission</a></li>
             <li><a href="../tutors">Tutors</a></li>
