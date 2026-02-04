@@ -910,7 +910,7 @@
                 </div>
             </div>
 
-            <a href="https://forms.gle/your-tutor-form" class="btn-white" target="_blank" rel="noopener noreferrer">Become a Tutor</a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKoQbKU6eqq6AaF3wdkfqWPHH0u3a5ggu-5eNA_uPe2h3lWg/viewform" class="btn-white" target="_blank" rel="noopener noreferrer">Become a Tutor</a>
         </div>
     </section>
 
