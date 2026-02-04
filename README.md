@@ -766,7 +766,7 @@
                 <img src="https://v6m3i6g9.delivery.rocketcdn.me/wp-content/uploads/2021/01/Princeton-Review-logo.png" alt="Princeton Review Logo" style="width: 200px; margin: 0 auto 1.5rem; display: block;">
                 <h3>Princeton Review Pricing</h3>
                 <p style="margin: 1.5rem 0 1rem; font-size: 1.15rem; color: #4b5563;">Check out what they actually charge for SAT prep:</p>
-                <img src="/mnt/user-data/uploads/Screenshot_2026-01-31_at_12_12_57_PM.png" alt="Princeton Review SAT Pricing" style="width: 100%; max-width: 700px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.15); margin: 1rem auto; display: block;">
+                <img src="https://edureviewer.com/wp-content/uploads/2023/08/Princeton-SAT-pricing.jpg" alt="Princeton Review SAT Pricing" style="width: 100%; max-width: 700px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.15); margin: 1rem auto; display: block;">
                 <p style="margin-top: 1.5rem; font-weight: 600; color: #e63946; font-size: 1.1rem;">That's $2,000-$3,150 for basic tutoring packages!</p>
                 <p style="margin-top: 0.5rem;">Most families simply can't afford this kind of pricing.</p>
             </div>
