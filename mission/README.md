@@ -390,7 +390,7 @@
             <li><a href="../mission">Mission</a></li>
             <li><a href="../tutors">Tutors</a></li>
             <li><a href="../guide">Free Guide</a></li>
-            <li><a href="../sait">S(Ai)T</a></li>
+            <li><a href="../betterq" class="nav-cta">BetterQ</a></li>
         </ul>
     </nav>
 
