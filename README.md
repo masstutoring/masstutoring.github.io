@@ -1,1051 +1,1221 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mass Tutoring - Free SAT Prep by Students, For Students</title>
-    <link rel="icon" type="image/png" href="https://i.imgur.com/4Fl92k3.png">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            color: #1a1a1a;
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px);
-            padding: 1rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .logo-container img {
-            height: 60px;
-            width: auto;
-        }
-
-        .logo-text {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: #1a1a1a;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #1a1a1a;
-            font-weight: 600;
-            transition: color 0.3s;
-            font-size: 1.05rem;
-        }
-
-        .nav-links a:hover {
-            color: #f59e0b;
-        }
-
-        .nav-cta {
-            background: #f59e0b;
-            color: white !important;
-            padding: 0.75rem 1.5rem;
-            border-radius: 30px;
-            font-weight: 700;
-        }
-
-        .nav-cta:hover {
-            background: #d97706;
-            color: white !important;
-        }
-
-        /* Hero Section */
-        .hero {
-            margin-top: 80px;
-            padding: 5rem 5% 7rem;
-            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
-            color: white;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(245, 158, 11, 0.15) 0%, transparent 70%);
-            border-radius: 50%;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero-cat {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 2rem;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-bottom: 1rem;
-            line-height: 1.2;
-        }
-
-        .hero .subtitle {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
-            color: #fbbf24;
-            font-weight: 600;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 800px;
-            margin: 0 auto 3rem;
-            opacity: 0.95;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 1.5rem 4rem;
-            font-size: 1.3rem;
-            font-weight: 700;
-            border-radius: 50px;
-            text-decoration: none;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-            display: inline-block;
-        }
-
-        .btn-primary {
-            background: #f59e0b;
-            color: white;
-            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.3);
-        }
-
-        .btn-primary:hover {
-            background: #d97706;
-            transform: translateY(-4px);
-            box-shadow: 0 12px 35px rgba(245, 158, 11, 0.5);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: white;
-            border: 3px solid #f59e0b;
-        }
-
-        .btn-secondary:hover {
-            background: #f59e0b;
-            color: white;
-            transform: translateY(-4px);
-            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.3);
-        }
-
-        /* The Problem Section */
-        .problem-section {
-            padding: 6rem 5%;
-            background: #f8f9fa;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.8rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            color: #1a1a1a;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            font-size: 1.3rem;
-            color: #666;
-            margin-bottom: 4rem;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .problem-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2.5rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .problem-card {
-            background: white;
-            padding: 2.5rem;
-            border-radius: 25px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-            transition: all 0.3s;
-            border: 3px solid transparent;
-        }
-
-        .problem-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
-            border-color: #f59e0b;
-        }
-
-        .problem-icon {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .problem-card h3 {
-            font-size: 1.6rem;
-            margin-bottom: 1rem;
-            color: #e63946;
-            font-weight: 700;
-        }
-
-        .price-highlight {
-            font-size: 2.8rem;
-            font-weight: 700;
-            color: #e63946;
-            margin: 1rem 0;
-        }
-
-        .problem-card p {
-            color: #4b5563;
-            line-height: 1.7;
-        }
-
-        /* Impact Stats */
-        .stats-section {
-            padding: 6rem 5%;
-            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
-            color: white;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stats-section::before {
-            content: '';
-            position: absolute;
-            bottom: -50%;
-            left: -10%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(245, 158, 11, 0.1) 0%, transparent 70%);
-            border-radius: 50%;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 3rem;
-            max-width: 1000px;
-            margin: 3rem auto 0;
-            position: relative;
-            z-index: 1;
-        }
-
-        .stat {
-            padding: 2rem;
-        }
-
-        .stat-number {
-            font-size: 4rem;
-            font-weight: 900;
-            margin-bottom: 0.5rem;
-            color: #fbbf24;
-        }
-
-        .stat-label {
-            font-size: 1.2rem;
-            opacity: 0.95;
-        }
-
-        /* Testimonials Section */
-        .testimonials-section {
-            padding: 6rem 5%;
-            background: white;
-            overflow: hidden;
-        }
-
-        .testimonials-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 3rem auto 0;
-        }
-
-        .testimonial-card {
-            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
-            color: white;
-            padding: 2.5rem;
-            border-radius: 25px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-            position: relative;
-            transition: all 0.3s;
-        }
-
-        .testimonial-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-        }
-
-        .testimonial-quote {
-            font-size: 1.2rem;
-            line-height: 1.7;
-            margin-bottom: 1.5rem;
-            font-style: italic;
-        }
-
-        .testimonial-author {
-            font-weight: 700;
-            color: #fbbf24;
-            font-size: 1.1rem;
-        }
-
-        .quote-icon {
-            position: absolute;
-            top: 1rem;
-            right: 1.5rem;
-            font-size: 3rem;
-            color: rgba(245, 158, 11, 0.2);
-        }
-
-        /* Why Us Section */
-        .why-us-section {
-            padding: 6rem 5%;
-            background: #f8f9fa;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2.5rem;
-            max-width: 1200px;
-            margin: 3rem auto 0;
-        }
-
-        .feature-card {
-            text-align: center;
-            padding: 2.5rem;
-            border-radius: 20px;
-            transition: all 0.3s;
-            background: white;
-            box-shadow: 0 3px 15px rgba(0,0,0,0.05);
-        }
-
-        .feature-card:hover {
-            background: white;
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
-        .feature-icon {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .feature-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: #f59e0b;
-            font-weight: 700;
-        }
-
-        .feature-card p {
-            color: #4b5563;
-            line-height: 1.7;
-        }
-
-        /* Services Section */
-        .services-section {
-            padding: 6rem 5%;
-            background: white;
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 2.5rem;
-            max-width: 1200px;
-            margin: 3rem auto 0;
-        }
-
-        .service-card {
-            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
-            color: white;
-            padding: 3rem;
-            border-radius: 20px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-            transition: all 0.3s;
-        }
-
-        .service-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-        }
-
-        .service-card h3 {
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            color: #fbbf24;
-            font-weight: 700;
-        }
-
-        .service-card ul {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .service-card li {
-            padding: 0.9rem 0;
-            padding-left: 2.5rem;
-            position: relative;
-            font-size: 1.1rem;
-            color: rgba(255,255,255,0.95);
-        }
-
-        .service-card li:before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: #10b981;
-            font-weight: bold;
-            font-size: 1.4rem;
-        }
-
-        /* Social Media Section */
-        .social-section {
-            padding: 6rem 5%;
-            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
-            color: white;
-            text-align: center;
-        }
-
-        /* Become a Tutor Section */
-        .become-tutor-section {
-            padding: 6rem 5%;
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-            text-align: center;
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* FAQ Section */
-        .faq-section {
-            padding: 6rem 5%;
-            background: #f0f4f8;
-        }
-
-        .faq-container {
-            max-width: 900px;
-            margin: 3rem auto 0;
-        }
-
-        .faq-item {
-            background: white;
-            margin-bottom: 1.5rem;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-            border: 2px solid transparent;
-            transition: all 0.3s;
-        }
-
-        .faq-item:hover {
-            border-color: #f59e0b;
-        }
-
-        .faq-item.active {
-            border-color: #f59e0b;
-        }
-
-        .faq-question {
-            padding: 1.8rem 5rem 1.8rem 2rem;
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #1a1a1a;
-            cursor: pointer;
-            position: relative;
-            user-select: none;
-            transition: background 0.3s;
-        }
-
-        .faq-question:hover {
-            background: #fef3c7;
-        }
-
-        .faq-toggle {
-            position: absolute;
-            right: 2rem;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 40px;
-            height: 40px;
-            background: #f59e0b;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            font-weight: 700;
-            transition: all 0.3s;
-        }
-
-        .faq-item.active .faq-toggle {
-            background: #d97706;
-            transform: translateY(-50%) rotate(45deg);
-        }
-
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease-out, padding 0.4s ease-out;
-            padding: 0 2rem;
-            background: #fafbfc;
-        }
-
-        .faq-item.active .faq-answer {
-            max-height: 500px;
-            padding: 2rem;
-        }
-
-        .faq-answer p {
-            font-size: 1.15rem;
-            line-height: 1.8;
-            color: #4b5563;
-            margin: 0;
-        }
-
-        .become-tutor-section::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -10%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-            border-radius: 50%;
-        }
-
-        .become-tutor-content {
-            position: relative;
-            z-index: 1;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .become-tutor-section h2 {
-            font-size: 3rem;
-            font-weight: 900;
-            margin-bottom: 1.5rem;
-        }
-
-        .become-tutor-section p {
-            font-size: 1.4rem;
-            margin-bottom: 2.5rem;
-            opacity: 0.95;
-            line-height: 1.8;
-        }
-
-        .tutor-benefits {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin: 3rem auto 3rem;
-            max-width: 900px;
-        }
-
-        .tutor-benefit {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            padding: 2rem;
-            border-radius: 20px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .tutor-benefit-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .tutor-benefit h3 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .tutor-benefit p {
-            font-size: 1rem;
-            margin-bottom: 0;
-            opacity: 0.9;
-        }
-
-        .btn-white {
-            background: white;
-            color: #f59e0b;
-            padding: 1.5rem 4rem;
-            font-size: 1.3rem;
-            font-weight: 700;
-            border-radius: 50px;
-            text-decoration: none;
-            transition: all 0.3s;
-            display: inline-block;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .btn-white:hover {
-            background: #fef3c7;
-            transform: translateY(-4px);
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
-        }
-
-        .social-links {
-            display: flex;
-            gap: 2rem;
-            justify-content: center;
-            margin-top: 3rem;
-            flex-wrap: wrap;
-        }
-
-        .social-link {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1.5rem 3rem;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            text-decoration: none;
-            color: white;
-            font-size: 1.2rem;
-            font-weight: 600;
-            transition: all 0.3s;
-            border: 2px solid transparent;
-        }
-
-        .social-link:hover {
-            background: rgba(245, 158, 11, 0.2);
-            transform: translateY(-5px);
-            border-color: #f59e0b;
-        }
-
-        .social-icon {
-            font-size: 2rem;
-        }
-
-        /* Footer */
-        footer {
-            background: #0f172a;
-            color: white;
-            padding: 3rem 5%;
-            text-align: center;
-        }
-
-        footer p {
-            opacity: 0.9;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero .subtitle {
-                font-size: 1.2rem;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .section-title {
-                font-size: 2.2rem;
-            }
-
-            .problem-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .services-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .social-links {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-    </style>
-</head>
-<body>
-    <!-- Navigation -->
-    <nav>
-        <div class="logo-container">
-            <img src="https://i.imgur.com/4Fl92k3.png" alt="Mass Tutoring Cat Logo">
-            <span class="logo-text">Mass Tutoring</span>
-        </div>
-        <ul class="nav-links">
-            <li><a href="">Home</a></li>
-            <li><a href="#testimonials">Testimonials</a></li>
-            <li><a href="mission">Mission</a></li>
-            <li><a href="tutors">Tutors</a></li>
-            <li><a href="guide">Free Guide</a></li>
-            <li><a href="betterq" class="nav-cta">BetterQ</a></li>
-        </ul>
+import { useState, useEffect, useRef } from "react";
+
+// ============================================================
+// DATA
+// ============================================================
+
+const TESTIMONIALS = [
+  { name: "Pierce Seth", text: "Mass Tutoring helped me with the Reading and Writing section and I'm doing better on the SAT now!", before: 1180, after: 1310 },
+  { name: "Langan Fisher", text: "I am so much better at Desmos Math after I met with a tutor!", before: 1240, after: 1390 },
+  { name: "Jack Reinfeld", text: "My practice Math scores increased 30 points after I met with Mass Tutoring!", before: 690, after: 720 },
+];
+
+const FEATURES = [
+  { title: "100% Free, Forever", desc: "No subscriptions, no hidden fees. Every tutor, every resource, completely free." },
+  { title: "Desmos, demystified", desc: "A full Desmos move-by-move guide so the calculator does the algebra for you." },
+  { title: "Tutors who just took the test", desc: "Every tutor scored 1530+ on the digital SAT, recently, and trained to teach it." },
+  { title: "200 original practice problems", desc: "100 Math, 100 Reading & Writing — every difficulty, every domain, every question with a full explanation." },
+  { title: "Built by students, for students", desc: "We know what's overpriced, what's outdated, and what actually moves your score." },
+  { title: "Closing the access gap", desc: "Score is correlated with income. We're here to break that correlation." },
+];
+
+const FAQS = [
+  { q: "Is this actually free?", a: "Yes. Mass Tutoring is a non-profit. Every tutor volunteers their time, and every resource on this site is free to use, forever." },
+  { q: "Who tutors me?", a: "High schoolers who scored 1530+ on the SAT and went through our internal training on how to teach it well." },
+  { q: "How do I get matched with a tutor?", a: "Fill out the student form (linked on this page), and we'll match you with a tutor based on subject and availability." },
+  { q: "I want to tutor. How do I sign up?", a: "Fill out the tutor form. We do a short review of your score and a quick training session before you start." },
+  { q: "Why should I trust a high school tutor over a $200/hr company?", a: "Our tutors took the digital SAT recently and know the current format. A 35-year-old who took the SAT on paper isn't always the best guide to the test as it exists today." },
+];
+
+const MATH_DOMAINS = ["Algebra", "Advanced Math", "Problem-Solving & Data Analysis", "Geometry & Trigonometry"];
+const RW_DOMAINS = ["Craft and Structure", "Information and Ideas", "Standard English Conventions", "Expression of Ideas"];
+const DIFFICULTIES = ["Easy", "Medium", "Hard", "Very Hard"];
+
+// type: "mc" (choices given) or "free" (student-produced)
+const MATH_QUESTIONS = [
+{ n:1, difficulty:"Easy", domain:"Algebra", type:"mc", prompt:"What is the solution to 5x − 7 = 18?", choices:["3","4","5","6"], answer:"5", solution:"Add 7 to both sides to get 5x = 25. Divide both sides by 5, so x = 5.", desmos:["y=5x-7","y=18"] },
+{ n:2, difficulty:"Easy", domain:"Algebra", type:"mc", prompt:"A taxi ride costs a fixed fee of $4 plus $2.50 per mile. What is the total cost, in dollars, of a 6-mile ride?", choices:["$15.00","$17.50","$19.00","$21.50"], answer:"$19.00", solution:"The cost is 4 + 2.50(6) = 4 + 15 = 19.", desmos:["4+2.5(6)"] },
+{ n:3, difficulty:"Easy", domain:"Algebra", type:"free", prompt:"A line passes through the points (2, 5) and (6, 13). What is the slope of the line?", answer:"2", solution:"Slope is change in y over change in x: (13 − 5)/(6 − 2) = 8/4 = 2.", desmos:["(13-5)/(6-2)"] },
+{ n:4, difficulty:"Easy", domain:"Algebra", type:"mc", prompt:"The graph of y = −3x + 11 has a y-intercept of (0, b). What is the value of b?", choices:["-3","0","3","11"], answer:"11", solution:"The y-intercept occurs when x = 0: y = −3(0) + 11 = 11.", desmos:["y=-3x+11"] },
+{ n:5, difficulty:"Easy", domain:"Algebra", type:"mc", prompt:"Which inequality is equivalent to 4x + 3 ≤ 19?", choices:["x ≤ 4","x ≥ 4","x ≤ 5.5","x ≥ 5.5"], answer:"x ≤ 4", solution:"Subtract 3: 4x ≤ 16. Divide by 4: x ≤ 4.", desmos:["y=4x+3","y=19"] },
+{ n:6, difficulty:"Easy", domain:"Algebra", type:"mc", prompt:"Two notebooks and three pens cost $13. Each notebook costs $5. What is the cost of one pen?", choices:["$1","$2","$3","$4"], answer:"$1", solution:"Two notebooks cost 2(5) = 10. The pens cost 13 − 10 = 3, so each pen costs 3/3 = 1.", desmos:["y=10+3x","y=13"] },
+{ n:7, difficulty:"Easy", domain:"Algebra", type:"free", prompt:"What is the solution to 3(x − 4) = 2x + 5?", answer:"17", solution:"Distribute: 3x − 12 = 2x + 5. Subtract 2x, add 12: x = 17.", desmos:["y=3(x-4)","y=2x+5"] },
+{ n:8, difficulty:"Easy", domain:"Algebra", type:"mc", prompt:"If f(x) = 2x² − 3, what is the value of f(3)?", choices:["9","12","15","33"], answer:"15", solution:"f(3) = 2(9) − 3 = 18 − 3 = 15.", desmos:["f(x)=2x^2-3","f(3)"] },
+{ n:9, difficulty:"Easy", domain:"Algebra", type:"free", prompt:"The equation y = 7.5x models the cost y, in dollars, of x identical items. What is the cost of 4 items?", answer:"30", solution:"y = 7.5(4) = 30.", desmos:["7.5(4)"] },
+{ n:10, difficulty:"Easy", domain:"Algebra", type:"mc", prompt:"Which equation represents the line through (4, 3) that is parallel to y = −(1/2)x + 7?", choices:["y = −(1/2)x + 1","y = −(1/2)x + 5","y = 2x − 5","y = 2x + 5"], answer:"y = −(1/2)x + 5", solution:"Parallel lines share slope −1/2. Using (4,3): 3 = −2 + b, so b = 5.", desmos:["y=-(1/2)x+7","y=-(1/2)x+5"] },
+{ n:11, difficulty:"Easy", domain:"Advanced Math", type:"mc", prompt:"What is the minimum value of g(x) = (x − 4)² + 9?", choices:["4","9","13","16"], answer:"9", solution:"A square is at least 0, smallest at x = 4. The minimum of g is 0 + 9 = 9.", desmos:["y=(x-4)^2+9"] },
+{ n:12, difficulty:"Easy", domain:"Advanced Math", type:"mc", prompt:"For x ≠ 0, which expression is equivalent to x³ · x⁵?", choices:["x⁸","x¹⁵","2x⁸","2x¹⁵"], answer:"x⁸", solution:"Multiplying powers with the same base adds exponents: x^(3+5) = x⁸.", desmos:["y=x^3*x^5","y=x^8"] },
+{ n:13, difficulty:"Easy", domain:"Advanced Math", type:"mc", prompt:"Which expression is equivalent to x² − 9?", choices:["(x − 9)(x + 1)","(x − 3)(x + 3)","(x − 3)²","(x + 9)(x − 1)"], answer:"(x − 3)(x + 3)", solution:"Difference of squares: x² − 3² = (x−3)(x+3).", desmos:["y=x^2-9","y=(x-3)(x+3)"] },
+{ n:14, difficulty:"Easy", domain:"Advanced Math", type:"mc", prompt:"An account begins with $800 and grows by 5% each year. Which function gives the account value A(t) after t years?", choices:["A(t)=800(0.05)^t","A(t)=800(0.95)^t","A(t)=800(1.05)^t","A(t)=805^t"], answer:"A(t)=800(1.05)^t", solution:"A 5% increase means multiplying by 1.05 each year, starting at 800.", desmos:["y=800(1.05)^x"] },
+{ n:15, difficulty:"Easy", domain:"Advanced Math", type:"free", prompt:"What is the value of √196 + √81?", answer:"23", solution:"√196 = 14 and √81 = 9. Their sum is 23.", desmos:["sqrt(196)+sqrt(81)"] },
+{ n:16, difficulty:"Easy", domain:"Advanced Math", type:"mc", prompt:"What is the sum of the solutions to |x − 2| = 5?", choices:["-4","0","4","10"], answer:"4", solution:"x − 2 = 5 gives x = 7; x − 2 = −5 gives x = −3. Sum: 7 + (−3) = 4.", desmos:["y=abs(x-2)","y=5"] },
+{ n:17, difficulty:"Easy", domain:"Advanced Math", type:"mc", prompt:"If f(x) = x + 3 and g(x) = 2x, what is f(g(4))?", choices:["8","10","11","14"], answer:"11", solution:"g(4) = 8. Then f(8) = 8 + 3 = 11.", desmos:["f(x)=x+3","g(x)=2x","f(g(4))"] },
+{ n:18, difficulty:"Easy", domain:"Advanced Math", type:"mc", prompt:"Which value is not in the domain of h(x) = 1/(x − 6)?", choices:["-6","0","1","6"], answer:"6", solution:"The denominator can't be 0, so x ≠ 6.", desmos:["y=1/(x-6)"] },
+{ n:19, difficulty:"Easy", domain:"Problem-Solving & Data Analysis", type:"mc", prompt:"A jacket originally costs $80 and is discounted by 25%. What is the sale price?", choices:["$20","$55","$60","$75"], answer:"$60", solution:"0.75(80) = 60.", desmos:["80(1-0.25)"] },
+{ n:20, difficulty:"Easy", domain:"Problem-Solving & Data Analysis", type:"free", prompt:"What is the mean of 6, 8, 10, 12, and 14?", answer:"10", solution:"Sum is 50; there are 5 values, so the mean is 10.", desmos:["mean([6,8,10,12,14])"] },
+{ n:21, difficulty:"Easy", domain:"Problem-Solving & Data Analysis", type:"mc", prompt:"A car travels at 72 kilometers per hour. What is this speed in kilometers per minute?", choices:["0.72","1.2","12","4,320"], answer:"1.2", solution:"72/60 = 1.2.", desmos:["72/60"] },
+{ n:22, difficulty:"Easy", domain:"Problem-Solving & Data Analysis", type:"mc", prompt:"A bag contains 3 red, 5 blue, and 2 green marbles. If one is selected at random, what is the probability it is blue?", choices:["1/5","3/10","1/2","2/3"], answer:"1/2", solution:"5 blue out of 10 total: 5/10 = 1/2.", desmos:["5/(3+5+2)"] },
+{ n:23, difficulty:"Easy", domain:"Geometry & Trigonometry", type:"mc", prompt:"A triangle has a base of 12 units and a height of 7 units. What is its area?", choices:["19","42","84","168"], answer:"42", solution:"A = (1/2)(12)(7) = 42.", desmos:["(1/2)(12)(7)"] },
+{ n:24, difficulty:"Easy", domain:"Geometry & Trigonometry", type:"free", prompt:"A circle has radius 5. If its circumference is C, what is the value of C/π?", answer:"10", solution:"C = 2π(5) = 10π, so C/π = 10.", desmos:["(2*pi*5)/pi"] },
+{ n:25, difficulty:"Easy", domain:"Geometry & Trigonometry", type:"mc", prompt:"A right triangle has legs of lengths 9 and 12. What is the length of its hypotenuse?", choices:["13","15","18","21"], answer:"15", solution:"c² = 9² + 12² = 225, so c = 15.", desmos:["sqrt(9^2+12^2)"] },
+{ n:26, difficulty:"Medium", domain:"Algebra", type:"mc", prompt:"Adult tickets cost $12 and child tickets cost $8. A total of 30 tickets were sold for $320. How many adult tickets were sold?", choices:["10","15","20","25"], answer:"20", solution:"a + c = 30, 12a + 8c = 320 → substitute c = 30 − a → 4a = 80 → a = 20.", desmos:["x+y=30","12x+8y=320"] },
+{ n:27, difficulty:"Medium", domain:"Algebra", type:"free", prompt:"What is the solution to (2x − 3)/5 = (x + 4)/3?", answer:"29", solution:"Cross-multiply: 3(2x−3) = 5(x+4) → 6x−9 = 5x+20 → x = 29.", desmos:["y=(2x-3)/5","y=(x+4)/3"] },
+{ n:28, difficulty:"Medium", domain:"Algebra", type:"mc", prompt:"A line passes through (−1,7), (1,3), (3,−1). Which equation represents the line?", choices:["y=-2x+5","y=-2x+3","y=2x+5","y=4x+3"], answer:"y=-2x+5", solution:"Slope = (3−7)/(1−(−1)) = −2. Using (1,3): 3 = −2+b → b = 5.", desmos:["y_1~mx_1+b"] },
+{ n:29, difficulty:"Medium", domain:"Algebra", type:"mc", prompt:"A device can store at most 50 GB. It contains 18 GB, and each video uses 2.5 GB. What's the greatest whole number of new videos that can be added?", choices:["12","13","14","20"], answer:"12", solution:"18+2.5v ≤ 50 → v ≤ 12.8 → greatest whole number is 12.", desmos:["y=18+2.5x","y=50"] },
+{ n:30, difficulty:"Medium", domain:"Algebra", type:"mc", prompt:"How many solutions does the system 6x − 2y = 10 and 3x − y = 5 have?", choices:["Zero","Exactly one","Exactly two","Infinitely many"], answer:"Infinitely many", solution:"Doubling the second equation gives the first exactly — same line.", desmos:["6x-2y=10","3x-y=5"] },
+{ n:31, difficulty:"Medium", domain:"Algebra", type:"mc", prompt:"What is the slope of a line perpendicular to 3x + 2y = 8?", choices:["-3/2","-2/3","2/3","3/2"], answer:"2/3", solution:"The line has slope −3/2. Perpendicular slope is the negative reciprocal: 2/3.", desmos:["3x+2y=8"] },
+{ n:32, difficulty:"Medium", domain:"Algebra", type:"mc", prompt:"The volume V (gallons) in a tank t minutes after draining begins is V = 1200 − 15t. What does −15 represent?", choices:["Initial volume is 15 gallons.","The tank loses 15 gallons per minute.","The tank is empty after 15 minutes.","The tank gains 15 gallons per minute."], answer:"The tank loses 15 gallons per minute.", solution:"The coefficient of t is the rate of change — negative means draining.", desmos:["y=1200-15x"] },
+{ n:33, difficulty:"Medium", domain:"Algebra", type:"free", prompt:"The line y = mx − 7 passes through (5,8). What is the value of m?", answer:"3", solution:"8 = 5m − 7 → 15 = 5m → m = 3.", desmos:["y=mx-7","point (5,8)"] },
+{ n:34, difficulty:"Medium", domain:"Algebra", type:"mc", prompt:"The system x + 2y = 11 and 3x − 2y = 9 has solution (x,y). What is x − y?", choices:["1","2","3","5"], answer:"2", solution:"Add equations: 4x = 20 → x = 5. Then y = 3. x − y = 2.", desmos:["x+2y=11","3x-2y=9"] },
+{ n:35, difficulty:"Medium", domain:"Advanced Math", type:"mc", prompt:"What is the larger solution to x² − 5x + 6 = 0?", choices:["1","2","3","6"], answer:"3", solution:"Factors as (x−2)(x−3); roots are 2 and 3.", desmos:["y=x^2-5x+6"] },
+{ n:36, difficulty:"Medium", domain:"Advanced Math", type:"mc", prompt:"What is the minimum value of f(x) = x² + 8x + 3?", choices:["-16","-13","-5","3"], answer:"-13", solution:"Complete the square: (x+4)² − 13. Minimum is −13.", desmos:["y=x^2+8x+3"] },
+{ n:37, difficulty:"Medium", domain:"Advanced Math", type:"mc", prompt:"A car worth $24,000 loses 12% of its value each year. Which function models its value V(t)?", choices:["V(t)=24000(0.12)^t","V(t)=24000(0.88)^t","V(t)=24000(1.12)^t","V(t)=24000-0.12t"], answer:"V(t)=24000(0.88)^t", solution:"Losing 12% leaves 88% each year, so the multiplier is 0.88.", desmos:["y=24000(0.88)^x"] },
+{ n:38, difficulty:"Medium", domain:"Advanced Math", type:"mc", prompt:"If x − 4 is a factor of x² + kx − 20, what is the value of k?", choices:["-4","-1","1","4"], answer:"1", solution:"x=4 is a zero: 16+4k−20=0 → 4k=4 → k=1.", desmos:["y=x^2+kx-20","k=1"] },
+{ n:39, difficulty:"Medium", domain:"Advanced Math", type:"free", prompt:"What is the solution to 3/(x − 1) = 2?", answer:"5/2", solution:"3 = 2(x−1) → 3 = 2x−2 → x = 5/2.", desmos:["y=3/(x-1)","y=2"] },
+{ n:40, difficulty:"Medium", domain:"Advanced Math", type:"mc", prompt:"What is the solution to √(x + 5) = x − 1?", choices:["-1","1","4","5"], answer:"4", solution:"Squaring gives x² − 3x − 4 = 0; candidates 4 and −1, but only 4 satisfies the domain (x≥1).", desmos:["y=sqrt(x+5)","y=x-1"] },
+{ n:41, difficulty:"Medium", domain:"Advanced Math", type:"mc", prompt:"For what value of k does x² + 6x + k = 0 have exactly one real solution?", choices:["6","8","9","12"], answer:"9", solution:"Discriminant 0: 36 − 4k = 0 → k = 9.", desmos:["y=x^2+6x+k","k=9"] },
+{ n:42, difficulty:"Medium", domain:"Advanced Math", type:"mc", prompt:"The graphs y = x² and y = 2x + 3 intersect at two points. What is the sum of the x-coordinates?", choices:["-2","0","2","4"], answer:"2", solution:"x² − 2x − 3 = 0 → (x−3)(x+1) → roots 3 and −1, sum 2.", desmos:["y=x^2","y=2x+3"] },
+{ n:43, difficulty:"Medium", domain:"Advanced Math", type:"mc", prompt:"For x ≠ 4, which expression is equivalent to (x² − 16)/(x − 4)?", choices:["x-4","x+4","x²+4","1"], answer:"x+4", solution:"Factor numerator: (x−4)(x+4)/(x−4) = x+4.", desmos:["y=(x^2-16)/(x-4)","y=x+4"] },
+{ n:44, difficulty:"Medium", domain:"Problem-Solving & Data Analysis", type:"free", prompt:"A student has an average of 82 on four quizzes, then scores 98 on a fifth. What is the new average?", answer:"85.2", solution:"(4·82+98)/5 = 426/5 = 85.2.", desmos:["(4*82+98)/5"] },
+{ n:45, difficulty:"Medium", domain:"Problem-Solving & Data Analysis", type:"mc", prompt:"A town's population increases from 250 to 290. What is the percent increase?", choices:["14%","16%","18%","40%"], answer:"16%", solution:"(290−250)/250 = 0.16 = 16%.", desmos:["(290-250)/250"] },
+{ n:46, difficulty:"Medium", domain:"Problem-Solving & Data Analysis", type:"mc", prompt:"A line of best fit is y = 1.8x + 4. At x = 10, the actual value is 24. What is the residual (actual − predicted)?", choices:["-2","0","2","6"], answer:"2", solution:"Predicted = 1.8(10)+4 = 22. Residual = 24−22 = 2.", desmos:["y=1.8x+4"] },
+{ n:47, difficulty:"Medium", domain:"Problem-Solving & Data Analysis", type:"mc", prompt:"Among 40 students, 22 are in band, 18 in athletics, 10 in both. If a band student is selected, what's the probability they're also in athletics?", choices:["1/4","5/11","1/2","10/18"], answer:"5/11", solution:"Sample space limited to 22 band students; 10 are also athletes. 10/22 = 5/11.", desmos:["10/22"] },
+{ n:48, difficulty:"Medium", domain:"Geometry & Trigonometry", type:"free", prompt:"A triangle has sides 6, 8, 10. A similar triangle has hypotenuse 25. What is the side corresponding to 6?", answer:"15", solution:"Scale factor 25/10 = 2.5. 6(2.5) = 15.", desmos:["6*(25/10)"] },
+{ n:49, difficulty:"Medium", domain:"Geometry & Trigonometry", type:"mc", prompt:"A circle has radius 9 and central angle 80°. If arc length is L, what is L/π?", choices:["2","4","8","18"], answer:"4", solution:"(80/360)(2π·9) = 4π, so L/π = 4.", desmos:["(80/360)*2*pi*9/pi"] },
+{ n:50, difficulty:"Medium", domain:"Geometry & Trigonometry", type:"free", prompt:"In a right triangle, an acute angle is 32° and the adjacent leg has length 12. What is the opposite leg, to the nearest tenth?", answer:"7.5", solution:"opposite = 12·tan(32°) ≈ 7.5.", desmos:["12tan(32)","(degree mode)"] },
+{ n:51, difficulty:"Hard", domain:"Algebra", type:"free", prompt:"For what value of k does the system kx + 3y = 12 and 4x + 6y = 30 have no solution?", answer:"2", solution:"Halve the 2nd: 2x+3y=15. For parallel distinct lines, match x-coeff: k=2 (constants 12≠15).", desmos:["kx+3y=12","4x+6y=30","k=2"] },
+{ n:52, difficulty:"Hard", domain:"Algebra", type:"free", prompt:"How many liters of a 30% solution should mix with a 50% solution to make 40 L of a 42% solution?", answer:"16", solution:"0.30x+0.50(40−x)=0.42(40) → −0.20x=−3.2 → x=16.", desmos:["y=0.30x+0.50(40-x)","y=0.42(40)"] },
+{ n:53, difficulty:"Hard", domain:"Algebra", type:"mc", prompt:"Gym Plan A: $25/mo + $8/visit. Plan B: $49/mo + $5/visit. Least whole visits for B to be cheaper?", choices:["8","9","10","12"], answer:"9", solution:"49+5v<25+8v → 24<3v → v>8 → least whole number is 9.", desmos:["y=25+8x","y=49+5x"] },
+{ n:54, difficulty:"Hard", domain:"Algebra", type:"mc", prompt:"The line ax+by=18 has x-intercept 6 and is perpendicular to y=(3/2)x−4. What is a+b?", choices:["6","7","7.5","9"], answer:"7.5", solution:"6a=18→a=3. Perp slope −2/3 = −a/b → b=4.5. a+b=7.5.", desmos:["3x+by=18","y=(3/2)x-4"] },
+{ n:55, difficulty:"Hard", domain:"Algebra", type:"mc", prompt:"For which value of x is there no y satisfying both y≥2x−3 and y<−x+6?", choices:["-2","0","2","4"], answer:"4", solution:"Need 2x−3<−x+6 → x<3. Only x=4 fails.", desmos:["y>=2x-3","y<-x+6"] },
+{ n:56, difficulty:"Hard", domain:"Algebra", type:"free", prompt:"The system (p+1)x+2y=7 and 3x+2y=11 has a solution with x=2. What is p?", answer:"0", solution:"Subtract: (p−2)x=−4. At x=2: 2(p−2)=−4 → p=0.", desmos:["(p+1)x+2y=7","3x+2y=11","x=2"] },
+{ n:57, difficulty:"Hard", domain:"Algebra", type:"mc", prompt:"Cost C=0.04n+120, revenue R=0.10n. Least n for profit ≥ $300?", choices:["3,000","5,000","7,000","10,500"], answer:"7,000", solution:"0.06n−120≥300 → n≥7000.", desmos:["y=0.10x-(0.04x+120)","y=300"] },
+{ n:58, difficulty:"Hard", domain:"Algebra", type:"mc", prompt:"A linear function f satisfies f(2)=7 and f(f(2))=22. What is f(10)?", choices:["27","29","31","35"], answer:"31", solution:"f(7)=22. Slope through (2,7),(7,22) is 3, so f(x)=3x+1. f(10)=31.", desmos:["points (2,7),(7,22)","y_1~mx_1+b"] },
+{ n:59, difficulty:"Hard", domain:"Advanced Math", type:"mc", prompt:"The graph of y=x²+bx+16 is tangent to the x-axis. If b>0, what is b?", choices:["4","8","16","32"], answer:"8", solution:"Discriminant 0: b²−64=0 → b=8 (positive).", desmos:["y=x^2+bx+16","b=8"] },
+{ n:60, difficulty:"Hard", domain:"Advanced Math", type:"mc", prompt:"A culture begins with 500 bacteria, growing ×1.4/day. Least whole days for more than 2,000?", choices:["4","5","6","7"], answer:"5", solution:"At t=4: 1920.8 (not enough). At t=5: 2689.12. Answer: 5.", desmos:["y=500(1.4)^x","y=2000"] },
+{ n:61, difficulty:"Hard", domain:"Advanced Math", type:"mc", prompt:"For what value of k is the remainder 0 when P(x)=x³−4x²+kx+6 is divided by x−2?", choices:["-1","0","1","2"], answer:"1", solution:"P(2)=0: 8−16+2k+6=0 → k=1.", desmos:["P(x)=x^3-4x^2+kx+6","k=1"] },
+{ n:62, difficulty:"Hard", domain:"Advanced Math", type:"mc", prompt:"What is the horizontal asymptote of f(x)=(3x+5)/(x−2)?", choices:["x=2","y=2","x=3","y=3"], answer:"y=3", solution:"Same-degree num/denom: ratio of leading coefficients = 3/1 = 3.", desmos:["y=(3x+5)/(x-2)","y=3"] },
+{ n:63, difficulty:"Hard", domain:"Advanced Math", type:"free", prompt:"What is the solution to √(2x + 3) = x?", answer:"3", solution:"x² − 2x − 3=0 → (x−3)(x+1); only x=3 satisfies x≥0.", desmos:["y=sqrt(2x+3)","y=x"] },
+{ n:64, difficulty:"Hard", domain:"Advanced Math", type:"mc", prompt:"A monic quadratic has roots r,s with r+s=7, rs=−18. Which equation has those roots?", choices:["x²+7x-18=0","x²-7x-18=0","x²-18x+7=0","x²+18x-7=0"], answer:"x²-7x-18=0", solution:"x²−(r+s)x+rs=0 → x²−7x−18=0.", desmos:["y=x^2-7x-18"] },
+{ n:65, difficulty:"Hard", domain:"Advanced Math", type:"mc", prompt:"The graph of y=f(x) has vertex (−1,4). What is the vertex of y=f(x−3)+2?", choices:["(-4,2)","(-4,6)","(2,2)","(2,6)"], answer:"(2,6)", solution:"Shift right 3 (x: −1→2), up 2 (y: 4→6).", desmos:["f(x)=(x+1)^2+4","f(x-3)+2"] },
+{ n:66, difficulty:"Hard", domain:"Advanced Math", type:"mc", prompt:"A rectangle has area 96. Length is x+4, width is x−2 (x>2). What is x to the nearest tenth?", choices:["8.2","9.2","10.2","11.2"], answer:"9.2", solution:"(x+4)(x−2)=96 → x²+2x−104=0 → x=−1+√105 ≈ 9.2.", desmos:["y=(x+4)(x-2)","y=96"] },
+{ n:67, difficulty:"Hard", domain:"Advanced Math", type:"mc", prompt:"f(x)=a(x−2)²−5 passes through (6,27). What is the square of the distance between its x-intercepts?", choices:["5","8","10","20"], answer:"10", solution:"27=16a−5 → a=2. Intercepts at 2±√(5/2); distance²=10.", desmos:["y=a(x-2)^2-5","a=2"] },
+{ n:68, difficulty:"Hard", domain:"Advanced Math", type:"mc", prompt:"For x≠±2, which expression is equivalent to 1/(x+2)+1/(x−2)?", choices:["2/(x²-4)","2x/(x²-4)","(x²+4)/(x²-4)","2x/(x²+4)"], answer:"2x/(x²-4)", solution:"Common denom x²−4; numerator (x−2)+(x+2)=2x.", desmos:["y=1/(x+2)+1/(x-2)","y=2x/(x^2-4)"] },
+{ n:69, difficulty:"Hard", domain:"Problem-Solving & Data Analysis", type:"mc", prompt:"A sample estimates 58% support, margin of error 4 points. Which value is plausible?", choices:["52%","55%","63%","65%"], answer:"55%", solution:"Plausible range: 54%–62%. Only 55% fits.", desmos:["58-4","58+4"] },
+{ n:70, difficulty:"Hard", domain:"Problem-Solving & Data Analysis", type:"free", prompt:"Table: (1,3) (2,5) (3,8) (4,10) (5,14). Using least-squares regression, predict y at x=6.", answer:"16.1", solution:"Regression line ≈ y=2.7x−0.1. At x=6: 16.1.", desmos:["y_1~mx_1+b","m(6)+b"] },
+{ n:71, difficulty:"Hard", domain:"Problem-Solving & Data Analysis", type:"mc", prompt:"Of 120 students, 70 studied (56 passed); of 50 who didn't, 25 passed. If a passing student is picked, P(studied)?", choices:["7/15","1/2","56/81","4/5"], answer:"56/81", solution:"56+25=81 passers; 56 studied. 56/81.", desmos:["56/(56+25)"] },
+{ n:72, difficulty:"Hard", domain:"Geometry & Trigonometry", type:"mc", prompt:"What is the radius of the circle x²+y²−6x+8y−11=0?", choices:["3","4","5","6"], answer:"6", solution:"Complete the square: (x−3)²+(y+4)²=36 → r=6.", desmos:["x^2+y^2-6x+8y-11=0"] },
+{ n:73, difficulty:"Hard", domain:"Geometry & Trigonometry", type:"free", prompt:"A sector has radius 12, central angle 75°. If area is A, what is A/π?", answer:"30", solution:"(75/360)π(144)=30π → A/π=30.", desmos:["(75/360)*pi*12^2/pi"] },
+{ n:74, difficulty:"Hard", domain:"Geometry & Trigonometry", type:"mc", prompt:"In a 30-60-90 triangle, the longer leg is 9√3. What is the hypotenuse?", choices:["9","9√3","18","18√3"], answer:"18", solution:"Ratio 1:√3:2 → short leg 9, hypotenuse 18.", desmos:["(9sqrt(3))/sqrt(3)*2"] },
+{ n:75, difficulty:"Hard", domain:"Geometry & Trigonometry", type:"mc", prompt:"A cube's side length increases by 20%. By what percent does its volume increase?", choices:["20%","44%","72.8%","120%"], answer:"72.8%", solution:"1.2³=1.728 → 72.8% increase.", desmos:["1.2^3-1"] },
+{ n:76, difficulty:"Very Hard", domain:"Algebra", type:"free", prompt:"The system (a−1)x+2y=6 and 4x+by=12 has infinitely many solutions. What is a+b?", answer:"7", solution:"Match a multiple of eqn 1 to eqn 2: 2(a−1)=4→a=3; b=4. a+b=7.", desmos:["(a-1)x+2y=6","4x+by=12"] },
+{ n:77, difficulty:"Very Hard", domain:"Algebra", type:"mc", prompt:"A repair company charges a fixed fee + hourly rate before 8% tax. 2 hrs → $116.64; 5 hrs → $213.84. How many hours for $278.64?", choices:["6","7","7.2","8"], answer:"7", solution:"Pretax: $108, $198. Rate=30/hr, fixed=$48. 48+30h=258 → h=7.", desmos:["points (2,108),(5,198)","y_1~mx_1+b"] },
+{ n:78, difficulty:"Very Hard", domain:"Algebra", type:"mc", prompt:"300 tickets sold: adult $18, student $12, child $8. Student tickets = 2× child. Revenue $4,080. How many adult tickets?", choices:["90","100","120","140"], answer:"120", solution:"18(300−3c)+24c+8c=4080 → c=60 → adult=300−180=120.", desmos:["y=18(300-3x)+12(2x)+8x","y=4080"] },
+{ n:79, difficulty:"Very Hard", domain:"Algebra", type:"mc", prompt:"f(f(x))=9x−8 for all x, slope of f positive. What is f(5)?", choices:["11","13","15","17"], answer:"13", solution:"f(x)=ax+b. a²=9→a=3 (positive). b(a+1)=−8 → b=−2. f(5)=13.", desmos:["f(x)=3x-2","f(f(x))"] },
+{ n:80, difficulty:"Very Hard", domain:"Algebra", type:"free", prompt:"A line passes through the intersection of 2x+3y=7 and 4x−y=9, and is perpendicular to x+2y=6. What is its y-intercept?", answer:"-29/7", solution:"Intersection: (17/7, 5/7). Perp slope 2. y-intercept = 5/7 − 2(17/7) = −29/7.", desmos:["2x+3y=7","4x-y=9"] },
+{ n:81, difficulty:"Very Hard", domain:"Algebra", type:"mc", prompt:"Tank A: 600 L draining at 18 L/min. Tank B: 150 L filling at 12 L/min. When is A exactly twice B?", choices:["6","50/7","8","25/7"], answer:"50/7", solution:"600−18t=2(150+12t) → 300=42t → t=50/7.", desmos:["y=600-18x","y=2(150+12x)"] },
+{ n:82, difficulty:"Very Hard", domain:"Algebra", type:"mc", prompt:"A line through (p,2p+1) has slope p−1 and y-intercept −5. Sum of all possible p?", choices:["-6","-3","3","6"], answer:"3", solution:"b=−p²+3p+1=−5 → p²−3p−6=0. Sum of roots = 3.", desmos:["b(p)=-p^2+3p+1","y=-5"] },
+{ n:83, difficulty:"Very Hard", domain:"Algebra", type:"free", prompt:"For x≥0, y≥0: x+2y≤12 and 3x−y≥4. Max value of 2x+5y?", answer:"200/7", solution:"Feasible vertex at (20/7,32/7) gives 200/7, the max.", desmos:["x+2y<=12","3x-y>=4"] },
+{ n:84, difficulty:"Very Hard", domain:"Advanced Math", type:"mc", prompt:"Monic f(x)=x²+bx+c has vertex x-coord 3, one root at x=1. What is f(7)?", choices:["5","10","12","18"], answer:"12", solution:"Other root at x=5 (symmetric). f(x)=(x−1)(x−5). f(7)=6·2=12.", desmos:["y=(x-1)(x-5)"] },
+{ n:85, difficulty:"Very Hard", domain:"Advanced Math", type:"mc", prompt:"P(t)=A(1.2)^t. Increase from t=1 to t=2 is 432. What is P(3)?", choices:["2,592","3,024","3,110.4","3,456"], answer:"3,110.4", solution:"0.24A=432 → A=1800. P(3)=1800(1.728)=3110.4.", desmos:["A*1.2^2-A*1.2=432"] },
+{ n:86, difficulty:"Very Hard", domain:"Advanced Math", type:"mc", prompt:"Line y=mx+1 is tangent to y=x²−6x+13. If m>0, what is m?", choices:["4√3-6","6-4√3","4√3+6","-6-4√3"], answer:"4√3-6", solution:"Discriminant 0: (6+m)²=48 → m=4√3−6 (positive root).", desmos:["y=x^2-6x+13","y=mx+1"] },
+{ n:87, difficulty:"Very Hard", domain:"Advanced Math", type:"free", prompt:"(x−2)(x²+ax+b)=x³−5x²+2x+8 for all x. What is a+b?", answer:"-7", solution:"a−2=−5→a=−3. −2b=8→b=−4. a+b=−7.", desmos:["expand (x-2)(x^2+ax+b)"] },
+{ n:88, difficulty:"Very Hard", domain:"Advanced Math", type:"mc", prompt:"For x>0, what is the minimum value of f(x)=x+4/x?", choices:["2","4","6","8"], answer:"4", solution:"By AM-GM, min is 2√4=4 at x=2.", desmos:["y=x+4/x {x>0}"] },
+{ n:89, difficulty:"Very Hard", domain:"Advanced Math", type:"mc", prompt:"How many distinct intersection points do x²+y²=25 and y=x²−5 have?", choices:["1","2","3","4"], answer:"3", solution:"Substituting gives u²−9u=0 → u=0 or 9 → 3 total points.", desmos:["x^2+y^2=25","y=x^2-5"] },
+{ n:90, difficulty:"Very Hard", domain:"Advanced Math", type:"free", prompt:"√(x+y)=5 and x−y=7. What is xy?", answer:"144", solution:"x+y=25, x−y=7 → x=16, y=9. xy=144.", desmos:["x+y=25","x-y=7"] },
+{ n:91, difficulty:"Very Hard", domain:"Advanced Math", type:"mc", prompt:"f(x)=(2x−3)/(x+4). What is 3f⁻¹(5)?", choices:["-23","-23/3","23/3","23"], answer:"-23", solution:"5=(2x−3)/(x+4) → x=−23/3. 3·(−23/3)=−23.", desmos:["y=(2x-3)/(x+4)","y=5"] },
+{ n:92, difficulty:"Very Hard", domain:"Problem-Solving & Data Analysis", type:"mc", prompt:"200 voters; 120 support A, 72 of those under 40. 110 total under 40. P(supports A | age ≥40)?", choices:["6/11","8/15","3/5","12/25"], answer:"8/15", solution:"90 voters ≥40. Of 120 supporters, 48 are ≥40. 48/90=8/15.", desmos:["(120-72)/(200-110)"] },
+{ n:93, difficulty:"Very Hard", domain:"Problem-Solving & Data Analysis", type:"free", prompt:"Margin of error ∝ 1/√n. n=500 gives 2.5 points. What margin for n=2,000?", answer:"1.25", solution:"n×4 → √n doubles → margin halves: 2.5/2=1.25.", desmos:["2.5*sqrt(500/2000)"] },
+{ n:94, difficulty:"Very Hard", domain:"Problem-Solving & Data Analysis", type:"mc", prompt:"Best fit y=2.4x+7. u=x+3, v=2y−5. What is the slope of v as a function of u?", choices:["2.4","4.8","7.2","9.6"], answer:"4.8", solution:"v=2(2.4(u−3)+7)−5=4.8u−5.4. Slope is 4.8.", desmos:["v=2(2.4(u-3)+7)-5"] },
+{ n:95, difficulty:"Very Hard", domain:"Problem-Solving & Data Analysis", type:"mc", prompt:"A price is increased 20% then decreased 15%. Overall change?", choices:["2% decrease","No change","2% increase","5% increase"], answer:"2% increase", solution:"1.20×0.85=1.02 → 2% increase.", desmos:["1.2*0.85-1"] },
+{ n:96, difficulty:"Very Hard", domain:"Geometry & Trigonometry", type:"free", prompt:"Circle center (2,−1), radius 5. Tangent touches at (5,3). What is 4× the tangent line's y-intercept?", answer:"27", solution:"Radius slope 4/3 → tangent slope −3/4. y-int = 27/4. ×4 = 27.", desmos:["(x-2)^2+(y+1)^2=25"] },
+{ n:97, difficulty:"Very Hard", domain:"Geometry & Trigonometry", type:"mc", prompt:"A cylinder's radius increases 50%, height decreases 20%. Volume change?", choices:["20% increase","50% increase","80% increase","100% increase"], answer:"80% increase", solution:"Factor = (1.5)²(0.8) = 1.8 → 80% increase.", desmos:["(1.5)^2*(0.8)-1"] },
+{ n:98, difficulty:"Very Hard", domain:"Geometry & Trigonometry", type:"mc", prompt:"Angle of elevation 32°. Moving 12 m closer, tangent becomes 5/3× original. Building height to nearest tenth?", choices:["16.2","18.7","20.0","22.5"], answer:"18.7", solution:"3d=5(d−12) → d=30. h=30tan(32°)≈18.7.", desmos:["d*tan(32)","(degree mode)"] },
+{ n:99, difficulty:"Very Hard", domain:"Geometry & Trigonometry", type:"mc", prompt:"Two chords intersect: segments 3,12 and x−1,x+2 (x>1). Find x to the nearest tenth.", choices:["4.8","5.2","5.7","6.3"], answer:"5.7", solution:"3(12)=(x−1)(x+2) → x²+x−38=0 → x≈5.7.", desmos:["y=(x-1)(x+2)","y=36"] },
+{ n:100, difficulty:"Very Hard", domain:"Geometry & Trigonometry", type:"mc", prompt:"Triangle A(0,0), B(a,2), C(4,8), a>0, area 18. What is a?", choices:["3.5","4.5","5.5","6.5"], answer:"5.5", solution:"Area=(1/2)|4a−4|=18 → a=5.5 (positive case).", desmos:["polygon((0,0),(a,2),(4,8))"] },
+];
+
+// Reading & Writing question bank — original questions, four content domains
+// (Craft and Structure, Information and Ideas, Standard English Conventions, Expression of Ideas)
+const RW_QUESTIONS = [
+{ n:1, difficulty:"Easy", domain:"Craft and Structure", type:"mc", prompt:`When the city council published its budget online, officials hoped the document would make municipal spending more transparent. Residents could now see how much money was assigned to parks, road repairs, and other services.
+
+As used in the text, what does 'transparent' most nearly mean?`, choices:["Open and understandable","Easy to see through","Delicate","Temporary"], answer:`Open and understandable`, solution:`The second sentence explains that residents can now see where money goes, so 'transparent' means open and understandable. The literal meaning (easy to see through) doesn't fit a budget, and 'delicate' or 'temporary' don't fit the context at all.`, strategy:`Use the surrounding explanation, not the most familiar dictionary meaning.` },
+{ n:2, difficulty:"Easy", domain:"Craft and Structure", type:"mc", prompt:`The first harvest from the school garden was modest: students collected only three baskets of tomatoes. Even so, the project showed that vegetables could be grown successfully in the small courtyard.
+
+Which choice completes the text with the most logical and precise meaning of 'modest'?`, choices:["Limited in size","Embarrassing","Traditional","Unexpected"], answer:`Limited in size`, solution:`Three baskets is a small, limited harvest. Nothing suggests embarrassment, tradition, or surprise.`, strategy:`Replace the tested word with each option and choose the one that preserves the sentence's logic.` },
+{ n:3, difficulty:"Easy", domain:"Craft and Structure", type:"mc", prompt:`Many plants can survive short dry periods by slowing their growth. For example, during a week without rain, a young sunflower may produce smaller leaves, reducing the amount of water it loses.
+
+Which choice best describes the function of the second sentence in the text as a whole?`, choices:["It challenges the claim in the first sentence.","It provides an example of the general claim in the first sentence.","It introduces a different topic from the first sentence.","It explains why sunflowers require more water than other plants."], answer:`It provides an example of the general claim in the first sentence.`, solution:`The first sentence states a general survival strategy, and the second gives the sunflower as a specific example.`, strategy:`Summarize each sentence in a few words, then identify the relationship between them.` },
+{ n:4, difficulty:"Easy", domain:"Craft and Structure", type:"mc", prompt:`Text 1: A neighborhood garden can strengthen a community because residents who tend it work toward a shared goal and often get to know one another.
+
+Text 2: Community gardens can improve neighborhoods by turning unused lots into green spaces that provide shade and absorb rainwater.
+
+Based on the texts, the authors of both texts would most likely agree with which statement?`, choices:["Every unused lot should become a garden.","The main benefit of a garden is the food it produces.","Community gardens require little cooperation.","Community gardens can benefit neighborhoods."], answer:`Community gardens can benefit neighborhoods.`, solution:`Both authors describe a neighborhood benefit, though Text 1 emphasizes social connection and Text 2 emphasizes environmental improvement.`, strategy:`Look for the overlap, not the difference in emphasis.` },
+{ n:5, difficulty:"Easy", domain:"Information and Ideas", type:"mc", prompt:`Glass artist Lena Ortiz collects bottles from buildings scheduled for renovation. She melts the glass and shapes it into panels that include outlines of the buildings' original windows. Her work therefore preserves traces of local architecture even after the buildings themselves have changed.
+
+Which choice best states the main idea of the text?`, choices:["Ortiz believes old buildings should never be renovated.","Making glass panels is less expensive than replacing windows.","Ortiz uses discarded glass to create art connected to local architectural history.","Most of Ortiz's materials come from newly constructed buildings."], answer:`Ortiz uses discarded glass to create art connected to local architectural history.`, solution:`This captures both the method (reusing glass) and purpose (preserving architectural traces).`, strategy:`A main idea should account for most of the passage, not just one detail.` },
+{ n:6, difficulty:"Easy", domain:"Information and Ideas", type:"mc", prompt:`A town restored a shallow pond beside its main road. During storms, the pond temporarily holds runoff that once flooded nearby sidewalks. Native grasses planted around the pond also provide habitat for insects and birds.
+
+According to the text, the restored pond benefits the town in which two ways?`, choices:["It stores drinking water and attracts tourists.","It lowers road traffic and cools buildings.","It produces electricity and improves soil.","It reduces flooding and supports wildlife."], answer:`It reduces flooding and supports wildlife.`, solution:`The pond holds runoff (reducing flooding) and the grasses provide habitat (supporting wildlife).`, strategy:`For detail questions, match both parts of the answer to explicit statements.` },
+{ n:7, difficulty:"Easy", domain:"Information and Ideas", type:"mc", prompt:`Researchers placed identical feeders beside blue, yellow, and white cards. Over several days, bees visited the feeder beside the blue card most often, even though all three feeders contained the same sugar solution.
+
+Which choice most logically follows from the text?`, choices:["Bees can see only the color blue.","The color of a nearby marker may influence which feeder bees visit.","Sugar solution beside a blue card contains more energy.","Yellow cards prevent bees from flying."], answer:`The color of a nearby marker may influence which feeder bees visit.`, solution:`This is a cautious inference from the controlled setup: feeders were identical except for card color, and visits differed.`, strategy:`Prefer the answer that is supported but not stronger than the evidence.` },
+{ n:8, difficulty:"Easy", domain:"Information and Ideas", type:"mc", prompt:`A desert cactus opens its flowers shortly after sunset and closes them by late morning. Biologist Mara Chen hypothesizes that the cactus is pollinated mainly by moths at night rather than by bees during the day.
+
+Which finding, if true, would most directly support Chen's hypothesis?`, choices:["The cactus grows in both rocky and sandy soil.","Bees visit several other plant species near the cactus.","The cactus produces flowers for three weeks each year.","Flowers covered only during daylight produce as many seeds as uncovered flowers, but flowers covered only at night produce far fewer seeds."], answer:`Flowers covered only during daylight produce as many seeds as uncovered flowers, but flowers covered only at night produce far fewer seeds.`, solution:`Preventing nighttime visits sharply reduces seed production, indicating nighttime pollinators are important.`, strategy:`Translate the hypothesis into a predicted result before reading the choices.` },
+{ n:9, difficulty:"Easy", domain:"Information and Ideas", type:"mc", prompt:`Library visits table — March/April: Children 120/200, Adults 120/140. The library introduced a Saturday storytelling program in April and compared visitor counts with those from March. A librarian claims that the program increased visits by children more than visits by adults.
+
+Which choice most effectively uses data from the table to support the librarian's claim?`, choices:["Adults made 140 visits in April.","Children's visits increased by 80, while adults' visits increased by 20.","Children made 120 visits in March.","Total visits were higher in April than in March."], answer:`Children's visits increased by 80, while adults' visits increased by 20.`, solution:`This calculates the relevant changes: children rose from 120 to 200 (+80), adults rose from 120 to 140 (+20).`, strategy:`Identify exactly what must be compared, then compute only those quantities.` },
+{ n:10, difficulty:"Easy", domain:"Standard English Conventions", type:"mc", prompt:`Each autumn, thousands of migrating birds pause at a lake before continuing south. The reason many of the birds stop near the lake ______ the abundance of insects there.
+
+Which choice completes the text so that it conforms to the conventions of Standard English?`, choices:["is,","is:","is","is;"], answer:`is`, solution:`The grammatical subject is the full phrase beginning with 'The reason'; 'is' is its verb. No punctuation should separate a subject from its verb.`, strategy:`Find the core subject and verb before deciding on punctuation.` },
+{ n:11, difficulty:"Easy", domain:"Standard English Conventions", type:"mc", prompt:`A museum exhibit explains how travelers found their way before electronic navigation. The exhibit features three kinds of early navigation ______ compasses, star charts, and measuring ropes.
+
+Which choice completes the text so that it conforms to the conventions of Standard English?`, choices:["tools:","tools,","tools;","tools"], answer:`tools:`, solution:`The words before the blank form a complete clause, and the list after explains 'three kinds,' so a colon is appropriate.`, strategy:`A colon can follow a complete clause to introduce a list or explanation.` },
+{ n:12, difficulty:"Easy", domain:"Standard English Conventions", type:"mc", prompt:`The chamber music program includes a duet that requires careful coordination between two performers. The violinist and the pianist ______ every afternoon before the concert.
+
+Which choice completes the text so that it conforms to the conventions of Standard English?`, choices:["rehearses","rehearse","has rehearsed","is rehearsing"], answer:`rehearse`, solution:`The compound subject 'The violinist and the pianist' is plural, so it takes the plural verb 'rehearse.'`, strategy:`Ignore phrases around the subject and determine whether the core subject is singular or plural.` },
+{ n:13, difficulty:"Easy", domain:"Standard English Conventions", type:"mc", prompt:`A seed must protect stored food during months of cold or dry weather. Each seed stores nutrients inside ______ outer covering until the young plant begins to grow.
+
+Which choice completes the text so that it conforms to the conventions of Standard English?`, choices:["their","our","your","its"], answer:`its`, solution:`The singular pronoun 'its' agrees with the singular antecedent 'Each seed.'`, strategy:`Match pronouns to the grammatical number of their antecedents.` },
+{ n:14, difficulty:"Easy", domain:"Standard English Conventions", type:"mc", prompt:`Nia visited the orchard early in the morning to inspect fruit that would soon be harvested and packed for the town market. Walking through the orchard, ______.
+
+Which choice completes the text so that it conforms to the conventions of Standard English?`, choices:["the ripe peaches smelled sweet to Nia","Nia noticed the sweet smell of ripe peaches","the sweet smell of peaches was noticed","there were ripe peaches that smelled sweet"], answer:`Nia noticed the sweet smell of ripe peaches`, solution:`Nia is the person walking through the orchard, so the noun right after the modifier should be Nia.`, strategy:`The noun immediately after an introductory modifier should be the one performing the modifier's action.` },
+{ n:15, difficulty:"Easy", domain:"Expression of Ideas", type:"mc", prompt:`Visitors sometimes choose the ridge trail because it appears short on the park map. The trail is only two kilometers long. ______ it includes several steep climbs and can take more than an hour to complete.
+
+Which choice completes the text with the most logical transition?`, choices:["However,","For example,","Similarly,","Therefore,"], answer:`However,`, solution:`The second sentence contrasts the trail's short distance with its difficulty and duration.`, strategy:`State the relationship first: contrast, cause, example, or continuation.` },
+{ n:16, difficulty:"Easy", domain:"Expression of Ideas", type:"mc", prompt:`The tissue samples had to remain frozen to be usable in later experiments. The lab's freezer stopped working overnight. ______ the researchers moved the samples to another building before they thawed.
+
+Which choice completes the text with the most logical transition?`, choices:["Meanwhile,","Nevertheless,","Consequently,","For instance,"], answer:`Consequently,`, solution:`Moving the samples was a direct result of the freezer failure.`, strategy:`Ask whether the second sentence is a result, contrast, example, or continuation.` },
+{ n:17, difficulty:"Easy", domain:"Expression of Ideas", type:"mc", prompt:`Notes: Artist Mina Park created River Lines in 2018. River Lines incorporates a map of the Han River. Artist Joel Reyes created Tidal Memory in 2021. Tidal Memory incorporates a map of San Juan Bay. The student wants to emphasize a similarity between the two artworks.
+
+Which choice most effectively uses relevant information from the notes to accomplish this goal?`, choices:["Park created River Lines three years before Reyes created Tidal Memory.","River Lines includes the Han River, which is in South Korea.","Both River Lines and Tidal Memory incorporate maps of bodies of water.","Tidal Memory, created in 2021, includes a map of San Juan Bay."], answer:`Both River Lines and Tidal Memory incorporate maps of bodies of water.`, solution:`This directly emphasizes the requested similarity between the two works.`, strategy:`Read the student's goal before the notes; include only information needed for that goal.` },
+{ n:18, difficulty:"Easy", domain:"Expression of Ideas", type:"mc", prompt:`Notes: The town opened its first public reading room in 1892. The reading room moved into a larger building in 1910. In 1956, the institution became the town library. The student wants to present the events in chronological order.
+
+Which choice most effectively uses relevant information from the notes to accomplish this goal?`, choices:["The town library, which was once a reading room, is an important institution.","A larger building housed the reading room in 1910, and the town opened many buildings.","In 1956, the town library had already existed since 1892 under the same name.","The institution became the town library in 1956 after beginning as a reading room in 1892 and moving to a larger building in 1910."], answer:`The institution became the town library in 1956 after beginning as a reading room in 1892 and moving to a larger building in 1910.`, solution:`This accurately presents all three events in order; the other choices omit the sequence or add unsupported claims.`, strategy:`Check both relevance and factual accuracy against every note used.` },
+{ n:19, difficulty:"Easy", domain:"Craft and Structure", type:"mc", prompt:`An early version of the ventilation fan was noisy and consumed more power than expected. After months of testing, the engineers' adjustments yielded a quieter motor that used less electricity.
+
+As used in the text, what does 'yielded' most nearly mean?`, choices:["Surrendered","Bent","Delayed","Produced"], answer:`Produced`, solution:`The adjustments produced a quieter motor — the other meanings of 'yielded' don't fit the cause-and-result context.`, strategy:`Use syntax and cause-effect clues to choose among multiple meanings of a word.` },
+{ n:20, difficulty:"Easy", domain:"Craft and Structure", type:"mc", prompt:`Most desert plants conserve water by limiting the surface area of their leaves. The desert rhubarb, however, grows broad leaves whose grooves channel rain toward its roots.
+
+Which choice best states the main purpose of the text?`, choices:["To present an exception to a common pattern among desert plants","To argue that all desert plants should have broad leaves","To explain why desert rhubarb grows only near rivers","To compare the flavor of desert rhubarb with other plants"], answer:`To present an exception to a common pattern among desert plants`, solution:`The first sentence establishes a common pattern, and the second introduces an exception.`, strategy:`Watch for signal words such as 'however' that reveal the passage's structure.` },
+{ n:21, difficulty:"Easy", domain:"Information and Ideas", type:"mc", prompt:`Freshwater mussels remove some suspended particles as they feed, which can make water clearer. Scientists caution, though, that mussels cannot remove every pollutant and should not be treated as a replacement for preventing contamination.
+
+Which choice best states the main idea of the text?`, choices:["Mussels create more pollution than they remove.","Preventing contamination is unnecessary where mussels live.","Mussels can improve water clarity but are not a complete solution to water pollution.","All suspended particles are harmful pollutants."], answer:`Mussels can improve water clarity but are not a complete solution to water pollution.`, solution:`This reflects both the benefit and the limitation described in the text.`, strategy:`When a passage contains a contrast, the main idea often includes both sides.` },
+{ n:22, difficulty:"Easy", domain:"Information and Ideas", type:"mc", prompt:`Two identical benches were placed in a park, one beneath a tree and one in full sun. At midday, more people sat on the shaded bench, even though measurements showed that the air temperature was the same at both benches.
+
+Which choice most logically completes the text?`, choices:["People always avoid benches in direct sunlight.","The thermometer beneath the tree must have been broken.","Air temperature is the only factor that affects comfort.","Shade may make a place feel more comfortable even without changing the measured air temperature."], answer:`Shade may make a place feel more comfortable even without changing the measured air temperature.`, solution:`This is supported by the preference for the shaded bench despite equal air temperatures, without overreaching.`, strategy:`A good inference explains the observed result without adding an extreme claim.` },
+{ n:23, difficulty:"Easy", domain:"Standard English Conventions", type:"mc", prompt:`Fallen branches blocked several roads, but officials waited until conditions were safe. The storm ended before sunrise ______ the cleanup crews began work at six o'clock.
+
+Which choice completes the text so that it conforms to the conventions of Standard English?`, choices:[",",":",";","; and"], answer:`;`, solution:`The sentence contains two independent clauses, so a semicolon can join them.`, strategy:`Two complete sentences can be joined by a semicolon or by a comma plus a coordinating conjunction.` },
+{ n:24, difficulty:"Easy", domain:"Standard English Conventions", type:"mc", prompt:`The orchestra scheduled a final sound check before the doors opened for the evening performance. By the time the audience entered the hall, the musicians ______ their sound check.
+
+Which choice completes the text so that it conforms to the conventions of Standard English?`, choices:["had completed","complete","completed","will complete"], answer:`had completed`, solution:`The sound check finished before another past event, so the past perfect clearly expresses the sequence.`, strategy:`Use past perfect for the earlier of two completed past actions when the sequence needs clarification.` },
+{ n:25, difficulty:"Easy", domain:"Expression of Ideas", type:"mc", prompt:`Notes: Bioluminescence is the production of light by a living organism. Some fungi produce a green glow through bioluminescence. The glow may attract insects that spread fungal spores. The student wants to introduce bioluminescence to an audience unfamiliar with the term.
+
+Which choice most effectively uses relevant information from the notes to accomplish this goal?`, choices:["Some fungi may attract insects that spread their spores.","Green is one color that people can see in forests at night.","Bioluminescence, the production of light by a living organism, occurs in some fungi, which can emit a green glow.","Scientists continue to study fungi for many reasons."], answer:`Bioluminescence, the production of light by a living organism, occurs in some fungi, which can emit a green glow.`, solution:`This defines the term and provides a relevant example, directly serving an unfamiliar audience.`, strategy:`For an introduction goal, define the key term immediately and add only the most useful context.` },
+{ n:26, difficulty:"Medium", domain:"Craft and Structure", type:"mc", prompt:`Although the historian initially rejected the possibility that the letters were written by two people, she later conceded that differences in handwriting made that explanation plausible.
+
+As used in the text, what does 'conceded' most nearly mean?`, choices:["Proved conclusively","Forgot completely","Acknowledged reluctantly","Announced proudly"], answer:`Acknowledged reluctantly`, solution:`The historian first rejected the idea but later accepted that it was plausible, so she acknowledged it, likely with reluctance.`, strategy:`Track changes in attitude around contrast words such as 'although' and 'later.'` },
+{ n:27, difficulty:"Medium", domain:"Craft and Structure", type:"mc", prompt:`Migratory birds may visit a wetland briefly, but a permanent population has greater needs. A wetland can sustain a large bird population only if it continues to provide enough food and nesting space throughout the year.
+
+As used in the text, what does 'sustain' most nearly mean?`, choices:["Observe","Measure","Maintain","Attract temporarily"], answer:`Maintain`, solution:`The wetland must maintain or support the population over time, not merely observe, measure, or briefly attract it.`, strategy:`Use time clues to distinguish lasting support from temporary effects.` },
+{ n:28, difficulty:"Medium", domain:"Craft and Structure", type:"mc", prompt:`Because larger seeds contain more stored energy, botanists once assumed that seedlings from larger seeds would always outgrow seedlings from smaller seeds. Yet in a study of coastal grasses, seedlings from small seeds grew faster when the soil was rich in nitrogen.
+
+Which choice best describes the function of the second sentence in the text as a whole?`, choices:["It gives a counterexample that limits the general assumption in the first sentence.","It explains why all coastal grasses produce large seeds.","It repeats the first sentence in more technical language.","It identifies an error in measuring seed size."], answer:`It gives a counterexample that limits the general assumption in the first sentence.`, solution:`The second sentence presents a condition under which small-seed seedlings grew faster, complicating the absolute assumption.`, strategy:`Absolute words such as 'always' are often challenged by a counterexample.` },
+{ n:29, difficulty:"Medium", domain:"Craft and Structure", type:"mc", prompt:`Octopuses can alter both the color and texture of their skin. Pigment cells create rapid color changes, while small muscular structures raise or flatten portions of the skin. Together, these systems allow an octopus to resemble surfaces such as rock or coral.
+
+Which choice best states the main purpose of the text?`, choices:["To argue that coral is safer than rock for octopuses","To compare the eyesight of octopuses and fish","To explain mechanisms that enable octopus camouflage","To describe how octopuses hunt in open water"], answer:`To explain mechanisms that enable octopus camouflage`, solution:`The passage explains two physical systems and their combined camouflage effect.`, strategy:`A purpose answer should describe what the author is doing, not merely name the subject.` },
+{ n:30, difficulty:"Medium", domain:"Craft and Structure", type:"mc", prompt:`Text 1: After observing that students who take music lessons often earn higher grades, a researcher argues that music instruction improves academic performance.
+
+Text 2: Students who choose music lessons may already differ from other students in motivation, family support, or access to resources. Without randomly assigning students to lessons, a study cannot show that the lessons caused higher grades.
+
+How would the author of Text 2 most likely respond to the argument in Text 1?`, choices:["Music lessons cannot affect any academic skill.","Grades are an unreliable measure in every study.","The observed association does not by itself establish causation.","Random assignment always lowers student motivation."], answer:`The observed association does not by itself establish causation.`, solution:`Text 2 points to possible preexisting differences and the lack of random assignment — both reasons correlation does not prove causation.`, strategy:`Identify the exact methodological concern raised in the second text.` },
+{ n:31, difficulty:"Medium", domain:"Craft and Structure", type:"mc", prompt:`Text 1: Museums should display high-quality replicas of fragile objects when exposure to light or humidity could damage the originals. Visitors can still study the object's form while the original remains protected.
+
+Text 2: A replica can communicate an object's shape, but it may not preserve subtle evidence of age, materials, and craftsmanship. Museums should therefore make clear when an item is a reproduction.
+
+Based on the texts, both authors would most likely agree that`, choices:["replicas should always replace original objects","visitors cannot learn anything from replicas","replicas can convey some information about original objects","museums should hide the use of reproductions"], answer:`replicas can convey some information about original objects`, solution:`Text 1 says replicas allow study of form, and Text 2 says they communicate shape — both agree replicas convey some information.`, strategy:`For paired texts, separate agreement from differences in qualification.` },
+{ n:32, difficulty:"Medium", domain:"Craft and Structure", type:"mc", prompt:`A neighborhood committee has proposed changing the timing of several traffic lights. The committee's recommendation is tentative; members plan to review new traffic data before making a final decision.
+
+As used in the text, what does 'tentative' most nearly mean?`, choices:["Unanimous","Secret","Detailed","Provisional"], answer:`Provisional`, solution:`Because the recommendation may change after new data are reviewed, it is provisional rather than final.`, strategy:`Use the semicolon: the second clause defines the implication of the tested word.` },
+{ n:33, difficulty:"Medium", domain:"Information and Ideas", type:"mc", prompt:`Birds in noisy cities sometimes sing at higher pitches than birds of the same species in quiet areas, possibly because low-frequency traffic noise masks lower notes. However, not every urban population shows this shift, and some species change the timing or volume of their songs instead.
+
+Which choice best states the main idea of the text?`, choices:["All city birds sing at higher pitches than rural birds.","Traffic noise improves birds' ability to communicate.","Urban noise can influence bird song, but species and populations respond in different ways.","Song timing is unaffected by urban environments."], answer:`Urban noise can influence bird song, but species and populations respond in different ways.`, solution:`This includes the qualifications 'sometimes' and 'not every,' capturing the general effect and its variation.`, strategy:`Include qualifications such as 'sometimes' and 'not every' in the main idea.` },
+{ n:34, difficulty:"Medium", domain:"Information and Ideas", type:"mc", prompt:`Scientists grew algae under identical light and nutrient conditions but varied the amount of water movement. Algae in gently circulating water formed thinner layers than algae in still water, even though both groups grew at the same overall rate.
+
+Which choice most logically follows from the text?`, choices:["Still water prevents algae from growing.","Thin algal layers always contain fewer cells.","Water movement may affect how algae are distributed without affecting total growth.","Light has no effect on algae."], answer:`Water movement may affect how algae are distributed without affecting total growth.`, solution:`Total growth was equal while layer thickness differed, suggesting distribution — not total growth — was affected.`, strategy:`Distinguish a variable that was controlled from one whose effect was actually tested.` },
+{ n:35, difficulty:"Medium", domain:"Information and Ideas", type:"mc", prompt:`Prairie plants often begin growing again soon after rain returns, but the process may depend on organisms below ground. Ecologist Priya Raman hypothesizes that soil microbes help the plants recover after drought.
+
+Which finding, if true, would most directly support Raman's hypothesis?`, choices:["Prairie plants grow at different rates during wet years.","Some soil microbes can survive freezing temperatures.","After drought, plants in sterilized soil recover more slowly than plants in otherwise identical soil containing its original microbes.","The deepest prairie roots extend more than a meter underground."], answer:`After drought, plants in sterilized soil recover more slowly than plants in otherwise identical soil containing its original microbes.`, solution:`This isolates the presence of microbes and links it directly to recovery speed.`, strategy:`The strongest evidence changes the hypothesized cause while holding other conditions constant.` },
+{ n:36, difficulty:"Medium", domain:"Information and Ideas", type:"mc", prompt:`Material/Uncoated/Coated corrosion rate — Metal X: 12%/3%. Metal Y: 8%/5%. A researcher exposed coated and uncoated samples of two metals to saltwater for one month and measured corrosion. The researcher claims that the protective coating was more effective for metal X than for metal Y.
+
+Which choice most effectively uses data from the table to support the claim?`, choices:["Uncoated metal Y had a corrosion rate of 8%.","The coating reduced corrosion of metal X by 9 percentage points but reduced corrosion of metal Y by only 3 percentage points.","Coated metal X had a corrosion rate of 3%.","Both coated metals had lower corrosion rates than their uncoated versions."], answer:`The coating reduced corrosion of metal X by 9 percentage points but reduced corrosion of metal Y by only 3 percentage points.`, solution:`This compares the size of the effect for both metals (9-point drop vs. 3-point drop), supporting 'more effective.'`, strategy:`For 'more effective' claims, compare changes, not just final values.` },
+{ n:37, difficulty:"Medium", domain:"Information and Ideas", type:"mc", prompt:`To reconstruct a nineteenth-century flood, historian Elena Brooks examined newspaper reports, city engineering records, and residents' diaries. Newspaper accounts described the event's public impact, engineering records documented water levels, and diaries revealed how individual families responded.
+
+Why did Brooks use several kinds of sources?`, choices:["No single source contained any information about the flood.","She wanted to prove that diaries are always more accurate than official records.","Each source type supplied a different perspective or kind of information.","The sources were all written by the same person."], answer:`Each source type supplied a different perspective or kind of information.`, solution:`The passage explicitly explains what each source contributed, supporting an integrative use of all three.`, strategy:`When a passage lists sources and functions, look for an answer that integrates the roles.` },
+{ n:38, difficulty:"Medium", domain:"Information and Ideas", type:"mc", prompt:`In a fictional story, Mateo carefully repairs an old radio but does not turn it on. Instead, he places it on the kitchen shelf beside a photograph of his grandfather, who had taught him how to fix electronics.
+
+Which choice most logically describes Mateo's motivation?`, choices:["He is certain the radio cannot work.","He plans to sell the radio immediately.","He values the radio mainly as a connection to his grandfather.","He dislikes learning how machines operate."], answer:`He values the radio mainly as a connection to his grandfather.`, solution:`Placing the radio beside the grandfather's photo, after the grandfather taught him to fix electronics, supports this emotional connection.`, strategy:`In literary inference, connect concrete actions and objects to implied emotions or motives.` },
+{ n:39, difficulty:"Medium", domain:"Standard English Conventions", type:"mc", prompt:`Archaeologists uncovered a canal near the remains of a farming settlement and invited a specialist to examine it. Dr. Salim, an expert on ancient irrigation systems, ______ the newly discovered canal last summer.
+
+Which choice completes the text so that it conforms to the conventions of Standard English?`, choices:["surveyed,","surveyed","surveyed;","surveyed:"], answer:`surveyed`, solution:`The appositive is already enclosed by commas; no punctuation should separate the subject 'Dr. Salim' from its verb 'surveyed.'`, strategy:`Set aside nonessential appositives and read the core sentence.` },
+{ n:40, difficulty:"Medium", domain:"Standard English Conventions", type:"mc", prompt:`The design team hoped to create a low-cost water sensor for remote farms. The first prototype was inexpensive to build ______ however, it failed after only two hours of use.
+
+Which choice completes the text so that it conforms to the conventions of Standard English?`, choices:[","," :","and",";"], answer:`;`, solution:`Two independent clauses joined by the conjunctive adverb 'however' require a semicolon before it and a comma after it.`, strategy:`With 'however' between complete clauses, use semicolon + however + comma.` },
+{ n:41, difficulty:"Medium", domain:"Standard English Conventions", type:"mc", prompt:`The archive recently received images documenting the city's waterfront before major construction began. A collection of photographs from the 1920s ______ in the archive's climate-controlled room.
+
+Which choice completes the text so that it conforms to the conventions of Standard English?`, choices:["is stored","are stored","store","have stored"], answer:`is stored`, solution:`The subject is the singular 'A collection,' not the plural noun inside the prepositional phrase, so the singular verb is required.`, strategy:`Cross out prepositional phrases when identifying the subject.` },
+{ n:42, difficulty:"Medium", domain:"Standard English Conventions", type:"mc", prompt:`Two students divided the remaining work on a history presentation after reviewing their teacher's comments. When Ava spoke with Lila about the presentation, Ava said that ______ would revise the conclusion.
+
+Which choice completes the text most clearly?`, choices:["she","Ava","they","her"], answer:`Ava`, solution:`Repeating 'Ava' makes clear who will revise the conclusion; 'she' is ambiguous between Ava and Lila.`, strategy:`Clarity can be more important than avoiding repetition when multiple antecedents are possible.` },
+{ n:43, difficulty:"Medium", domain:"Standard English Conventions", type:"mc", prompt:`During a summer ecology internship, Devin practiced several skills needed to communicate research accurately. The internship taught Devin how to organize field notes, analyze samples, and ______.
+
+Which choice completes the text so that it conforms to the conventions of Standard English?`, choices:["write clear reports","writing clear reports","clear reports were written","the writing of clear reports"], answer:`write clear reports`, solution:`The series uses parallel infinitive verbs: 'to organize,' '[to] analyze,' and '[to] write.'`, strategy:`Items in a series should have the same grammatical form.` },
+{ n:44, difficulty:"Medium", domain:"Standard English Conventions", type:"mc", prompt:`After a night of freezing rain, the hikers followed the marked trail until they reached a narrow wooden bridge over the stream. Covered with a thin layer of ice, ______.
+
+Which choice completes the text so that it conforms to the conventions of Standard English?`, choices:["the hikers crossed the bridge carefully","the hikers saw the bridge ahead","the bridge looked slippery to the hikers","care was used by the hikers on the bridge"], answer:`the bridge looked slippery to the hikers`, solution:`The bridge, the noun immediately following the modifier, is what is covered with ice.`, strategy:`Ask which noun is actually described by the opening phrase.` },
+{ n:45, difficulty:"Medium", domain:"Standard English Conventions", type:"mc", prompt:`Two scientists joined the research center to lead separate projects on plant genetics. The two ______ offices are located on opposite sides of the laboratory.
+
+Which choice completes the text so that it conforms to the conventions of Standard English?`, choices:["scientist","scientists'","scientists","scientist's"], answer:`scientists'`, solution:`The offices belong to two scientists, so the plural possessive form 'scientists'' is needed.`, strategy:`Make the noun plural first, then add the possessive apostrophe.` },
+{ n:46, difficulty:"Medium", domain:"Expression of Ideas", type:"mc", prompt:`City planners designed a bus route to serve areas that previously lacked direct public transportation. The new route connects the northern neighborhood to downtown. ______ it stops near the community college, giving students another transportation option.
+
+Which choice completes the text with the most logical transition?`, choices:["Instead,","Nevertheless,","As a result,","In addition,"], answer:`In addition,`, solution:`The second sentence adds another benefit of the route — an additive relationship.`, strategy:`When two details support the same point, choose an additive transition.` },
+{ n:47, difficulty:"Medium", domain:"Expression of Ideas", type:"mc", prompt:`Safety during rainy weather was a major concern in the renovation of the public plaza. The design team considered covering the plaza with smooth stone. ______ the team selected textured brick, which is less slippery when wet.
+
+Which choice completes the text with the most logical transition?`, choices:["Likewise,","Instead,","For example,","Consequently,"], answer:`Instead,`, solution:`The team chose textured brick in place of smooth stone — a substitution relationship.`, strategy:`Look for verbs such as 'considered' and 'selected' that signal an unchosen option and its replacement.` },
+{ n:48, difficulty:"Medium", domain:"Expression of Ideas", type:"mc", prompt:`Notes: Lake A freezes for about 110 days each year. Lake B freezes for about 45 days each year. Lake A is located at a higher elevation than Lake B. The student wants to emphasize a difference in the lakes' ice cover.
+
+Which choice most effectively uses relevant information from the notes to accomplish this goal?`, choices:["Lake A, which is at a higher elevation, remains frozen for about 65 more days each year than Lake B.","Lake A and Lake B are both lakes that freeze during the year.","Lake B is located at a lower elevation than Lake A.","Lake A freezes for about 110 days each year."], answer:`Lake A, which is at a higher elevation, remains frozen for about 65 more days each year than Lake B.`, solution:`This directly compares the durations and accurately computes the 65-day difference.`, strategy:`For a comparison goal, mention both subjects in the same sentence and use comparable measurements.` },
+{ n:49, difficulty:"Medium", domain:"Expression of Ideas", type:"mc", prompt:`Notes: A study tested whether background music affected proofreading. One group proofread in silence. A second group heard instrumental music. The groups found nearly the same number of errors. The student wants to summarize the study's main finding.
+
+Which choice most effectively uses relevant information from the notes to accomplish this goal?`, choices:["In the study, proofreading with instrumental music did not meaningfully change the number of errors found compared with proofreading in silence.","The study included two groups and several written passages.","Instrumental music is a popular choice for studying.","The silent group completed a proofreading task."], answer:`In the study, proofreading with instrumental music did not meaningfully change the number of errors found compared with proofreading in silence.`, solution:`This states the central comparison and result, while the others describe design details or unsupported claims.`, strategy:`A finding summary should identify the tested contrast and the outcome.` },
+{ n:50, difficulty:"Medium", domain:"Expression of Ideas", type:"mc", prompt:`Notes: Architect Yasmeen Lari promotes low-cost building methods. Some of her structures use bamboo. Bamboo grows rapidly and can be sourced locally in parts of South Asia. The student wants to provide an example of how Lari's material choices support her goal of low-cost construction.
+
+Which choice most effectively uses relevant information from the notes to accomplish this goal?`, choices:["Lari is an architect whose work is known in South Asia.","Bamboo is a plant that grows in many climates.","Low-cost construction is one of several topics architects discuss.","Lari sometimes uses rapidly growing, locally available bamboo, a choice that can help keep construction costs low."], answer:`Lari sometimes uses rapidly growing, locally available bamboo, a choice that can help keep construction costs low.`, solution:`This links the specific material properties to the stated goal explicitly.`, strategy:`When the goal asks 'how,' make the causal connection explicit.` },
+{ n:51, difficulty:"Hard", domain:"Craft and Structure", type:"mc", prompt:`The tree belt did not eliminate traffic noise, but measurements showed that it attenuated the highest frequencies enough to make conversations on nearby patios easier.
+
+As used in the text, what does 'attenuated' most nearly mean?`, choices:["Reduced","Redirected completely","Recorded","Predicted"], answer:`Reduced`, solution:`The noise was not eliminated, but some frequencies became less intense — a weaker version of an effect.`, strategy:`Contrast clues such as 'did not eliminate, but' often indicate a weaker version of an effect.` },
+{ n:52, difficulty:"Hard", domain:"Craft and Structure", type:"mc", prompt:`The sensor can discriminate between the vibration pattern of a passing truck and that of an earthquake, allowing the warning system to ignore ordinary traffic.
+
+As used in the text, what does 'discriminate' most nearly mean?`, choices:["Treat unfairly","Distinguish","Amplify","Combine"], answer:`Distinguish`, solution:`The sensor must distinguish one vibration pattern from another, a precise technical meaning.`, strategy:`Technical contexts often use a less common but precise meaning of a familiar word.` },
+{ n:53, difficulty:"Hard", domain:"Craft and Structure", type:"mc", prompt:`For decades, researchers estimated historical whale populations mainly from commercial hunting records. Those records, however, begin only after hunting had already reduced some populations and may omit unreported catches. Genetic variation in modern whales offers another source of evidence, though estimates based on DNA also depend on assumptions about mutation rates.
+
+Which choice best describes the overall structure of the text?`, choices:["It presents a traditional method, identifies its limitations, and introduces an alternative that also has limitations.","It compares two methods and concludes that both produce identical estimates.","It describes a historical problem and argues that no evidence can address it.","It lists several whale species in order of population size."], answer:`It presents a traditional method, identifies its limitations, and introduces an alternative that also has limitations.`, solution:`This accurately follows the passage's structure: method → limitation → alternative → limitation.`, strategy:`Map the passage by moves: method -> limitation -> alternative -> limitation.` },
+{ n:54, difficulty:"Hard", domain:"Craft and Structure", type:"mc", prompt:`A critic describes a novelist's city scenes as 'maps drawn in weather': streets remain recognizable, but rain, heat, and fog continually alter how characters experience them. The phrase emphasizes that the setting is both stable in layout and changeable in atmosphere.
+
+Which choice best describes the function of the quoted phrase in the text as a whole?`, choices:["It supplies statistical evidence for the critic's claim.","It identifies the literal maps used by the characters.","It contradicts the description that follows it.","It offers a metaphor that the rest of the sentence interprets."], answer:`It offers a metaphor that the rest of the sentence interprets.`, solution:`The phrase is figurative, and the sentence explains the metaphor as combining stable layout with changing atmosphere.`, strategy:`After a quotation, check whether the author explains, challenges, or exemplifies it.` },
+{ n:55, difficulty:"Hard", domain:"Craft and Structure", type:"mc", prompt:`Text 1: A psychological effect should not be accepted until independent laboratories reproduce it. When several replications fail, the original explanation should be abandoned.
+
+Text 2: Failed replications can reveal that an effect depends on conditions not specified in the original study, such as language or setting. Rather than immediately discarding the effect, researchers should test which conditions matter.
+
+How would the author of Text 2 most likely respond to the position in Text 1?`, choices:["Independent replication is unnecessary in psychological research.","An effect is valid only when it occurs in every culture.","Language and setting never influence experimental outcomes.","Failed replications may call for refining an explanation rather than rejecting it immediately."], answer:`Failed replications may call for refining an explanation rather than rejecting it immediately.`, solution:`Text 2 values replication but argues that failures can identify boundary conditions rather than disprove the effect outright.`, strategy:`When texts disagree, identify whether the second rejects the first or narrows its conclusion.` },
+{ n:56, difficulty:"Hard", domain:"Craft and Structure", type:"mc", prompt:`Text 1: In the poem, the abandoned house primarily represents loss: its empty rooms mirror the speaker's grief for people who have left.
+
+Text 2: Although the house is empty, the speaker repeatedly imagines future visitors opening its windows. The image therefore also suggests readiness for renewal, not only loss.
+
+Based on the texts, the author of Text 2 would most likely agree with which statement about Text 1's interpretation?`, choices:["It is entirely wrong because the house does not represent loss.","It focuses too much on the poem's rhyme scheme.","It correctly proves that the speaker will sell the house.","It identifies one important meaning but overlooks evidence of hope."], answer:`It identifies one important meaning but overlooks evidence of hope.`, solution:`Text 2 accepts the loss interpretation ('not only loss') but adds renewal — expansion rather than total disagreement.`, strategy:`Words such as 'also' and 'not only' signal expansion rather than total disagreement.` },
+{ n:57, difficulty:"Hard", domain:"Craft and Structure", type:"mc", prompt:`The proposal sounded persuasive at first, but its central comparison was specious: the two cities differed in population, climate, and public-transit access, making the apparent parallel misleading.
+
+As used in the text, what does 'specious' most nearly mean?`, choices:["Superficially plausible but flawed","Highly technical","Morally generous","Widely accepted"], answer:`Superficially plausible but flawed`, solution:`The comparison initially seems persuasive but is misleading because of major differences.`, strategy:`A colon often provides a direct definition or explanation of the tested word.` },
+{ n:58, difficulty:"Hard", domain:"Information and Ideas", type:"mc", prompt:`Marine protected areas often increase the size and abundance of fish within their boundaries. Whether nearby fisheries benefit depends on additional factors, however, including how far adult fish move, whether larvae drift beyond the protected area, and how intensely surrounding waters are fished. Thus, success inside a reserve does not automatically guarantee larger catches outside it.
+
+Which choice best states the main idea of the text?`, choices:["Marine protected areas always reduce catches in nearby waters.","Adult fish movement is the only factor determining fishery yields.","A reserve is successful only if every larva remains inside it.","Protected areas can strengthen fish populations internally, but benefits to nearby fisheries depend on ecological and fishing conditions."], answer:`Protected areas can strengthen fish populations internally, but benefits to nearby fisheries depend on ecological and fishing conditions.`, solution:`This includes both the well-supported internal effect and the qualified external effect.`, strategy:`Hard main-idea questions often hinge on preserving a qualification.` },
+{ n:59, difficulty:"Hard", domain:"Information and Ideas", type:"mc", prompt:`In an experiment, one group of bean plants was exposed to air from neighboring plants damaged by insects; another group received ordinary air. Later, when insects were introduced, the first group produced defensive chemicals sooner. The plants had no physical contact with one another.
+
+Which choice most logically follows from the text?`, choices:["Bean plants can identify the exact species of every nearby insect.","Airborne signals from damaged plants may prepare nearby plants for insect attack.","Physical contact is required for plants to communicate.","The defensive chemicals prevented all insect damage."], answer:`Airborne signals from damaged plants may prepare nearby plants for insect attack.`, solution:`This explains the earlier chemical response and is consistent with the lack of physical contact, without overreaching.`, strategy:`Choose the inference that accounts for the difference between experimental groups without exceeding the evidence.` },
+{ n:60, difficulty:"Hard", domain:"Information and Ideas", type:"mc", prompt:`A historian argues that a city's nineteenth-century public clocks did more than display time: they helped coordinate daily activity among people who did not own watches.
+
+Which finding, if true, would most directly support the historian's argument?`, choices:["Several public clocks were decorated with carved stone.","Watchmakers advertised expensive pocket watches in city newspapers.","The city repaired one clock after a storm damaged its face.","Factory notices and ferry schedules from the period frequently instructed workers and passengers to act when a particular public clock struck."], answer:`Factory notices and ferry schedules from the period frequently instructed workers and passengers to act when a particular public clock struck.`, solution:`This directly shows people using public clock signals to coordinate work and travel.`, strategy:`Evidence should connect directly to every important part of the claim.` },
+{ n:61, difficulty:"Hard", domain:"Information and Ideas", type:"mc", prompt:`Soil condition/Full sun/Shade — Dry: 34°C/28°C. Moist: 28°C/26°C. A scientist grew plants under two soil-moisture conditions and measured leaf temperature in full sun and under shade cloth. The scientist claims that increasing shade reduced leaf temperature more strongly when the soil was dry than when it was moist.
+
+Which choice most effectively uses data from the table to support the claim?`, choices:["In full sun, dry-soil leaves reached 34 degrees C.","With shade, moist-soil leaves were 26 degrees C.","Shade lowered leaf temperature under both soil conditions.","Under dry-soil conditions, shade lowered leaf temperature by 6 degrees C, compared with 2 degrees C under moist-soil conditions."], answer:`Under dry-soil conditions, shade lowered leaf temperature by 6 degrees C, compared with 2 degrees C under moist-soil conditions.`, solution:`This compares the magnitude of the shade effect across both soil conditions, supporting the interaction claim.`, strategy:`For interaction claims, calculate the effect of one variable separately at each level of the other.` },
+{ n:62, difficulty:"Hard", domain:"Information and Ideas", type:"mc", prompt:`Young ravens often hesitate before approaching unfamiliar containers that might hold food. Researchers propose that the birds learn which unfamiliar objects are safe by watching older ravens.
+
+Which finding, if true, would most directly support the proposal?`, choices:["Young ravens approach a novel container sooner after seeing an older raven feed from it than after seeing the container alone.","Older ravens are larger than young ravens.","Ravens sometimes hide food from other birds.","Novel containers vary in color and shape."], answer:`Young ravens approach a novel container sooner after seeing an older raven feed from it than after seeing the container alone.`, solution:`This directly compares young ravens' behavior with and without an older raven's demonstration.`, strategy:`The strongest support includes a comparison that isolates the proposed learning source.` },
+{ n:63, difficulty:"Hard", domain:"Information and Ideas", type:"mc", prompt:`Economist Ada Mensah examined markets in which vendors post fixed prices and markets in which buyers bargain. She found that bargaining sometimes lowers prices but also takes time and can discourage buyers who dislike negotiation. Mensah therefore argues that evaluating a market system requires considering transaction effort as well as the final price.
+
+Which choice best describes Mensah's conclusion?`, choices:["A market's efficiency should be judged by both prices and the effort required to complete exchanges.","Bargaining always benefits buyers.","Fixed prices are higher in every market.","Buyers enjoy negotiation when it takes a long time."], answer:`A market's efficiency should be judged by both prices and the effort required to complete exchanges.`, solution:`This accurately combines the two dimensions Mensah emphasizes, signaled by 'therefore.'`, strategy:`Look for the conclusion signaled by 'therefore,' then restate it without exaggeration.` },
+{ n:64, difficulty:"Hard", domain:"Information and Ideas", type:"mc", prompt:`A historian comparing two ship logs notices that both record the same storm, but one log gives exact wind directions while the other describes damage to cargo. The historian uses both accounts rather than choosing one as the 'better' source.
+
+Which choice most logically explains the historian's approach?`, choices:["The logs provide complementary information shaped by different concerns.","Exact wind directions make the first log completely objective.","Cargo damage is irrelevant to understanding storms.","Two sources that differ cannot describe the same event."], answer:`The logs provide complementary information shaped by different concerns.`, solution:`This fits the decision to use both: each records a different aspect of the same event.`, strategy:`Different accounts can be complementary rather than mutually exclusive.` },
+{ n:65, difficulty:"Hard", domain:"Standard English Conventions", type:"mc", prompt:`A stone sculpture in the gallery changes appearance as visitors move toward it. The sculpture's surface appears smooth from a distance ______ up close, hundreds of shallow grooves become visible.
+
+Which choice completes the text so that it conforms to the conventions of Standard English?`, choices:[", however,","; however,",": however,","however"], answer:`; however,`, solution:`Both sides are independent clauses, and 'however' is a conjunctive adverb, requiring a semicolon before it and a comma after it.`, strategy:`Test whether the text on both sides of the transition could stand as complete sentences.` },
+{ n:66, difficulty:"Hard", domain:"Standard English Conventions", type:"mc", prompt:`Archaeologists had expected the deepest layer of a site to contain its earliest artifacts. Instead, the excavation revealed an unexpected pattern ______ the oldest tools were found in the upper layer rather than the lower one.
+
+Which choice completes the text so that it conforms to the conventions of Standard English?`, choices:[":",",","; because","because,"], answer:`:`, solution:`The first clause is complete, and the second clause explains the 'unexpected pattern,' so a colon is appropriate.`, strategy:`When the second clause names or explains a noun in the first, consider a colon.` },
+{ n:67, difficulty:"Hard", domain:"Standard English Conventions", type:"mc", prompt:`The archive is currently closed on Sundays, which limits access for scholars who can travel only on weekends. If the archive ______ open on Sundays, researchers from out of town could make better use of short visits.
+
+Which choice completes the text so that it conforms to the conventions of Standard English?`, choices:["was","is","has been","were"], answer:`were`, solution:`The sentence describes a hypothetical condition contrary to the current situation, so the subjunctive 'were' is standard after 'if.'`, strategy:`Use 'were' for unreal or hypothetical conditions: 'If I were,' 'If the archive were.'` },
+{ n:68, difficulty:"Hard", domain:"Standard English Conventions", type:"mc", prompt:`Biologists tested moths under several combinations of natural and artificial light. A series of experiments on moth navigation ______ that moonlight is not the insects' only directional cue.
+
+Which choice completes the text so that it conforms to the conventions of Standard English?`, choices:["suggests","suggest","have suggested","were suggesting"], answer:`suggests`, solution:`The subject is singular 'A series,' so it takes the singular verb 'suggests'; the plural noun 'experiments' is inside a prepositional phrase.`, strategy:`The head noun before 'of' usually determines agreement.` },
+{ n:69, difficulty:"Hard", domain:"Standard English Conventions", type:"mc", prompt:`A laboratory revised its imaging workflow after technicians spent too much time repeating tests. The new procedure allows technicians to identify damaged cells more quickly, to record their locations more accurately, and ______.
+
+Which choice completes the text so that it conforms to the conventions of Standard English?`, choices:["reducing unnecessary tests","unnecessary tests are reduced","to reduce unnecessary tests","the reduction of unnecessary tests"], answer:`to reduce unnecessary tests`, solution:`This maintains the parallel infinitive structure: 'to identify,' 'to record,' and 'to reduce.'`, strategy:`In a three-part series, compare the opening words of all three items.` },
+{ n:70, difficulty:"Hard", domain:"Standard English Conventions", type:"mc", prompt:`The research team launched a balloon to survey changes along a remote stretch of coast after a powerful winter storm. Using a camera mounted beneath the balloon, ______.
+
+Which choice completes the text so that it conforms to the conventions of Standard English?`, choices:["the research team photographed the coastline","the coastline was photographed by the research team","photographs of the coastline were taken","the coastline appeared in detailed photographs"], answer:`the research team photographed the coastline`, solution:`The research team is the agent using the camera, so the introductory modifier must logically describe them.`, strategy:`An -ing introductory phrase must logically modify the subject that follows.` },
+{ n:71, difficulty:"Hard", domain:"Expression of Ideas", type:"mc", prompt:`Scholars disagree about a recently discovered manuscript attributed to a well-known novelist. The manuscript contains several dates that conflict with known events in the author's life. ______ handwriting analysis strongly suggests that the manuscript is genuine.
+
+Which choice completes the text with the most logical transition?`, choices:["Nevertheless,","Similarly,","For example,","Consequently,"], answer:`Nevertheless,`, solution:`The handwriting evidence supports authenticity despite the conflicting dates — a concession/contrast relationship.`, strategy:`When the second sentence remains true despite a problem in the first, use a concessive transition.` },
+{ n:72, difficulty:"Hard", domain:"Expression of Ideas", type:"mc", prompt:`The first survey used a question that many participants interpreted in two different ways. ______ the researchers rewrote the question before conducting the second survey.
+
+Which choice completes the text with the most logical transition?`, choices:["In contrast,","Meanwhile,","Specifically,","Consequently,"], answer:`Consequently,`, solution:`Rewriting the question was a direct result of the ambiguity in the first survey.`, strategy:`Translate the relationship into 'because X, Y' to test a result transition.` },
+{ n:73, difficulty:"Hard", domain:"Expression of Ideas", type:"mc", prompt:`Notes: A 1998 study reported that a herbal extract improved memory in mice. The study used 12 mice. Three later studies used more than 100 mice in total. The later studies found no memory improvement. The student wants to evaluate the strength of the original claim.
+
+Which choice most effectively uses relevant information from the notes to accomplish this goal?`, choices:["The 1998 claim is weakened by its small sample and by larger later studies that failed to find the reported effect.","A 1998 study tested a herbal extract on 12 mice.","More than 100 mice participated in three studies conducted after 1998.","Scientists have long been interested in memory."], answer:`The 1998 claim is weakened by its small sample and by larger later studies that failed to find the reported effect.`, solution:`This evaluates the claim by combining the original study's limitation with contrary replication evidence.`, strategy:`For evaluation goals, connect evidence to a judgment rather than just listing facts.` },
+{ n:74, difficulty:"Hard", domain:"Expression of Ideas", type:"mc", prompt:`Notes: Researchers surveyed commuters about a new train schedule. The survey was available only through a smartphone app. Forty percent of regular riders do not use the app. Most survey respondents approved of the schedule. The student wants to emphasize a limitation of the survey.
+
+Which choice most effectively uses relevant information from the notes to accomplish this goal?`, choices:["Because the survey was available only through an app that many regular riders do not use, its respondents may not represent all riders.","Most respondents approved of the new train schedule.","The train schedule was the subject of a commuter survey.","Forty percent of regular riders do not use a particular smartphone app."], answer:`Because the survey was available only through an app that many regular riders do not use, its respondents may not represent all riders.`, solution:`This explains how the access method creates potential sampling bias.`, strategy:`A limitation answer should name the design feature and explain why it matters.` },
+{ n:75, difficulty:"Hard", domain:"Expression of Ideas", type:"mc", prompt:`Notes: Poet Amina Bell often writes in strict sonnet form. Her poem 'Harbor Light' has fourteen lines and a regular rhyme scheme. Her poem 'Open Field' uses irregular line lengths and no rhyme scheme. The student wants to contrast Bell's use of form in the two poems.
+
+Which choice most effectively uses relevant information from the notes to accomplish this goal?`, choices:["Bell often writes sonnets, including a poem called 'Harbor Light.'","Whereas 'Harbor Light' follows a regular fourteen-line, rhymed form, 'Open Field' uses irregular line lengths and no rhyme scheme.","Both poems were written by Amina Bell.","'Open Field' has irregular line lengths and no rhyme scheme."], answer:`Whereas 'Harbor Light' follows a regular fourteen-line, rhymed form, 'Open Field' uses irregular line lengths and no rhyme scheme.`, solution:`This directly contrasts both poems using parallel details.`, strategy:`Use contrast language and include matched details for both subjects.` },
+{ n:76, difficulty:"Very Hard", domain:"Craft and Structure", type:"mc", prompt:`The invasive grass proved refractory to the usual control measures: mowing stimulated new shoots, and the standard herbicide damaged neighboring plants without substantially reducing the grass.
+
+As used in the text, what does 'refractory' most nearly mean?`, choices:["Highly combustible","Recently introduced","Easy to identify","Resistant to treatment"], answer:`Resistant to treatment`, solution:`The colon explains that common control methods failed, so the grass was resistant to treatment.`, strategy:`Use the examples after the colon as a contextual definition.` },
+{ n:77, difficulty:"Very Hard", domain:"Craft and Structure", type:"mc", prompt:`Rather than treating memory as a fixed recording, the psychologist describes it as plastic: in this view, each act of recall can subtly reorganize the remembered event.
+
+As used in the text, what does 'plastic' most nearly mean?`, choices:["Artificial","Flexible and capable of change","Visually vivid","Durable under pressure"], answer:`Flexible and capable of change`, solution:`The explanation after the colon says memory can be reorganized, so 'plastic' means malleable or capable of change.`, strategy:`On the SAT, a familiar word may have an academic meaning clarified by the sentence.` },
+{ n:78, difficulty:"Very Hard", domain:"Craft and Structure", type:"mc", prompt:`Early studies of bilingualism often compared bilingual children with monolingual children from different schools and socioeconomic backgrounds. Later researchers matched participants more carefully and found that some previously reported disadvantages became smaller or disappeared. These later findings do not prove that bilingualism has no cognitive effects; they show that study design can shape the apparent size and direction of those effects.
+
+Which choice best states the main purpose of the text?`, choices:["To demonstrate that bilingual children always outperform monolingual children","To argue that socioeconomic background has no influence on cognitive research","To show how improved controls changed interpretations of research on bilingualism while cautioning against an opposite overgeneralization","To list the languages spoken by participants in early studies"], answer:`To show how improved controls changed interpretations of research on bilingualism while cautioning against an opposite overgeneralization`, solution:`This captures the methodological correction and the final caution against overgeneralizing in either direction.`, strategy:`Very hard purpose questions may include both a revision of an earlier view and a limit on the revision.` },
+{ n:79, difficulty:"Very Hard", domain:"Craft and Structure", type:"mc", prompt:`A team found that a frog species calls at a higher pitch near rushing streams than near quiet ponds. Higher pitches are less likely to be masked by low-frequency water noise. Yet the frogs near streams also tend to be smaller, and smaller frogs naturally produce higher calls. This size difference raises a new question: is the pitch shift an adjustment to noise, a consequence of body size, or both?
+
+Which choice best describes the function of the sentence 'Yet the frogs near streams also tend to be smaller' in the text as a whole?`, choices:["It supplies the final answer to the research question.","It introduces a competing explanation that complicates the initial interpretation.","It provides an irrelevant detail about frog appearance.","It proves that water noise has no effect on calls."], answer:`It introduces a competing explanation that complicates the initial interpretation.`, solution:`This offers an alternative cause for higher pitch and leads directly to the unresolved question that follows.`, strategy:`Look for a sentence that changes the causal interpretation of earlier evidence.` },
+{ n:80, difficulty:"Very Hard", domain:"Craft and Structure", type:"mc", prompt:`Text 1: Restoring a grassland should aim to recreate the species composition recorded before intensive agriculture. Historical surveys provide a clear target and help prevent managers from accepting a degraded ecosystem as normal.
+
+Text 2: Historical composition is informative, but climate and soil conditions may have changed so much that recreating an earlier community is impossible. Restoration should prioritize ecological functions and future resilience rather than exact historical resemblance.
+
+How would the author of Text 2 most likely respond to Text 1's proposed restoration target?`, choices:["Historical records should never influence restoration.","Agriculture has no lasting effect on grasslands.","Ecological function can be measured only by counting historical species.","Historical records are useful, but exact replication may be neither feasible nor the best goal under changed conditions."], answer:`Historical records are useful, but exact replication may be neither feasible nor the best goal under changed conditions.`, solution:`This reflects Text 2's qualified stance: history is informative, but conditions and goals may require flexibility.`, strategy:`Distinguish 'useful but insufficient' from complete rejection.` },
+{ n:81, difficulty:"Very Hard", domain:"Craft and Structure", type:"mc", prompt:`Text 1: A reconstructed musical instrument can never reproduce an ancient performance authentically because modern players, audiences, and acoustic spaces differ from those of the past.
+
+Text 2: Perfect reconstruction is impossible, but building and playing replicas can reveal practical constraints—such as finger reach or breath capacity—that written descriptions alone may not expose.
+
+Based on the texts, the author of Text 2 would most likely agree that`, choices:["authentic performance requires ignoring physical instruments","replicas can yield historical insight even if they cannot recreate the past completely","modern musicians experience ancient music exactly as ancient audiences did","written evidence is always less reliable than experimental reconstruction"], answer:`replicas can yield historical insight even if they cannot recreate the past completely`, solution:`This captures Text 2's position and is compatible with Text 1's concern about complete authenticity.`, strategy:`The correct answer often preserves the concession and the benefit together.` },
+{ n:82, difficulty:"Very Hard", domain:"Craft and Structure", type:"mc", prompt:`A transit project could not begin until a regional agency completed its formal review. The agency's approval did not merely acknowledge the project; it sanctioned the use of public funds for construction.
+
+As used in the text, what does 'sanctioned' most nearly mean?`, choices:["Penalized","Questioned","Publicized","Authorized"], answer:`Authorized`, solution:`The contrast with 'merely acknowledge' and the phrase 'use of public funds' indicate formal authorization.`, strategy:`For contronyms - words with opposing meanings - let the sentence's action determine the meaning.` },
+{ n:83, difficulty:"Very Hard", domain:"Craft and Structure", type:"mc", prompt:`Text 1: Because readers know that the narrator is recalling events decades later, inconsistencies in the account reveal the narrator's fading memory.
+
+Text 2: The inconsistencies are too patterned to be random lapses: the narrator remembers events that protect her reputation and becomes vague only when describing her own mistakes. The pattern suggests strategic self-presentation.
+
+How would the author of Text 2 most likely characterize the explanation in Text 1?`, choices:["It is correct because all memory failures are deliberate.","It is irrelevant because the narrator never discusses the past.","It is possible but does not account for the selective pattern of the inconsistencies.","It proves that the narrator has an unusually accurate memory."], answer:`It is possible but does not account for the selective pattern of the inconsistencies.`, solution:`Text 2 does not deny memory could matter, but argues the selective pattern requires an additional explanation.`, strategy:`When Text 2 presents a more specific pattern, it often treats Text 1 as incomplete rather than impossible.` },
+{ n:84, difficulty:"Very Hard", domain:"Information and Ideas", type:"mc", prompt:`Some economists predicted that remote work would sharply reduce city-center rents because fewer employees would commute daily. In several cities, office demand did fall, but rents declined less than expected as firms sought more space per worker and converted some offices to laboratories or residences. The outcome illustrates that a decrease in one use of urban space can be partly offset by changes in other uses.
+
+Which choice best states the main idea of the text?`, choices:["Remote work had no effect on office demand or rents.","Remote work reduced some office demand, but adaptations in how urban space was used moderated the predicted rent decline.","Laboratories and residences always pay higher rents than offices.","Economists correctly predicted the exact size of rent declines."], answer:`Remote work reduced some office demand, but adaptations in how urban space was used moderated the predicted rent decline.`, solution:`This captures why a forecast was directionally right but quantitatively overstated.`, strategy:`The main idea may explain why a forecast was directionally right but quantitatively overstated.` },
+{ n:85, difficulty:"Very Hard", domain:"Information and Ideas", type:"mc", prompt:`Juvenile fish raised in tanks with artificial shelter later preferred shelter shapes they had never encountered but that provided similar narrow openings. Fish raised without shelter showed no consistent shape preference.
+
+Which choice most logically follows from the text?`, choices:["The fish can recognize every possible shelter shape at birth.","Artificial shelter permanently prevents fish from entering open water.","The sheltered fish may have learned a general feature of safe spaces rather than memorizing one exact shape.","Narrow openings are the only feature fish use in all habitat decisions."], answer:`The sheltered fish may have learned a general feature of safe spaces rather than memorizing one exact shape.`, solution:`Generalization to novel shapes sharing a feature suggests learning of a category, not simple memorization.`, strategy:`Generalization to novel examples suggests learning of a category or feature, not simple memorization.` },
+{ n:86, difficulty:"Very Hard", domain:"Information and Ideas", type:"mc", prompt:`A linguist claims that a new pronunciation spread through a town primarily because speakers who already used it moved into influential workplace roles, not because schools explicitly taught it.
+
+Which finding, if true, would most directly support the linguist's claim?`, choices:["The town's schools introduced a new reading curriculum during the same decade.","Some residents preferred the older pronunciation in formal speeches.","The pronunciation appears in recordings made after the change had already spread widely.","Use of the pronunciation increased first among coworkers of newly promoted speakers, while school materials and teachers continued to use the older pronunciation."], answer:`Use of the pronunciation increased first among coworkers of newly promoted speakers, while school materials and teachers continued to use the older pronunciation.`, solution:`This supports both parts of the claim: diffusion follows workplace contact, and schools were not the source.`, strategy:`For mechanism claims, seek evidence about sequence, contact, and the absence of the competing cause.` },
+{ n:87, difficulty:"Very Hard", domain:"Information and Ideas", type:"mc", prompt:`Water condition/No fertilizer/Fertilizer mean mass — Limited: 11 g/11 g. Abundant: 18 g/30 g. A researcher grew plants with and without fertilizer under limited-water and abundant-water conditions, then measured mean mass. The researcher claims that fertilizer increased plant mass only when water was abundant.
+
+Which choice most effectively uses data from the table to support the claim?`, choices:["Plants with abundant water and fertilizer had a mean mass of 30 g.","With abundant water, fertilizer increased mean mass from 18 g to 30 g, whereas with limited water, mean mass remained unchanged at 11 g.","Plants with limited water had lower mass than plants with abundant water.","Without fertilizer, abundant-water plants averaged 18 g."], answer:`With abundant water, fertilizer increased mean mass from 18 g to 30 g, whereas with limited water, mean mass remained unchanged at 11 g.`, solution:`This compares the fertilizer effect within each water condition, directly supporting the 'only when' claim.`, strategy:`An 'only when' claim requires comparing treatment versus control in both conditions.` },
+{ n:88, difficulty:"Very Hard", domain:"Information and Ideas", type:"mc", prompt:`A philosopher distinguishes between a rule's wording and the practice that gives the rule meaning. A chess manual can state how a bishop moves, but a reader understands the rule fully only by seeing how diagonal movement functions within actual games. The philosopher uses this example to argue that applying a rule is not merely repeating its sentence; it involves grasping a pattern of use.
+
+Which choice best states the main idea of the text?`, choices:["Chess rules cannot be expressed in writing.","Understanding a rule requires knowing how it operates in practice, not just knowing its wording.","A bishop is the most important piece in chess.","Rules become meaningless whenever people apply them differently."], answer:`Understanding a rule requires knowing how it operates in practice, not just knowing its wording.`, solution:`This accurately summarizes the distinction between verbal statement and practical use.`, strategy:`Abstract passages often use an example; identify the broader claim the example supports.` },
+{ n:89, difficulty:"Very Hard", domain:"Information and Ideas", type:"mc", prompt:`In a fictional story, an architect repeatedly redraws a public square after residents criticize the plan. On the morning the final design is approved, she saves the earliest rejected sketch rather than discarding it, then pins it beside the final version.
+
+Which choice most logically explains the architect's action?`, choices:["She regards the rejected design as a record of how the project and her thinking evolved.","She intends to replace the approved plan secretly with the first sketch.","She believes public criticism had no effect on the final design.","She cannot tell the two drawings apart."], answer:`She regards the rejected design as a record of how the project and her thinking evolved.`, solution:`Preserving and displaying the first sketch beside the final version highlights development over time.`, strategy:`Interpret symbolic actions in light of the full sequence of events.` },
+{ n:90, difficulty:"Very Hard", domain:"Standard English Conventions", type:"mc", prompt:`During the expedition's final planning meeting, the lead geologist Dr. Imani Cole—whose earlier work mapped volcanic vents beneath the ice—______ the team to collect samples farther east.
+
+Which choice completes the text so that it conforms to the conventions of Standard English?`, choices:["directed,","directed;","directed","directed:"], answer:`directed`, solution:`The parenthetical material is already set off by dashes, leaving the core sentence with no punctuation needed between subject and verb.`, strategy:`Remove interruptions enclosed by commas, dashes, or parentheses and test the core sentence.` },
+{ n:91, difficulty:"Very Hard", domain:"Standard English Conventions", type:"mc", prompt:`A delay in equipment delivery made the original summer schedule impossible. The committee faced a choice ______ postpone the launch until winter or proceed with a smaller test in autumn.
+
+Which choice completes the text so that it conforms to the conventions of Standard English?`, choices:[":",";",",","because"], answer:`:`, solution:`The complete clause before the blank introduces the two alternatives that define the 'choice,' so a colon is appropriate.`, strategy:`A colon can introduce alternatives that explain a preceding general noun.` },
+{ n:92, difficulty:"Very Hard", domain:"Standard English Conventions", type:"mc", prompt:`A later inspection showed that one sensor had been calibrated incorrectly before the experiment began. If the researchers ______ the calibration error earlier, they would not have published the initial estimate.
+
+Which choice completes the text so that it conforms to the conventions of Standard English?`, choices:["notice","noticed","had noticed","would notice"], answer:`had noticed`, solution:`This describes a past condition that did not occur and its unreal past result, requiring past perfect in the if-clause.`, strategy:`For unreal past conditionals, use 'if + had + past participle' and 'would have + past participle.'` },
+{ n:93, difficulty:"Very Hard", domain:"Standard English Conventions", type:"mc", prompt:`A reporter arrived after the theater's final rehearsal hoping to discuss the production with its staff. Neither the director nor the two assistants ______ available to answer questions.
+
+Which choice completes the text so that it conforms to the conventions of Standard English?`, choices:["was","has been","were","is"], answer:`were`, solution:`With 'neither...nor,' the verb generally agrees with the nearer subject; 'two assistants' is plural, so 'were' is required.`, strategy:`For either/or and neither/nor constructions, check the noun closest to the verb.` },
+{ n:94, difficulty:"Very Hard", domain:"Standard English Conventions", type:"mc", prompt:`Two project managers met to decide who would make the final changes to a funding request. After Mei discussed the proposal with Sofia, she sent the revised budget to the board.
+
+Which revision most clearly indicates that Sofia sent the budget?`, choices:["After Mei discussed the proposal with Sofia, she sent Sofia the revised budget.","After Mei discussed the proposal with Sofia, Sofia sent the revised budget to the board.","After discussing the proposal, the revised budget was sent by Sofia to the board.","Mei discussed the proposal with Sofia after she sent the revised budget to the board."], answer:`After Mei discussed the proposal with Sofia, Sofia sent the revised budget to the board.`, solution:`This explicitly names Sofia as the subject of 'sent' and preserves the intended sequence without ambiguity.`, strategy:`When two same-gender people are mentioned, repeat the name if the pronoun's antecedent could be unclear.` },
+{ n:95, difficulty:"Very Hard", domain:"Standard English Conventions", type:"mc", prompt:`Engineers improved the instrument's mirror and image-processing system so that astronomers could identify much fainter signals in crowded star fields. The new telescope can detect planets smaller than ______.
+
+Which choice completes the text so that it makes a logical comparison?`, choices:["the old telescope","those detected by the old telescope","the old telescope's","the old telescope's detection"], answer:`those detected by the old telescope`, solution:`This compares planets with planets, avoiding an illogical comparison between planets and a telescope.`, strategy:`Make sure the two sides of a comparison name comparable things.` },
+{ n:96, difficulty:"Very Hard", domain:"Expression of Ideas", type:"mc", prompt:`In most of the region, annual rainfall has decreased during the past decade. ______ rainfall has increased along the narrow coastal strip, where warmer ocean water supplies more moisture to storms.
+
+Which choice completes the text with the most logical transition?`, choices:["Accordingly,","By contrast,","For instance,","In other words,"], answer:`By contrast,`, solution:`The coastal trend is opposite to the regional trend, calling for a contrast transition.`, strategy:`Determine whether a local case follows or opposes the general pattern.` },
+{ n:97, difficulty:"Very Hard", domain:"Expression of Ideas", type:"mc", prompt:`The surviving manuscript lacks the final page, and no contemporary summary of the ending is known. ______ scholars have reconstructed several plausible endings from references earlier in the story.
+
+Which choice completes the text with the most logical transition?`, choices:["For this reason,","Likewise,","Specifically,","Even so,"], answer:`Even so,`, solution:`The reconstruction effort occurs despite missing direct evidence — a concessive relationship.`, strategy:`Use 'even so' when the second idea proceeds despite an obstacle.` },
+{ n:98, difficulty:"Very Hard", domain:"Expression of Ideas", type:"mc", prompt:`Notes: Several studies find that tree cover is associated with cooler summer temperatures in cities. The size of the cooling effect varies by tree species, canopy density, and local humidity. Most studies measured neighborhoods rather than individual streets. The student wants to present the research finding while appropriately qualifying it.
+
+Which choice most effectively uses relevant information from the notes to accomplish this goal?`, choices:["Trees always cool every city street by the same amount.","Urban tree cover is generally associated with cooler summer temperatures, though the size and street-level distribution of the effect can vary with local conditions and study scale.","Researchers have studied trees, species, humidity, and neighborhoods.","Most studies measured neighborhoods rather than streets, so tree cover has no cooling effect."], answer:`Urban tree cover is generally associated with cooler summer temperatures, though the size and street-level distribution of the effect can vary with local conditions and study scale.`, solution:`This states the general association and incorporates both sources of uncertainty: variable conditions and neighborhood-level measurement.`, strategy:`A qualified synthesis should preserve the main finding while accurately limiting its scope or precision.` },
+{ n:99, difficulty:"Very Hard", domain:"Expression of Ideas", type:"mc", prompt:`Notes: Some historians interpret a 1764 tax protest as primarily economic. They emphasize merchants' complaints about costs. Other historians interpret the protest as primarily political. They emphasize speeches about representation and authority. The student wants to introduce the scholarly debate without favoring either interpretation.
+
+Which choice most effectively uses relevant information from the notes to accomplish this goal?`, choices:["The 1764 protest was clearly economic because merchants complained about costs.","Historians disagree over whether the 1764 protest was driven mainly by economic burdens, highlighted in merchants' complaints, or by political concerns about representation and authority.","Political speeches are generally more important than merchants' records.","Historians have written about a protest that occurred in 1764."], answer:`Historians disagree over whether the 1764 protest was driven mainly by economic burdens, highlighted in merchants' complaints, or by political concerns about representation and authority.`, solution:`This presents both interpretations and their evidence symmetrically, without favoring either side.`, strategy:`For a neutral debate introduction, use parallel structure and balanced evidence.` },
+{ n:100, difficulty:"Very Hard", domain:"Expression of Ideas", type:"mc", prompt:`Notes: A newly discovered planet orbits within its star's habitable zone. Its mass suggests that it may be rocky. Scientists do not yet know whether it has an atmosphere. Surface temperature depends strongly on atmospheric composition. The student wants to emphasize what remains unresolved about the planet's potential habitability.
+
+Which choice most effectively uses relevant information from the notes to accomplish this goal?`, choices:["The planet is habitable because it is rocky and lies in the habitable zone.","Scientists discovered a planet that has a measurable mass.","Atmospheres can contain gases that affect temperature.","Although the planet's orbit and probable rocky composition are promising, its habitability remains uncertain because its atmosphere—and therefore its likely surface temperature—is unknown."], answer:`Although the planet's orbit and probable rocky composition are promising, its habitability remains uncertain because its atmosphere—and therefore its likely surface temperature—is unknown.`, solution:`This acknowledges the promising evidence while identifying the key unresolved factor and its consequence.`, strategy:`When the goal asks what remains unresolved, contrast known favorable evidence with the missing information that prevents a conclusion.` },
+];
+
+const DIFF_COLORS = {
+  Easy: { bg: "#10b98122", text: "#34d399" },
+  Medium: { bg: "#3b82f622", text: "#60a5fa" },
+  Hard: { bg: "#f59e0b22", text: "#f59e0b" },
+  "Very Hard": { bg: "#ef444422", text: "#f87171" },
+};
+
+// ============================================================
+// VISITOR COUNTER
+// ============================================================
+
+const BASE_COUNT = 1842;
+
+function useVisitorCounter() {
+  const [count, setCount] = useState(BASE_COUNT);
+  const ranRef = useRef(false);
+  useEffect(() => {
+    if (ranRef.current) return;
+    ranRef.current = true;
+    setCount((c) => c + 1);
+  }, []);
+  return count;
+}
+
+// ============================================================
+// SHARED STYLE HELPERS
+// ============================================================
+
+const transitions = `
+  @keyframes mt-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .mt-marquee { display: flex; gap: 20px; width: max-content; animation: mt-scroll 28s linear infinite; }
+  .mt-marquee:hover { animation-play-state: paused; }
+
+  @keyframes mt-fade-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  .mt-fade-in { animation: mt-fade-in 0.25s ease-out; }
+
+  @keyframes mt-pop { 0% { transform: scale(0.97); } 60% { transform: scale(1.01); } 100% { transform: scale(1); } }
+  .mt-pop { animation: mt-pop 0.18s ease-out; }
+
+  .mt-btn { transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease, border-color 0.12s ease, opacity 0.12s ease; }
+  .mt-btn:hover:not(:disabled) { transform: translateY(-1px); }
+  .mt-btn:active:not(:disabled) { transform: translateY(0) scale(0.98); }
+
+  .mt-choice { transition: transform 0.12s ease, background 0.12s ease, border-color 0.12s ease, color 0.12s ease; }
+  .mt-choice:hover:not(:disabled) { transform: translateX(2px); border-color: #f59e0b66; }
+
+  .mt-card-hover { transition: transform 0.15s ease, border-color 0.15s ease; }
+  .mt-card-hover:hover { transform: translateY(-3px); border-color: #f59e0b55; }
+
+  .mt-chip { transition: all 0.15s ease; }
+
+  ::selection { background: #f59e0b55; }
+`;
+
+function CatMark({ size = 36 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 64 64" style={{ flexShrink: 0 }}>
+      <circle cx="32" cy="32" r="31" fill="#111827" stroke="#f59e0b" strokeWidth="2" />
+      <path d="M18 20 L24 30 L20 30 Z" fill="white" />
+      <path d="M46 20 L40 30 L44 30 Z" fill="white" />
+      <ellipse cx="32" cy="36" rx="15" ry="13" fill="white" />
+      <circle cx="26" cy="33" r="2.4" fill="#111827" />
+      <circle cx="38" cy="33" r="2.4" fill="#111827" />
+      <path d="M30 40 Q32 42 34 40" stroke="#111827" strokeWidth="1.6" fill="none" strokeLinecap="round" />
+      <line x1="14" y1="37" x2="22" y2="36" stroke="#111827" strokeWidth="1.2" />
+      <line x1="14" y1="40" x2="22" y2="40" stroke="#111827" strokeWidth="1.2" />
+      <line x1="50" y1="37" x2="42" y2="36" stroke="#111827" strokeWidth="1.2" />
+      <line x1="50" y1="40" x2="42" y2="40" stroke="#111827" strokeWidth="1.2" />
+    </svg>
+  );
+}
+
+function Nav({ page, setPage }) {
+  const linkStyle = (active) => ({
+    color: active ? "#f59e0b" : "#cbd5e1",
+    background: "none", border: "none", cursor: "pointer",
+    fontWeight: 600, fontSize: 15, padding: "8px 4px",
+  });
+  return (
+    <nav style={{
+      position: "sticky", top: 0, zIndex: 50, background: "rgba(17,24,39,0.92)",
+      backdropFilter: "blur(8px)", borderBottom: "1px solid #1f2937",
+      display: "flex", alignItems: "center", justifyContent: "space-between",
+      padding: "12px 5%",
+    }}>
+      <button className="mt-btn" onClick={() => setPage("home")} style={{ display: "flex", alignItems: "center", gap: 10, background: "none", border: "none", cursor: "pointer" }}>
+        <CatMark />
+        <span style={{ color: "white", fontWeight: 800, fontSize: 18 }}>Mass Tutoring</span>
+      </button>
+      <div style={{ display: "flex", gap: 18, alignItems: "center" }}>
+        <button className="mt-btn" style={linkStyle(page === "home")} onClick={() => setPage("home")}>Home</button>
+        <button className="mt-btn" style={linkStyle(page === "mission")} onClick={() => setPage("mission")}>Mission</button>
+        <button className="mt-btn" style={linkStyle(page === "guide")} onClick={() => setPage("guide")}>Guide</button>
+        <button
+          className="mt-btn"
+          onClick={() => setPage("practice")}
+          style={{ background: "#f59e0b", color: "#111827", border: "none", borderRadius: 999, padding: "9px 18px", fontWeight: 700, cursor: "pointer", fontSize: 14, boxShadow: "0 0 0 0 rgba(245,158,11,0.5)" }}
+        >
+          Get Started
+        </button>
+      </div>
     </nav>
+  );
+}
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <img src="https://i.imgur.com/4Fl92k3.png" alt="Mass Tutoring Cat" class="hero-cat">
-            <h1>Free SAT Tutoring.<br>By Students, For Students.</h1>
-            <p class="subtitle">Quality test prep shouldn't cost hundreds of dollars</p>
-            <p>Get personalized SAT tutoring from high-scoring students (1540+) who just took the test and know exactly what works—completely free.</p>
-           
-            <div class="cta-buttons">
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSd_44AwF3K59YjrAs7FtT8zBMCg3I9nET6Kx6Pfw5EAg9bphw/viewform" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Book Free Tutoring</a>
-                <a href="betterq" class="btn btn-secondary" target="_blank">Practice Questions</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- The Problem -->
-    <section id="problem" class="problem-section">
-        <h2 class="section-title">The SAT Tutoring Industry is Broken</h2>
-        <p class="section-subtitle">Expensive tutoring creates an unfair advantage for wealthy families</p>
-
-        <div class="problem-grid">
-            <div class="problem-card" style="grid-column: span 2; max-width: 900px; margin: 0 auto;">
-                <img src="https://v6m3i6g9.delivery.rocketcdn.me/wp-content/uploads/2021/01/Princeton-Review-logo.png" alt="Princeton Review Logo" style="width: 200px; margin: 0 auto 1.5rem; display: block;">
-                <h3>Princeton Review Pricing</h3>
-                <p style="margin: 1.5rem 0 1rem; font-size: 1.15rem; color: #4b5563;">Check out what they actually charge for SAT prep:</p>
-                <img src="https://edureviewer.com/wp-content/uploads/2023/08/Princeton-SAT-pricing.jpg" alt="Princeton Review SAT Pricing" style="width: 100%; max-width: 700px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.15); margin: 1rem auto; display: block;">
-                <p style="margin-top: 1.5rem; font-weight: 600; color: #e63946; font-size: 1.1rem;">That's hundreds of dollars for basic tutoring packages!</p>
-                <p style="margin-top: 0.5rem;">Most families simply can't afford this kind of pricing.</p>
-            </div>
-
-            <div class="problem-card">
-                <img src="https://static01.nyt.com/images/2023/10/20/multimedia/2023-10-13-sat-scores-index/2023-10-13-sat-scores-index-superJumbo-v5.png" alt="SAT Scores vs Parent Income - NYT Graph" style="width: 100%; max-width: 400px; border-radius: 12px; margin: 0 auto 1rem; display: block; box-shadow: 0 3px 15px rgba(0,0,0,0.1);">
-                <h3>Wealth = Higher Scores</h3>
-                <p>There's a clear correlation between family income and SAT scores. Students from families earning $200k+ score on average 200+ points higher than those from families earning under $40k.</p>
-            </div>
-
-            <div class="problem-card">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTydUo-ItHHvLBZE5h4ZDc49200P6UQMwXwHw&s" alt="College Rejection Letter" style="width: 100%; max-width: 350px; border-radius: 12px; margin: 0 auto 1rem; display: block; box-shadow: 0 3px 15px rgba(0,0,0,0.1);">
-                <h3>Only for the Top 1%</h3>
-                <p>Premium tutoring is only accessible to the wealthiest families, leaving 99% of students without affordable help—even though the SAT can determine your college future.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Stats -->
-    <section class="stats-section">
-        <h2 class="section-title" style="color: white;">We're Changing the Game</h2>
-        <div class="stats-grid">
-            <div class="stat">
-                <div class="stat-number">$0</div>
-                <div class="stat-label">Cost Per Hour</div>
-            </div>
-            <div class="stat">
-                <div class="stat-number">1540+</div>
-                <div class="stat-label">Tutor SAT Scores</div>
-            </div>
-            <div class="stat">
-                <div class="stat-number">100%</div>
-                <div class="stat-label">Free Forever</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials -->
-    <section id="testimonials" class="testimonials-section">
-        <h2 class="section-title">What Students Say</h2>
-        <p class="section-subtitle">Real results from real students</p>
-
-        <div class="testimonials-container">
-            <div class="testimonial-card">
-                <div class="quote-icon">"</div>
-                <p class="testimonial-quote">Mass Tutoring helped me with the Reading and Writing section and I'm doing better on the SAT now!</p>
-                <p class="testimonial-author">— Pierce Seth</p>
-            </div>
-
-            <div class="testimonial-card">
-                <div class="quote-icon">"</div>
-                <p class="testimonial-quote">I am so much better at Desmos Math after I met with a tutor!</p>
-                <p class="testimonial-author">— Langan Fisher</p>
-            </div>
-
-            <div class="testimonial-card">
-                <div class="quote-icon">"</div>
-                <p class="testimonial-quote">My practice Math scores increased 30 points after I met with Mass Tutoring!</p>
-                <p class="testimonial-author">— Jack Reinfeld</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Why Us -->
-    <section id="why-us" class="why-us-section">
-        <h2 class="section-title">Why Students Make Better Tutors</h2>
-        <p class="section-subtitle">We just took the test. We know what actually works.</p>
-
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">🎯</div>
-                <h3>Recent Experience</h3>
-                <p>Our tutors just took the digital SAT. They know the latest question formats, timing strategies, and what actually appears on test day.</p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">🤝</div>
-                <h3>Relatable Teaching</h3>
-                <p>We remember what it's like to struggle with the SAT. We explain concepts in ways that actually make sense to students, not adults.</p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">💯</div>
-                <h3>Proven Results</h3>
-                <p>All our tutors scored 1540+ on the SAT. They know the strategies and shortcuts that lead to top scores—and they share them for free.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Services -->
-    <section id="services" class="services-section">
-        <h2 class="section-title">What We Offer</h2>
-        <p class="section-subtitle">Comprehensive SAT prep, completely free</p>
-
-        <div class="services-grid">
-            <div class="service-card">
-                <h3>📐 SAT Math Section</h3>
-                <ul>
-                    <li>Mastering the Desmos calculator</li>
-                    <li>Algebra and geometry fundamentals</li>
-                    <li>Time management strategies</li>
-                    <li>Practice with real test questions</li>
-                    <li>Test-taking tactics that work</li>
-                </ul>
-            </div>
-
-            <div class="service-card">
-                <h3>📚 SAT Reading & Writing</h3>
-                <ul>
-                    <li>Grammar rules that actually matter</li>
-                    <li>Transition word strategies</li>
-                    <li>Rhetorical analysis techniques</li>
-                    <li>Reading comprehension shortcuts</li>
-                    <li>Time management and pacing</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <!-- Become a Tutor -->
-    <section class="become-tutor-section">
-        <div class="become-tutor-content">
-            <h2>Want to Make a Difference?</h2>
-            <p>If you'd like to become a tutor who helps students ace the SAT without emptying their wallets, we'd love to have you on our team!</p>
-           
-            <div class="tutor-benefits">
-                <div class="tutor-benefit">
-                    <div class="tutor-benefit-icon">🎓</div>
-                    <h3>Gain Experience</h3>
-                    <p>Build valuable teaching skills for your resume</p>
-                </div>
-                <div class="tutor-benefit">
-                    <div class="tutor-benefit-icon">❤️</div>
-                    <h3>Give Back</h3>
-                    <p>Help level the playing field for all students</p>
-                </div>
-                <div class="tutor-benefit">
-                    <div class="tutor-benefit-icon">🌟</div>
-                    <h3>Join Our Team</h3>
-                    <p>Be part of a mission-driven community</p>
-                </div>
-            </div>
-
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKoQbKU6eqq6AaF3wdkfqWPHH0u3a5ggu-5eNA_uPe2h3lWg/viewform" class="btn-white" target="_blank" rel="noopener noreferrer">Become a Tutor</a>
-        </div>
-    </section>
-
-    <!-- Social Media -->
-    <section id="social" class="social-section">
-        <h2 class="section-title" style="color: white;">Learn SAT Strategies on Social Media</h2>
-        <p class="section-subtitle" style="color: rgba(255,255,255,0.9);">Follow us for free tutorials, practice problems, and test-taking tips</p>
-
-        <div class="social-links">
-            <a href="https://www.instagram.com/masstutoring/" target="_blank" class="social-link">
-                <span class="social-icon">📸</span>
-                <span>Follow on Instagram</span>
-            </a>
-            <a href="https://www.youtube.com/channel/UC7RMZB6gyNhiVdx7XAJ7NCQ" target="_blank" class="social-link">
-                <span class="social-icon">▶️</span>
-                <span>Subscribe on YouTube</span>
-            </a>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="faq-section">
-        <h2 class="section-title">Frequently Asked Questions</h2>
-        <p class="section-subtitle">Everything you need to know about Mass Tutoring</p>
-
-        <div class="faq-container">
-            <div class="faq-item">
-                <div class="faq-question">
-                    What does my tutor help with?
-                    <div class="faq-toggle">+</div>
-                </div>
-                <div class="faq-answer">
-                    <p>Your tutor can help with all sections of the SAT including Math (algebra, geometry, data analysis), Reading & Writing (grammar, rhetoric, reading comprehension), test-taking strategies, time management, and personalized study plans. They'll work with you to identify your weaknesses and build on your strengths!</p>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">
-                    How do I get started with free tutoring?
-                    <div class="faq-toggle">+</div>
-                </div>
-                <div class="faq-answer">
-                    <p>Simply click the "Get Free Tutoring" button or try our S(Ai)T AI tutor for instant help! For human tutoring, fill out our form and we'll match you with a high-scoring tutor (1540+) who fits your needs. It's completely free—no credit card, no catch.</p>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">
-                    How many times can I meet with my tutor?
-                    <div class="faq-toggle">+</div>
-                </div>
-                <div class="faq-answer">
-                    <p>There's no limit! Our tutoring is completely free and you can meet with your tutor as many times as you need. We recommend consistent weekly sessions leading up to your test date for the best results.</p>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">
-                    What makes Mass Tutoring different from other SAT prep?
-                    <div class="faq-toggle">+</div>
-                </div>
-                <div class="faq-answer">
-                    <p>We're 100% free, run by students who just took the test (and scored 1540+), and we actually care about leveling the playing field. Unlike companies charging $10,000+ for prep courses, we believe quality education should be accessible to everyone regardless of family income.</p>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">
-                    How do I make the most out of Mass Tutoring?
-                    <div class="faq-toggle">+</div>
-                </div>
-                <div class="faq-answer">
-                    <p>Stay consistent! Meet with your tutor regularly, update them on your progress, and they will guide you on what to do next. Work with them to create a study plan and stick to it. Use our free resources and practice materials. They're here to support you, so make full use of them!</p>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">
-                    Who's behind Mass Tutoring?
-                    <div class="faq-toggle">+</div>
-                </div>
-                <div class="faq-answer">
-                    <p>Mass Tutoring was founded by Ethan Moran and Albert Wen, students at BB&N who scored 1550 and 1560 on the SAT. They created this to break the cycle where only wealthy families can afford quality test prep. Our tutors are all high-scoring students (1540+) passionate about helping others succeed.</p>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">
-                    As a parent, how can I contact you if I have questions?
-                    <div class="faq-toggle">+</div>
-                </div>
-                <div class="faq-answer">
-                    <p>We'd love to hear from you! You can reach us at <strong>masstutoringea@gmail.com</strong>, through our Instagram (@masstutoring), or via our contact form. We're always happy to answer parent questions about our program, tutoring approach, or anything else you'd like to know.</p>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">
-                    Can I become a tutor?
-                    <div class="faq-toggle">+</div>
-                </div>
-                <div class="faq-answer">
-                    <p>Absolutely! As long as you score well on the SAT (1500+) and have a good personality with a passion to help others, you can become a tutor. We'd love to have you on our team! Click "Become a Tutor" to sign up. You'll gain valuable teaching experience while making a real difference!</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <p>2026 Mass Tutoring. Making SAT prep accessible to everyone.</p>
-        <p style="margin-top: 1rem; opacity: 0.8;">Free tutoring by students, for students. Forever.</p>
+function Footer() {
+  return (
+    <footer style={{ background: "#0b0f17", color: "#94a3b8", padding: "40px 5%", textAlign: "center", fontSize: 14, borderTop: "1px solid #1f2937" }}>
+      <div style={{ display: "flex", justifyContent: "center", marginBottom: 14 }}>
+        <CatMark size={32} />
+      </div>
+      <p style={{ color: "white", fontWeight: 700, marginBottom: 6 }}>Mass Tutoring</p>
+      <p>Free SAT tutoring, built by students, for students.</p>
     </footer>
+  );
+}
 
-    <script>
-        // FAQ Accordion functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const faqItems = document.querySelectorAll('.faq-item');
-           
-            faqItems.forEach(item => {
-                const question = item.querySelector('.faq-question');
-               
-                question.addEventListener('click', () => {
-                    // Close other open items
-                    faqItems.forEach(otherItem => {
-                        if (otherItem !== item && otherItem.classList.contains('active')) {
-                            otherItem.classList.remove('active');
-                        }
-                    });
-                   
-                    // Toggle current item
-                    item.classList.toggle('active');
-                });
-            });
-        });
-    </script>
-</body>
-</html>
+function VisitorBadge({ count }) {
+  return (
+    <div style={{
+      display: "inline-flex", alignItems: "center", gap: 8, background: "#161d2b",
+      border: "1px solid #263244", borderRadius: 999, padding: "8px 16px", fontSize: 13.5,
+    }}>
+      <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#34d399", display: "inline-block", boxShadow: "0 0 0 3px rgba(52,211,153,0.18)" }} />
+      <span style={{ color: "#e2e8f0" }}>
+        <strong style={{ color: "#f59e0b" }}>{count.toLocaleString()}</strong> students helped so far
+      </span>
+    </div>
+  );
+}
+
+// ============================================================
+// HOME PAGE
+// ============================================================
+
+function ScoreBadge({ before, after }) {
+  return (
+    <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 10 }}>
+      <span style={{ fontSize: 26, fontWeight: 900, color: "#f59e0b" }}>{after}</span>
+      <span style={{ fontSize: 13, color: "#94a3b8" }}>+{after - before} pts</span>
+      <span style={{ fontSize: 13, color: "#64748b" }}>{before} → {after}</span>
+    </div>
+  );
+}
+
+function HomePage({ setPage, visitorCount }) {
+  const loop = [...TESTIMONIALS, ...TESTIMONIALS];
+  return (
+    <div>
+      <section style={{ padding: "90px 5% 70px", textAlign: "center", background: "radial-gradient(circle at 50% 0%, #1f2937 0%, #0b0f17 60%)" }}>
+        <div style={{
+          display: "inline-block", background: "rgba(245,158,11,0.12)", border: "1px solid #f59e0b",
+          color: "#f59e0b", borderRadius: 999, padding: "6px 16px", fontSize: 13, fontWeight: 700, marginBottom: 22,
+        }}>
+          Built by high schoolers. 100% free, always.
+        </div>
+        <h1 style={{ color: "white", fontSize: "clamp(2.4rem,6vw,4rem)", fontWeight: 900, lineHeight: 1.1, margin: "0 0 18px" }}>
+          We tutor the SAT.<br />For free.
+        </h1>
+        <p style={{ color: "#cbd5e1", fontSize: 19, maxWidth: 640, margin: "0 auto 28px" }}>
+          A free, peer-to-peer SAT tutoring platform. Real tutors who scored 1530+, a full study guide, and 200 original practice questions across Math and Reading & Writing — no $200/hour required.
+        </p>
+        <div style={{ marginBottom: 30 }}>
+          <VisitorBadge count={visitorCount} />
+        </div>
+        <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
+          <button className="mt-btn" onClick={() => setPage("practice")} style={{ background: "#f59e0b", color: "#111827", border: "none", borderRadius: 999, padding: "14px 30px", fontWeight: 800, fontSize: 16, cursor: "pointer" }}>
+            Get Started — Try a Question
+          </button>
+          <button className="mt-btn" onClick={() => setPage("guide")} style={{ background: "transparent", color: "white", border: "2px solid #374151", borderRadius: 999, padding: "14px 30px", fontWeight: 700, fontSize: 16, cursor: "pointer" }}>
+            See the Free Guide
+          </button>
+        </div>
+
+        <div style={{ maxWidth: 880, margin: "48px auto 0", borderRadius: 20, overflow: "hidden", border: "1px solid #263244", boxShadow: "0 20px 60px rgba(0,0,0,0.45)" }}>
+          <img
+            src="https://images.unsplash.com/photo-1655337690727-5224680c8c07?auto=format&fit=crop&w=1600&q=80"
+            alt="Students studying together in a classroom"
+            style={{ width: "100%", height: "auto", maxHeight: 380, objectFit: "cover", display: "block" }}
+          />
+        </div>
+      </section>
+
+      <section style={{ background: "#0b0f17", padding: "50px 0", overflow: "hidden", borderTop: "1px solid #1f2937", borderBottom: "1px solid #1f2937" }}>
+        <h2 style={{ color: "white", textAlign: "center", fontSize: 28, fontWeight: 800, marginBottom: 30 }}>
+          No tuition. No catch. <span style={{ color: "#f59e0b" }}>Just show up ready to learn.</span>
+        </h2>
+        <div className="mt-marquee">
+          {loop.map((t, i) => (
+            <div key={i} className="mt-card-hover" style={{ width: 320, flexShrink: 0, background: "#161d2b", border: "1px solid #263244", borderRadius: 16, padding: 22 }}>
+              <ScoreBadge before={t.before} after={t.after} />
+              <p style={{ color: "#e2e8f0", fontSize: 14.5, lineHeight: 1.55, marginBottom: 14, minHeight: 80 }}>"{t.text}"</p>
+              <p style={{ color: "#f59e0b", fontWeight: 700, fontSize: 14 }}>— {t.name}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section style={{ background: "#0b0f17", padding: "80px 5%" }}>
+        <h2 style={{ color: "white", textAlign: "center", fontSize: 32, fontWeight: 800, marginBottom: 12 }}>Everything you need. None of the cost.</h2>
+        <p style={{ color: "#94a3b8", textAlign: "center", marginBottom: 50, fontSize: 17 }}>Princeton Review charges $200+/hour. Here's what you get from us for $0.</p>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 22, maxWidth: 1100, margin: "0 auto" }}>
+          {FEATURES.map((f, i) => (
+            <div key={i} className="mt-card-hover" style={{ background: "#161d2b", border: "1px solid #263244", borderRadius: 16, padding: 26 }}>
+              <div style={{ width: 38, height: 38, borderRadius: 10, background: "rgba(245,158,11,0.15)", color: "#f59e0b", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, marginBottom: 14 }}>
+                {i + 1}
+              </div>
+              <h3 style={{ color: "white", fontSize: 18, fontWeight: 700, marginBottom: 8 }}>{f.title}</h3>
+              <p style={{ color: "#94a3b8", fontSize: 14.5, lineHeight: 1.6 }}>{f.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section style={{ background: "#0b0f17", padding: "20px 5% 80px" }}>
+        <h2 style={{ color: "white", textAlign: "center", fontSize: 32, fontWeight: 800, marginBottom: 12 }}>How to get involved</h2>
+        <p style={{ color: "#94a3b8", textAlign: "center", marginBottom: 44, fontSize: 17 }}>No tiers, no plans, no payment info. Just pick one.</p>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))", gap: 24, maxWidth: 820, margin: "0 auto" }}>
+          <div className="mt-card-hover" style={{ background: "#161d2b", border: "2px solid #f59e0b", borderRadius: 20, padding: 32 }}>
+            <p style={{ color: "#f59e0b", fontWeight: 800, fontSize: 13, letterSpacing: 1, marginBottom: 10 }}>STUDENT</p>
+            <h3 style={{ color: "white", fontSize: 24, fontWeight: 800, marginBottom: 14 }}>Get a free tutor</h3>
+            <p style={{ color: "#94a3b8", fontSize: 14.5, marginBottom: 22, lineHeight: 1.6 }}>Get matched with a tutor who scored 1530+, on Math or Reading & Writing, completely free.</p>
+            <a href="https://forms.gle/your-student-form" target="_blank" rel="noreferrer" className="mt-btn" style={{ display: "block", textAlign: "center", background: "#f59e0b", color: "#111827", padding: "12px 0", borderRadius: 999, fontWeight: 800, textDecoration: "none" }}>
+              Request a Tutor
+            </a>
+          </div>
+          <div className="mt-card-hover" style={{ background: "#161d2b", border: "1px solid #263244", borderRadius: 20, padding: 32 }}>
+            <p style={{ color: "#94a3b8", fontWeight: 800, fontSize: 13, letterSpacing: 1, marginBottom: 10 }}>TUTOR</p>
+            <h3 style={{ color: "white", fontSize: 24, fontWeight: 800, marginBottom: 14 }}>Become a tutor</h3>
+            <p style={{ color: "#94a3b8", fontSize: 14.5, marginBottom: 22, lineHeight: 1.6 }}>Scored 1530+? Teach what you know, build real teaching experience, and help close the access gap.</p>
+            <a href="https://forms.gle/your-tutor-form" target="_blank" rel="noreferrer" className="mt-btn" style={{ display: "block", textAlign: "center", background: "transparent", color: "white", border: "2px solid #374151", padding: "10px 0", borderRadius: 999, fontWeight: 700, textDecoration: "none" }}>
+              Apply to Tutor
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <FAQSection />
+    </div>
+  );
+}
+
+function FAQSection() {
+  const [open, setOpen] = useState(0);
+  return (
+    <section style={{ background: "#0b0f17", padding: "0 5% 90px" }}>
+      <h2 style={{ color: "white", textAlign: "center", fontSize: 32, fontWeight: 800, marginBottom: 36 }}>FAQ</h2>
+      <div style={{ maxWidth: 700, margin: "0 auto" }}>
+        {FAQS.map((f, i) => (
+          <div key={i} style={{ borderBottom: "1px solid #1f2937" }}>
+            <button
+              className="mt-btn"
+              onClick={() => setOpen(open === i ? -1 : i)}
+              style={{ width: "100%", background: "none", border: "none", color: "white", textAlign: "left", padding: "18px 4px", fontSize: 16, fontWeight: 700, cursor: "pointer", display: "flex", justifyContent: "space-between" }}
+            >
+              {f.q}
+              <span style={{ color: "#f59e0b" }}>{open === i ? "−" : "+"}</span>
+            </button>
+            {open === i && <p className="mt-fade-in" style={{ color: "#94a3b8", padding: "0 4px 18px", fontSize: 14.5, lineHeight: 1.6 }}>{f.a}</p>}
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+// ============================================================
+// PRACTICE PAGE
+// ============================================================
+
+function ProgressBar({ index, total }) {
+  return (
+    <div style={{ display: "flex", gap: 4 }}>
+      {Array.from({ length: total }).map((_, i) => (
+        <div key={i} style={{
+          flex: 1, height: 5, borderRadius: 4, transition: "background 0.2s ease",
+          background: i < index ? "#f59e0b" : i === index ? "#f59e0b88" : "#263244",
+        }} />
+      ))}
+    </div>
+  );
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function PracticePage({ visitorCount }) {
+  const [subject, setSubject] = useState("Math");
+  const [domainFilter, setDomainFilter] = useState("All");
+  const [diffFilter, setDiffFilter] = useState("All");
+  const [index, setIndex] = useState(0);
+  const [selected, setSelected] = useState("");
+  const [revealed, setRevealed] = useState(false);
+  const [missed, setMissed] = useState([]);
+  const [score, setScore] = useState({ correct: 0, total: 0 });
+  const [finished, setFinished] = useState(false);
+
+  const QUESTIONS = subject === "Math" ? MATH_QUESTIONS : RW_QUESTIONS;
+  const DOMAINS = subject === "Math" ? MATH_DOMAINS : RW_DOMAINS;
+
+  const pool = QUESTIONS.filter(
+    (q) => (domainFilter === "All" || q.domain === domainFilter) && (diffFilter === "All" || q.difficulty === diffFilter)
+  );
+  const q = pool.length ? pool[index % pool.length] : null;
+
+  function resetRun() {
+    setIndex(0);
+    setSelected("");
+    setRevealed(false);
+    setMissed([]);
+    setScore({ correct: 0, total: 0 });
+    setFinished(false);
+  }
+
+  function switchSubject(newSubject) {
+    setSubject(newSubject);
+    setDomainFilter("All");
+    setDiffFilter("All");
+    resetRun();
+  }
+
+  function applyFilters(newDomain, newDiff) {
+    setDomainFilter(newDomain);
+    setDiffFilter(newDiff);
+    resetRun();
+  }
+
+  function checkAnswer(choice) {
+    if (revealed || !q) return;
+    setSelected(choice);
+    setRevealed(true);
+    const isCorrect = choice.trim().toLowerCase() === q.answer.trim().toLowerCase();
+    setScore((s) => ({ correct: s.correct + (isCorrect ? 1 : 0), total: s.total + 1 }));
+    if (!isCorrect) setMissed((m) => [...m, q.n]);
+  }
+
+  function next() {
+    if (index + 1 >= pool.length) {
+      setFinished(true);
+      return;
+    }
+    setIndex((i) => i + 1);
+    setSelected("");
+    setRevealed(false);
+  }
+
+  const isCorrect = revealed && q && selected.trim().toLowerCase() === q.answer.trim().toLowerCase();
+
+  const SubjectToggle = (
+    <div style={{ display: "inline-flex", background: "#161d2b", border: "1px solid #263244", borderRadius: 999, padding: 4, marginBottom: 18 }}>
+      {["Math", "Reading & Writing"].map((s) => (
+        <button
+          key={s}
+          className="mt-chip"
+          onClick={() => switchSubject(s)}
+          style={{
+            background: subject === s ? "#f59e0b" : "transparent",
+            color: subject === s ? "#111827" : "#94a3b8",
+            border: "none", borderRadius: 999, padding: "8px 18px", fontSize: 13.5, fontWeight: 700, cursor: "pointer",
+          }}
+        >
+          {s}
+        </button>
+      ))}
+    </div>
+  );
+
+  if (!q) {
+    return (
+      <div style={{ background: "#0b0f17", minHeight: "60vh", padding: "60px 5%", display: "flex", flexDirection: "column", alignItems: "center" }}>
+        {SubjectToggle}
+        <p style={{ color: "#94a3b8" }}>No questions match these filters.</p>
+      </div>
+    );
+  }
+
+  if (finished) {
+    const pct = Math.round((score.correct / score.total) * 100);
+    return (
+      <div className="mt-fade-in" style={{ background: "#0b0f17", minHeight: "80vh", padding: "60px 5%", display: "flex", justifyContent: "center" }}>
+        <style>{transitions}</style>
+        <div style={{ maxWidth: 540, width: "100%", textAlign: "center" }}>
+          <div style={{ fontSize: 46, marginBottom: 10 }}>{pct >= 80 ? "🎯" : pct >= 50 ? "📈" : "💪"}</div>
+          <h1 style={{ color: "white", fontSize: 28, fontWeight: 800, marginBottom: 8 }}>Set complete!</h1>
+          <p style={{ color: "#94a3b8", marginBottom: 30 }}>You got <strong style={{ color: "#f59e0b" }}>{score.correct}/{score.total}</strong> correct ({pct}%).</p>
+          <div style={{ background: "#161d2b", border: "1px solid #263244", borderRadius: 18, padding: 26, textAlign: "left", marginBottom: 26 }}>
+            <p style={{ color: "white", fontWeight: 700, marginBottom: 10 }}>
+              {missed.length === 0 ? "Clean sweep — nice work." : `Questions to review: #${missed.join(", #")}`}
+            </p>
+            <p style={{ color: "#94a3b8", fontSize: 14, lineHeight: 1.6 }}>
+              {missed.length === 0
+                ? "Try a harder difficulty or a different domain to keep building speed."
+                : "Restart this set to drill the ones you missed again — repetition on the exact move is what sticks."}
+            </p>
+          </div>
+          <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+            <button className="mt-btn" onClick={resetRun} style={{ background: "#f59e0b", color: "#111827", border: "none", borderRadius: 999, padding: "12px 24px", fontWeight: 800, cursor: "pointer" }}>
+              Try Again
+            </button>
+            <button className="mt-btn" onClick={() => applyFilters("All", "All")} style={{ background: "transparent", color: "white", border: "2px solid #374151", borderRadius: 999, padding: "12px 24px", fontWeight: 700, cursor: "pointer" }}>
+              All {QUESTIONS.length} Questions
+            </button>
+            <button className="mt-btn" onClick={() => switchSubject(subject === "Math" ? "Reading & Writing" : "Math")} style={{ background: "transparent", color: "#f59e0b", border: "2px solid #f59e0b", borderRadius: 999, padding: "12px 24px", fontWeight: 700, cursor: "pointer" }}>
+              Switch to {subject === "Math" ? "Reading & Writing" : "Math"}
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ background: "#0b0f17", minHeight: "80vh", padding: "32px 5% 80px" }}>
+      <style>{transitions}</style>
+      <div style={{ maxWidth: 780, margin: "0 auto" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 18 }}>
+          <CatMark size={30} />
+          <div>
+            <h1 style={{ color: "white", fontSize: 22, fontWeight: 800, margin: 0 }}>Practice — 200 Questions</h1>
+            <p style={{ color: "#64748b", fontSize: 12.5, margin: 0 }}>{visitorCount.toLocaleString()} students have used this tool</p>
+          </div>
+        </div>
+
+        {SubjectToggle}
+
+        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 10 }}>
+          {["All", ...DIFFICULTIES].map((d) => (
+            <button
+              key={d}
+              className="mt-chip"
+              onClick={() => applyFilters(domainFilter, d)}
+              style={{
+                background: diffFilter === d ? (DIFF_COLORS[d]?.text || "#f59e0b") : "#161d2b",
+                color: diffFilter === d ? "#0b0f17" : (DIFF_COLORS[d]?.text || "#94a3b8"),
+                border: `1px solid ${diffFilter === d ? "transparent" : "#263244"}`,
+                borderRadius: 999, padding: "6px 13px", fontSize: 12.5, fontWeight: 700, cursor: "pointer",
+              }}
+            >
+              {d}
+            </button>
+          ))}
+        </div>
+        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 20 }}>
+          {["All", ...DOMAINS].map((d) => (
+            <button
+              key={d}
+              className="mt-chip"
+              onClick={() => applyFilters(d, diffFilter)}
+              style={{
+                background: domainFilter === d ? "#f59e0b" : "#161d2b",
+                color: domainFilter === d ? "#111827" : "#94a3b8",
+                border: `1px solid ${domainFilter === d ? "#f59e0b" : "#263244"}`,
+                borderRadius: 999, padding: "6px 13px", fontSize: 12.5, fontWeight: 700, cursor: "pointer",
+              }}
+            >
+              {d}
+            </button>
+          ))}
+        </div>
+
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10, flexWrap: "wrap", gap: 8 }}>
+          <span style={{ color: "#94a3b8", fontSize: 13.5 }}>Question {index + 1} of {pool.length}</span>
+          <span style={{ background: "#161d2b", border: "1px solid #263244", borderRadius: 999, padding: "5px 13px", color: "#f59e0b", fontWeight: 700, fontSize: 12.5 }}>
+            {score.correct}/{score.total} correct
+          </span>
+        </div>
+        <div style={{ marginBottom: 22 }}>
+          <ProgressBar index={index} total={pool.length} />
+        </div>
+
+        <div key={`${subject}-${q.n}`} className="mt-fade-in" style={{ background: "#161d2b", border: "1px solid #263244", borderRadius: 20, padding: 30 }}>
+          <div style={{ display: "flex", gap: 8, marginBottom: 18, flexWrap: "wrap", alignItems: "center" }}>
+            <span style={{ background: "#0b0f17", color: "#64748b", border: "1px solid #263244", borderRadius: 999, padding: "4px 10px", fontSize: 11.5, fontWeight: 700 }}>#{q.n}</span>
+            <span style={{ background: DIFF_COLORS[q.difficulty].bg, color: DIFF_COLORS[q.difficulty].text, borderRadius: 999, padding: "5px 12px", fontSize: 12, fontWeight: 700 }}>{q.difficulty}</span>
+            <span style={{ background: "rgba(245,158,11,0.10)", color: "#f59e0b", borderRadius: 999, padding: "5px 12px", fontSize: 12, fontWeight: 700 }}>{q.domain}</span>
+          </div>
+
+          <p style={{ color: "white", fontSize: 18, lineHeight: 1.6, marginBottom: 26, whiteSpace: "pre-line" }}>{q.prompt}</p>
+
+          {q.type === "mc" ? (
+            <div style={{ display: "grid", gap: 10, marginBottom: 20 }}>
+              {q.choices.map((c) => {
+                const isThisCorrect = c.trim().toLowerCase() === q.answer.trim().toLowerCase();
+                const isThisSelected = c === selected;
+                let bg = "#0b0f17", border = "#263244", color = "#e2e8f0";
+                if (revealed && isThisCorrect) { bg = "rgba(16,185,129,0.12)"; border = "#10b981"; color = "#6ee7b7"; }
+                else if (revealed && isThisSelected && !isThisCorrect) { bg = "rgba(248,113,113,0.12)"; border = "#f87171"; color = "#fca5a5"; }
+                return (
+                  <button
+                    key={c}
+                    className={`mt-choice${revealed && isThisCorrect ? " mt-pop" : ""}`}
+                    onClick={() => checkAnswer(c)}
+                    disabled={revealed}
+                    style={{ textAlign: "left", padding: "13px 16px", borderRadius: 12, border: `1.5px solid ${border}`, background: bg, color, fontSize: 15, fontWeight: 600, cursor: revealed ? "default" : "pointer" }}
+                  >
+                    {c}
+                  </button>
+                );
+              })}
+            </div>
+          ) : (
+            <div style={{ display: "flex", gap: 10, marginBottom: 20 }}>
+              <input
+                value={selected}
+                onChange={(e) => setSelected(e.target.value)}
+                disabled={revealed}
+                placeholder="Type your answer"
+                style={{ flex: 1, padding: "12px 14px", borderRadius: 10, border: "1px solid #374151", background: "#0b0f17", color: "white", fontSize: 15 }}
+                onKeyDown={(e) => { if (e.key === "Enter" && selected && !revealed) checkAnswer(selected); }}
+              />
+              <button
+                className="mt-btn"
+                onClick={() => checkAnswer(selected)}
+                disabled={revealed || !selected}
+                style={{ background: "#f59e0b", color: "#111827", border: "none", borderRadius: 10, padding: "0 22px", fontWeight: 800, cursor: revealed ? "default" : "pointer", opacity: !selected ? 0.5 : 1 }}
+              >
+                Check
+              </button>
+            </div>
+          )}
+
+          {revealed && (
+            <div className="mt-fade-in" style={{ background: "#0b0f17", border: `1px solid ${isCorrect ? "#10b981" : "#f87171"}`, borderRadius: 14, padding: 20, marginTop: 4 }}>
+              <p style={{ color: isCorrect ? "#6ee7b7" : "#fca5a5", fontWeight: 800, fontSize: 14, marginBottom: 10 }}>
+                {isCorrect ? "Correct!" : `Not quite — the answer is ${q.answer}`}
+              </p>
+              <p style={{ color: "#cbd5e1", fontSize: 14, lineHeight: 1.6, marginBottom: 14 }}>{q.solution}</p>
+              {q.desmos ? (
+                <>
+                  <p style={{ color: "#94a3b8", fontSize: 12, fontWeight: 700, marginBottom: 8 }}>DESMOS METHOD</p>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                    {q.desmos.map((line, i) => (
+                      <code key={i} style={{ background: "#111827", color: "#f59e0b", padding: "8px 12px", borderRadius: 8, fontSize: 13.5, fontFamily: "monospace" }}>
+                        {line}
+                      </code>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <p style={{ color: "#94a3b8", fontSize: 12, fontWeight: 700, marginBottom: 8 }}>STRATEGY</p>
+                  <p style={{ background: "#111827", color: "#f59e0b", padding: "10px 12px", borderRadius: 8, fontSize: 13.5, margin: 0 }}>
+                    {q.strategy}
+                  </p>
+                </>
+              )}
+            </div>
+          )}
+
+          <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 24 }}>
+            <button className="mt-btn" onClick={next} disabled={!revealed} style={{ background: revealed ? "#f59e0b" : "#263244", color: revealed ? "#111827" : "#64748b", border: "none", borderRadius: 999, padding: "11px 26px", fontWeight: 800, cursor: revealed ? "pointer" : "not-allowed" }}>
+              {revealed ? (index + 1 >= pool.length ? "See Results →" : "Next Question →") : "Answer to continue"}
+            </button>
+          </div>
+        </div>
+
+        <p style={{ color: "#64748b", fontSize: 13, textAlign: "center", marginTop: 24 }}>
+          {subject === "Math"
+            ? <>Every solution shows the algebra <em>and</em> the fastest Desmos move. Want the full breakdown? Check the <strong style={{ color: "#94a3b8" }}>Guide</strong> page.</>
+            : <>Every solution comes with a reusable strategy for that question type. Want the full breakdown? Check the <strong style={{ color: "#94a3b8" }}>Guide</strong> page.</>}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// MISSION PAGE
+// ============================================================
+
+function MissionPage() {
+  const cards = [
+    { emoji: "💸", title: "Test prep is expensive.", body: "The average cost of SAT tutoring is $200+/hour. Companies like Princeton Review charge upwards of $10,000 for complete prep programs." },
+    { emoji: "✅", title: "You don't need to overpay for a good score.", body: "Our founders scored 1550 and 1560 without any paid tutoring. We built Mass Tutoring on the strategies that actually worked for us." },
+    { emoji: "📚", title: "Don't over-complicate studying.", body: "There's no magic strategy — just a solid study plan, consistent practice, and personalized guidance. That's what we provide, for free." },
+    { emoji: "🤝", title: "Learn from peers, not strangers.", body: "Every tutor just took the test themselves. They know what works because they recently succeeded using these exact methods." },
+    { emoji: "🎯", title: "The SAT matters more than ever.", body: "With more universities reinstating SAT requirements, a strong score is crucial. We're here to help you reach it." },
+    { emoji: "🌍", title: "Economics shouldn't limit opportunity.", body: "There's a direct correlation between income and SAT scores — not because wealthier students are smarter, but because they can afford tutoring. We're working to close that gap." },
+  ];
+  return (
+    <div style={{ background: "#0b0f17" }}>
+      <style>{transitions}</style>
+      <section style={{ padding: "80px 5% 50px", textAlign: "center" }}>
+        <h1 style={{ color: "white", fontSize: "clamp(2rem,5vw,3rem)", fontWeight: 900 }}>Our Mission</h1>
+      </section>
+
+      <section style={{ padding: "0 5% 60px", maxWidth: 1100, margin: "0 auto" }}>
+        <p style={{ color: "#cbd5e1", fontSize: 18, lineHeight: 1.8, maxWidth: 700, margin: "0 auto 36px", textAlign: "center" }}>
+          <strong style={{ color: "#f59e0b" }}>Ethan Moran</strong> and <strong style={{ color: "#f59e0b" }}>Albert Wen</strong>, students at Buckingham Browne & Nichols School in Cambridge, Massachusetts, founded Mass Tutoring with one mission: make SAT prep simple, accessible, and free for every student.
+        </p>
+        <div style={{ maxWidth: 760, margin: "0 auto 50px", borderRadius: 18, overflow: "hidden", border: "1px solid #263244" }}>
+          <img
+            src="https://images.unsplash.com/photo-1721702754494-fdd7189f946c?auto=format&fit=crop&w=1400&q=80"
+            alt="A library filled with books"
+            style={{ width: "100%", height: "auto", maxHeight: 320, objectFit: "cover", display: "block" }}
+          />
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 22 }}>
+          {cards.map((c, i) => (
+            <div key={i} className="mt-card-hover" style={{ background: "#161d2b", border: "1px solid #263244", borderRadius: 18, padding: 28 }}>
+              <div style={{ fontSize: 30, marginBottom: 12 }}>{c.emoji}</div>
+              <h3 style={{ color: "white", fontSize: 18, fontWeight: 700, marginBottom: 10 }}>{c.title}</h3>
+              <p style={{ color: "#94a3b8", fontSize: 14.5, lineHeight: 1.6 }}>{c.body}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section style={{ background: "#111827", padding: "70px 5%" }}>
+        <h2 style={{ color: "white", textAlign: "center", fontSize: 28, fontWeight: 800, marginBottom: 40 }}>Meet the Founders</h2>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))", gap: 30, maxWidth: 700, margin: "0 auto 40px" }}>
+          {[{ initials: "EM", name: "Ethan Moran", score: 1550 }, { initials: "AW", name: "Albert Wen", score: 1560 }].map((f) => (
+            <div key={f.initials} style={{ textAlign: "center" }}>
+              <div style={{
+                width: 140, height: 140, borderRadius: "50%", margin: "0 auto 16px",
+                background: "#0b0f17", border: "3px solid #f59e0b", display: "flex",
+                alignItems: "center", justifyContent: "center", color: "white", fontSize: 36, fontWeight: 800,
+              }}>
+                {f.initials}
+              </div>
+              <p style={{ color: "white", fontSize: 20, fontWeight: 800 }}>{f.name}</p>
+              <p style={{ color: "#f59e0b", fontWeight: 700, fontSize: 14 }}>SAT Superscore: {f.score}</p>
+              <p style={{ color: "#64748b", fontSize: 12 }}>[ photo placeholder ]</p>
+            </div>
+          ))}
+        </div>
+        <div style={{ maxWidth: 700, margin: "0 auto", color: "#cbd5e1", fontSize: 15.5, lineHeight: 1.8 }}>
+          <p style={{ marginBottom: 16 }}>Hi, we're Ethan and Albert. In every student's journey, standardized testing plays a vital role. While the SAT definitely isn't a measure of intelligence, it matters for college admissions and can shape your opportunities.</p>
+          <p style={{ marginBottom: 16 }}>The major problem? Access to tutoring. With companies charging over $200/hour, quality test prep isn't accessible to most families. Wealthier students score higher — not because they're smarter, but because they can afford expensive tutoring.</p>
+          <p style={{ marginBottom: 16 }}>We created Mass Tutoring to break that cycle. Both of us scored highly (1550 and 1560) without any paid tutoring. By connecting tutors who scored 1530+ with students who need help, we're making test prep accessible to everyone.</p>
+          <p style={{ textAlign: "center", marginTop: 30 }}><strong>Your goals are our goals too.</strong><br />With care, Ethan Moran & Albert Wen</p>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+// ============================================================
+// FREE GUIDE PAGE
+// ============================================================
+
+function GuidePage({ setPage }) {
+  const steps = [
+    { title: "Schedule your test", body: "Find a high school nearby and schedule a date. You don't want to be driving an hour to your exam Saturday morning." },
+    { title: "Start 3 months before", body: "This varies person to person, but 3 months gives plenty of time to improve significantly." },
+    { title: "Take a diagnostic test", body: "Take a full, timed, no-help practice test on Blue Book first. Don't worry if it isn't great — you need a baseline before you know what to study." },
+    { title: "Drill your weaknesses", body: "Use Erica Meltzer for grammar, or Khan Academy / Miyagi Labs for math. Target the specific question types you missed." },
+    { title: "Take regular practice tests", body: "Every 2–3 weeks, retest to track progress. Don't burn all 10 Blue Book tests early — save some for closer to test day." },
+    { title: "Review and repeat", body: "Understand why you got each question wrong, learn the pattern, and keep cycling through practice → review → drill." },
+  ];
+  return (
+    <div style={{ background: "#0b0f17" }}>
+      <style>{transitions}</style>
+      <section style={{ padding: "80px 5% 40px", textAlign: "center" }}>
+        <h1 style={{ color: "white", fontSize: "clamp(2rem,5vw,3rem)", fontWeight: 900, marginBottom: 14 }}>Ultimate SAT Study Guide</h1>
+        <p style={{ color: "#94a3b8", fontSize: 17 }}>Everything you need to ace the SAT, completely free.</p>
+      </section>
+
+      <div style={{ maxWidth: 800, margin: "0 auto 10px", padding: "0 5%" }}>
+        <div style={{ borderRadius: 18, overflow: "hidden", border: "1px solid #263244" }}>
+          <img
+            src="https://images.unsplash.com/photo-1514369118554-e20d93546b30?auto=format&fit=crop&w=1400&q=80"
+            alt="A student writing in a notebook"
+            style={{ width: "100%", height: "auto", maxHeight: 300, objectFit: "cover", display: "block" }}
+          />
+        </div>
+      </div>
+
+      <section style={{ padding: "30px 5% 60px", maxWidth: 1000, margin: "0 auto" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))", gap: 22, marginBottom: 50 }}>
+          <div className="mt-card-hover" style={{ background: "#161d2b", border: "1px solid #263244", borderRadius: 18, padding: 26 }}>
+            <span style={{ background: "#10b98122", color: "#34d399", borderRadius: 999, padding: "4px 12px", fontSize: 12, fontWeight: 800 }}>FREE — $0</span>
+            <h3 style={{ color: "white", fontSize: 18, fontWeight: 800, margin: "14px 0 6px" }}>Practice Questions</h3>
+            <p style={{ color: "#94a3b8", fontSize: 14, lineHeight: 1.6 }}>200 original questions on this site (100 Math, 100 Reading & Writing), plus Question Bank (non-active), Khan Academy, and Miyagi Labs.</p>
+            <h3 style={{ color: "white", fontSize: 18, fontWeight: 800, margin: "18px 0 6px" }}>Videos</h3>
+            <p style={{ color: "#94a3b8", fontSize: 14, lineHeight: 1.6 }}>Khan Academy.</p>
+            <h3 style={{ color: "white", fontSize: 18, fontWeight: 800, margin: "18px 0 6px" }}>Practice Tests</h3>
+            <p style={{ color: "#94a3b8", fontSize: 14, lineHeight: 1.6 }}>Blue Book (official College Board — only 10, use wisely), Princeton Review (1 free with sign-up), Miyagi Labs.</p>
+          </div>
+          <div className="mt-card-hover" style={{ background: "#161d2b", border: "1px solid #263244", borderRadius: 18, padding: 26 }}>
+            <span style={{ background: "#f59e0b22", color: "#f59e0b", borderRadius: 999, padding: "4px 12px", fontSize: 12, fontWeight: 800 }}>OPTIONAL — PAID</span>
+            <h3 style={{ color: "white", fontSize: 18, fontWeight: 800, margin: "14px 0 6px" }}>Recommended Books</h3>
+            <p style={{ color: "#94a3b8", fontSize: 14, lineHeight: 1.6 }}>Princeton Review, Erica Meltzer (highly recommended for R&W), Kaplan. Some can be found secondhand.</p>
+          </div>
+        </div>
+
+        <h2 style={{ color: "white", fontSize: 26, fontWeight: 800, marginBottom: 24, textAlign: "center" }}>Example Study Plan</h2>
+        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+          {steps.map((s, i) => (
+            <div key={i} className="mt-card-hover" style={{ background: "#161d2b", border: "1px solid #263244", borderRadius: 16, padding: 22, display: "flex", gap: 18 }}>
+              <div style={{ width: 34, height: 34, borderRadius: "50%", background: "#f59e0b", color: "#111827", fontWeight: 800, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                {i + 1}
+              </div>
+              <div>
+                <h4 style={{ color: "white", fontSize: 16, fontWeight: 700, marginBottom: 6 }}>{s.title}</h4>
+                <p style={{ color: "#94a3b8", fontSize: 14, lineHeight: 1.6 }}>{s.body}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div style={{ background: "#1f2937", border: "1px solid #f59e0b", borderRadius: 16, padding: 22, marginTop: 28 }}>
+          <p style={{ color: "#f59e0b", fontWeight: 800, fontSize: 13, marginBottom: 8 }}>A NOTE ON VOCABULARY</p>
+          <p style={{ color: "#e2e8f0", fontSize: 14, lineHeight: 1.6 }}>
+            This is the one section almost everyone agrees you can't really study for short-term. Unless you start 6+ months out or read consistently for a year, vocab is partially out of your control. If you're missing more than 3–5 vocab questions, try SAT vocab lists on Quizlet.
+          </p>
+        </div>
+
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))", gap: 22, marginTop: 28 }}>
+          <div className="mt-card-hover" style={{ background: "#161d2b", border: "1px solid #263244", borderRadius: 16, padding: 26 }}>
+            <p style={{ background: "#f59e0b22", color: "#f59e0b", display: "inline-block", borderRadius: 999, padding: "4px 12px", fontSize: 12, fontWeight: 800, marginBottom: 12 }}>DESMOS</p>
+            <h3 style={{ color: "white", fontSize: 18, fontWeight: 800, marginBottom: 10 }}>The 15-second Desmos decision</h3>
+            <p style={{ color: "#94a3b8", fontSize: 14, lineHeight: 1.7 }}>
+              Identify the requested quantity → ask if it's an intersection, intercept, vertex, regression, parameter, or batch-check problem → write the equation(s) before opening Desmos → choose the shortest move → read only what's asked → check sign, scale, domain, and rounding.
+            </p>
+          </div>
+          <div className="mt-card-hover" style={{ background: "#161d2b", border: "1px solid #263244", borderRadius: 16, padding: 26 }}>
+            <p style={{ background: "#f59e0b22", color: "#f59e0b", display: "inline-block", borderRadius: 999, padding: "4px 12px", fontSize: 12, fontWeight: 800, marginBottom: 12 }}>READING & WRITING</p>
+            <h3 style={{ color: "white", fontSize: 18, fontWeight: 800, marginBottom: 10 }}>The same-pattern approach</h3>
+            <p style={{ color: "#94a3b8", fontSize: 14, lineHeight: 1.7 }}>
+              Name the question type first (words in context, transitions, agreement, etc.) → answer the question using only the passage, before reading the choices → eliminate choices that are true but off-topic, or that add unsupported claims → for grammar, isolate the core subject and verb before worrying about commas.
+            </p>
+          </div>
+        </div>
+
+        <div style={{ textAlign: "center", marginTop: 24 }}>
+          <button className="mt-btn" onClick={() => setPage("practice")} style={{ background: "#f59e0b", color: "#111827", border: "none", borderRadius: 999, padding: "10px 22px", fontWeight: 800, cursor: "pointer", fontSize: 14 }}>
+            Try all 200 questions →
+          </button>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+// ============================================================
+// ROOT APP
+// ============================================================
+
+export default function App() {
+  const [page, setPage] = useState("home");
+  const visitorCount = useVisitorCounter();
+
+  let content;
+  if (page === "practice") content = <PracticePage visitorCount={visitorCount} />;
+  else if (page === "mission") content = <MissionPage />;
+  else if (page === "guide") content = <GuidePage setPage={setPage} />;
+  else content = <HomePage setPage={setPage} visitorCount={visitorCount} />;
+
+  return (
+    <div style={{ fontFamily: "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif", background: "#0b0f17", minHeight: "100vh" }}>
+      <Nav page={page} setPage={setPage} />
+      {content}
+      <Footer />
+    </div>
+  );
+}
