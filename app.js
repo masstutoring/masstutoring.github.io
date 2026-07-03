@@ -194,13 +194,13 @@ function renderHomePage() {
           <p class="involved-tag accent">STUDENT</p>
           <h3>Get a free tutor</h3>
           <p>Get matched with a tutor who scored 1530+, on Math or Reading &amp; Writing, completely free.</p>
-          <a href="https://forms.gle/your-student-form" target="_blank" rel="noreferrer" class="involved-link-primary mt-btn">Request a Tutor</a>
+          <a href="https://forms.gle/twdbjZLheSdaHJa28" target="_blank" rel="noreferrer" class="involved-link-primary mt-btn">Request a Tutor</a>
         </div>
         <div class="involved-card mt-card-hover">
           <p class="involved-tag dim">TUTOR</p>
           <h3>Become a tutor</h3>
           <p>Scored 1530+? Teach what you know, build real teaching experience, and help close the access gap.</p>
-          <a href="https://forms.gle/your-tutor-form" target="_blank" rel="noreferrer" class="involved-link-secondary mt-btn">Apply to Tutor</a>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKoQbKU6eqq6AaF3wdkfqWPHH0u3a5ggu-5eNA_uPe2h3lWg/viewform" target="_blank" rel="noreferrer" class="involved-link-secondary mt-btn">Apply to Tutor</a>
         </div>
       </div>
     </section>
