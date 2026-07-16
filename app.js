@@ -8,6 +8,7 @@ let visitorCount = BASE_COUNT;
 const state = {
   page: "home",
   faqOpen: 0,
+  sample: { selected: "", revealed: false },
   practice: {
     subject: "Math",
     domainFilter: "All",
@@ -20,6 +21,19 @@ const state = {
     finished: false,
   },
 };
+
+// The question shown live in the home hero (from data.js).
+const SAMPLE_QUESTION = MATH_QUESTIONS.find((q) => q.n === 2) || MATH_QUESTIONS[0];
+
+// Light-theme difficulty tag classes (DIFF_COLORS in data.js is dark-theme).
+const DIFF_CLASS = {
+  Easy: "tag--easy",
+  Medium: "tag--medium",
+  Hard: "tag--hard",
+  "Very Hard": "tag--veryhard",
+};
+
+const BUBBLE_LETTERS = ["A", "B", "C", "D", "E"];
 
 function getQuestions() {
   return state.practice.subject === "Math" ? MATH_QUESTIONS : RW_QUESTIONS;
@@ -40,18 +54,18 @@ function getPool() {
 
 function catMarkSvg(size) {
   return `
-    <svg width="${size}" height="${size}" viewBox="0 0 64 64" style="flex-shrink:0">
-      <circle cx="32" cy="32" r="31" fill="#111827" stroke="#f59e0b" stroke-width="2" />
-      <path d="M18 20 L24 30 L20 30 Z" fill="white" />
-      <path d="M46 20 L40 30 L44 30 Z" fill="white" />
-      <ellipse cx="32" cy="36" rx="15" ry="13" fill="white" />
-      <circle cx="26" cy="33" r="2.4" fill="#111827" />
-      <circle cx="38" cy="33" r="2.4" fill="#111827" />
-      <path d="M30 40 Q32 42 34 40" stroke="#111827" stroke-width="1.6" fill="none" stroke-linecap="round" />
-      <line x1="14" y1="37" x2="22" y2="36" stroke="#111827" stroke-width="1.2" />
-      <line x1="14" y1="40" x2="22" y2="40" stroke="#111827" stroke-width="1.2" />
-      <line x1="50" y1="37" x2="42" y2="36" stroke="#111827" stroke-width="1.2" />
-      <line x1="50" y1="40" x2="42" y2="40" stroke="#111827" stroke-width="1.2" />
+    <svg width="${size}" height="${size}" viewBox="0 0 64 64" style="flex-shrink:0" aria-hidden="true">
+      <circle cx="32" cy="32" r="31" fill="#14213D" stroke="#F59E0B" stroke-width="2" />
+      <path d="M18 20 L24 30 L20 30 Z" fill="#FBFAF7" />
+      <path d="M46 20 L40 30 L44 30 Z" fill="#FBFAF7" />
+      <ellipse cx="32" cy="36" rx="15" ry="13" fill="#FBFAF7" />
+      <circle cx="26" cy="33" r="2.4" fill="#14213D" />
+      <circle cx="38" cy="33" r="2.4" fill="#14213D" />
+      <path d="M30 40 Q32 42 34 40" stroke="#14213D" stroke-width="1.6" fill="none" stroke-linecap="round" />
+      <line x1="14" y1="37" x2="22" y2="36" stroke="#14213D" stroke-width="1.2" />
+      <line x1="14" y1="40" x2="22" y2="40" stroke="#14213D" stroke-width="1.2" />
+      <line x1="50" y1="37" x2="42" y2="36" stroke="#14213D" stroke-width="1.2" />
+      <line x1="50" y1="40" x2="42" y2="40" stroke="#14213D" stroke-width="1.2" />
     </svg>
   `;
 }
@@ -73,6 +87,10 @@ function escAttr(str) {
   return esc(str);
 }
 
+function isAnswer(q, value) {
+  return value.trim().toLowerCase() === q.answer.trim().toLowerCase();
+}
+
 // ============================================================
 // ROUTER
 // ============================================================
@@ -84,7 +102,6 @@ function setPage(page) {
 }
 
 function render() {
-  // nav active states
   document.querySelectorAll(".nav-link").forEach((btn) => {
     btn.classList.toggle("active", btn.dataset.page === state.page);
   });
@@ -108,12 +125,49 @@ function render() {
 // HOME PAGE
 // ============================================================
 
-function scoreBadgeHtml(before, after) {
+function sampleQuestionHtml() {
+  const q = SAMPLE_QUESTION;
+  const s = state.sample;
+
+  const choices = q.choices
+    .map((c, i) => {
+      const correct = isAnswer(q, c);
+      const chosen = c === s.selected;
+      let cls = "";
+      if (s.revealed && correct) cls = " is-correct";
+      else if (s.revealed && chosen && !correct) cls = " is-incorrect";
+      return `
+        <button class="bubble-choice${cls}" data-sample-choice="${escAttr(c)}" ${s.revealed ? "disabled" : ""}>
+          <span class="bubble">${BUBBLE_LETTERS[i]}</span>
+          <span>${esc(c)}</span>
+        </button>
+      `;
+    })
+    .join("");
+
+  let feedback = "";
+  if (s.revealed) {
+    const good = isAnswer(q, s.selected);
+    feedback = `
+      <div class="booklet-feedback fade-in">
+        <p class="verdict ${good ? "good" : "bad"}">${good ? "CORRECT." : `NOT QUITE — THE ANSWER IS ${esc(q.answer)}.`}</p>
+        <p style="margin:8px 0 0">${esc(q.solution)}</p>
+        <div class="booklet-more">
+          <button class="btn btn--amber btn--sm" data-page="practice">Keep going — 199 more questions →</button>
+        </div>
+      </div>
+    `;
+  }
+
   return `
-    <div class="score-badge">
-      <span class="score-after">${after}</span>
-      <span class="score-delta">+${after - before} pts</span>
-      <span class="score-range">${before} &rarr; ${after}</span>
+    <div class="booklet">
+      <div class="booklet-head">
+        <span>Section 2 · Math · No. ${q.n}</span>
+        <span class="live">Live — try it</span>
+      </div>
+      <p class="booklet-prompt">${esc(q.prompt)}</p>
+      ${choices}
+      ${feedback}
     </div>
   `;
 }
@@ -124,21 +178,26 @@ function renderHomePage() {
   const testimonialCards = loop
     .map(
       (t) => `
-      <div class="testimonial-card mt-card-hover">
-        ${scoreBadgeHtml(t.before, t.after)}
-        <p class="testimonial-text">&ldquo;${esc(t.text)}&rdquo;</p>
-        <p class="testimonial-name">&mdash; ${esc(t.name)}</p>
+      <div class="t-card">
+        <div class="t-score">
+          <span class="path">${t.before} → <strong>${t.after}</strong></span>
+          <span class="delta">+${t.after - t.before} pts</span>
+        </div>
+        <p class="t-text">&ldquo;${esc(t.text)}&rdquo;</p>
+        <p class="t-name">— ${esc(t.name)}</p>
       </div>
     `
     )
     .join("");
 
   const featureCards = FEATURES.map(
-    (f, i) => `
-      <div class="feature-card mt-card-hover">
-        <div class="feature-num">${i + 1}</div>
-        <h3>${esc(f.title)}</h3>
-        <p>${esc(f.desc)}</p>
+    (f) => `
+      <div class="feature-card">
+        <div class="feature-check" aria-hidden="true">✓</div>
+        <div>
+          <h3>${esc(f.title)}</h3>
+          <p>${esc(f.desc)}</p>
+        </div>
       </div>
     `
   ).join("");
@@ -146,80 +205,104 @@ function renderHomePage() {
   const faqItems = FAQS.map(
     (f, i) => `
       <div class="faq-item">
-        <button class="faq-question mt-btn" data-faq-index="${i}">
-          ${esc(f.q)}
-          <span class="plusminus">${state.faqOpen === i ? "&minus;" : "+"}</span>
+        <button class="faq-question" data-faq-index="${i}" aria-expanded="${state.faqOpen === i}">
+          <span class="q-mark">Q${i + 1}.</span>
+          <span>${esc(f.q)}</span>
+          <span class="plusminus" aria-hidden="true">${state.faqOpen === i ? "&minus;" : "+"}</span>
         </button>
-        <p class="faq-answer mt-fade-in${state.faqOpen === i ? " open" : ""}">${esc(f.a)}</p>
+        <p class="faq-answer${state.faqOpen === i ? " open" : ""}">${esc(f.a)}</p>
       </div>
     `
   ).join("");
 
   return `
     <section class="hero">
-      <div class="hero-badge">Built by high schoolers. 100% free, always.</div>
-      <h1>We tutor the SAT.<br />For free.</h1>
-      <p class="lede">A free, peer-to-peer SAT tutoring platform. Real tutors who scored 1530+, a full study guide, and 200 original practice questions across Math and Reading &amp; Writing &mdash; no $200/hour required.</p>
-      <div style="margin-bottom:30px">
-        <div class="visitor-badge">
-          <span class="visitor-dot"></span>
-          <span class="label"><strong id="visitor-count">${visitorCount.toLocaleString()}</strong> students helped so far</span>
+      <div class="hero-grid">
+        <div>
+          <div class="hero-badge">Built by high schoolers · 100% free, always</div>
+          <h1>We tutor the SAT.<br /><span class="hl">For free.</span></h1>
+          <p class="lede">Peer-to-peer SAT tutoring from students who scored <strong>1530+</strong>, a full study guide, and 200 original practice questions across Math and Reading &amp; Writing — no $200/hour required.</p>
+          <div class="hero-actions">
+            <button class="btn btn--ink" data-page="practice">Start practicing</button>
+            <button class="btn btn--ghost" data-page="guide">Read the free guide</button>
+          </div>
+          <div class="visitor-badge">
+            <span class="visitor-dot" aria-hidden="true"></span>
+            <span><strong id="visitor-count">${visitorCount.toLocaleString()}</strong> students helped so far</span>
+          </div>
         </div>
-      </div>
-      <div class="hero-actions">
-        <button class="btn-primary mt-btn" data-page="practice">Get Started &mdash; Try a Question</button>
-        <button class="btn-secondary mt-btn" data-page="guide">See the Free Guide</button>
-      </div>
-      <div class="hero-image-wrap">
-        <img src="https://images.unsplash.com/photo-1655337690727-5224680c8c07?auto=format&fit=crop&w=1600&q=80" alt="Students studying together in a classroom" />
-      </div>
-    </section>
-
-    <section class="testimonials-section">
-      <h2>No tuition. No catch. <span class="accent">Just show up ready to learn.</span></h2>
-      <div class="mt-marquee">${testimonialCards}</div>
-    </section>
-
-    <section class="features-section">
-      <h2 class="section-title">Everything you need. None of the cost.</h2>
-      <p class="section-sub">Princeton Review charges $200+/hour. Here's what you get from us for $0.</p>
-      <div class="features-grid">${featureCards}</div>
-    </section>
-
-    <section class="involved-section">
-      <h2 class="section-title">How to get involved</h2>
-      <p class="section-sub">No tiers, no plans, no payment info. Just pick one.</p>
-      <div class="involved-grid">
-        <div class="involved-card highlight mt-card-hover">
-          <p class="involved-tag accent">STUDENT</p>
-          <h3>Get a free tutor</h3>
-          <p>Get matched with a tutor who scored 1530+, on Math or Reading &amp; Writing, completely free.</p>
-          <a href="https://forms.gle/twdbjZLheSdaHJa28" target="_blank" rel="noreferrer" class="involved-link-primary mt-btn">Request a Tutor</a>
-        </div>
-        <div class="involved-card mt-card-hover">
-          <p class="involved-tag dim">TUTOR</p>
-          <h3>Become a tutor</h3>
-          <p>Scored 1530+? Teach what you know, build real teaching experience, and help close the access gap.</p>
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKoQbKU6eqq6AaF3wdkfqWPHH0u3a5ggu-5eNA_uPe2h3lWg/viewform" target="_blank" rel="noreferrer" class="involved-link-secondary mt-btn">Apply to Tutor</a>
+        <div>
+          ${sampleQuestionHtml()}
         </div>
       </div>
     </section>
 
-    <section class="faq-section">
-      <h2 class="section-title">FAQ</h2>
-      <div class="faq-list">${faqItems}</div>
+    <section class="section section--rule testimonials">
+      <div class="heading-wrap">
+        <p class="eyebrow">Score reports</p>
+        <h2 class="section-title">No tuition. No catch.</h2>
+        <p class="section-sub">Just show up ready to learn.</p>
+      </div>
+      <div class="marquee">${testimonialCards}</div>
+    </section>
+
+    <section class="section section--rule">
+      <div class="inner">
+        <p class="eyebrow">The checklist</p>
+        <h2 class="section-title">Everything you need. None of the cost.</h2>
+        <p class="section-sub">Princeton Review charges $200+/hour. Here's what you get from us for $0.</p>
+        <div class="features-grid">${featureCards}</div>
+      </div>
+    </section>
+
+    <section class="section section--rule">
+      <div class="inner center">
+        <p class="eyebrow">Two forms, one minute</p>
+        <h2 class="section-title">How to get involved</h2>
+        <p class="section-sub">No tiers, no plans, no payment info. Just pick one.</p>
+        <div class="involved-grid">
+          <div class="form-card primary">
+            <p class="form-tag">Form A — Students</p>
+            <h3>Get a free tutor</h3>
+            <p>Get matched with a tutor who scored 1530+, on Math or Reading &amp; Writing, completely free.</p>
+            <a href="https://forms.gle/twdbjZLheSdaHJa28" target="_blank" rel="noreferrer" class="btn btn--amber">Request a tutor</a>
+          </div>
+          <div class="form-card">
+            <p class="form-tag">Form B — Tutors</p>
+            <h3>Become a tutor</h3>
+            <p>Scored 1530+? Teach what you know, build real teaching experience, and help close the access gap.</p>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKoQbKU6eqq6AaF3wdkfqWPHH0u3a5ggu-5eNA_uPe2h3lWg/viewform" target="_blank" rel="noreferrer" class="btn btn--ghost">Apply to tutor</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="inner center">
+        <h2 class="section-title">Questions, answered</h2>
+        <p class="section-sub">The ones we hear most.</p>
+        <div class="faq-list">${faqItems}</div>
+      </div>
     </section>
   `;
 }
 
 function wireHomePage() {
-  document.querySelectorAll("[data-page]").forEach((el) => {
+  document.querySelectorAll("#page-root [data-page]").forEach((el) => {
     el.addEventListener("click", () => setPage(el.dataset.page));
   });
   document.querySelectorAll("[data-faq-index]").forEach((btn) => {
     btn.addEventListener("click", () => {
       const i = Number(btn.dataset.faqIndex);
       state.faqOpen = state.faqOpen === i ? -1 : i;
+      render();
+    });
+  });
+  document.querySelectorAll("[data-sample-choice]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      if (state.sample.revealed) return;
+      state.sample.selected = btn.dataset.sampleChoice;
+      state.sample.revealed = true;
       render();
     });
   });
@@ -230,19 +313,19 @@ function wireHomePage() {
 // ============================================================
 
 const MISSION_CARDS = [
-  { emoji: "\u{1F4B8}", title: "Test prep is expensive.", body: "The average cost of SAT tutoring is $200+/hour. Companies like Princeton Review charge upwards of $10,000 for complete prep programs." },
-  { emoji: "\u2705", title: "You don't need to overpay for a good score.", body: "Our founders scored 1550 and 1560 without any paid tutoring. We built Mass Tutoring on the strategies that actually worked for us." },
-  { emoji: "\u{1F4DA}", title: "Don't over-complicate studying.", body: "There's no magic strategy — just a solid study plan, consistent practice, and personalized guidance. That's what we provide, for free." },
-  { emoji: "\u{1F91D}", title: "Learn from peers, not strangers.", body: "Every tutor just took the test themselves. They know what works because they recently succeeded using these exact methods." },
-  { emoji: "\u{1F3AF}", title: "The SAT matters more than ever.", body: "With more universities reinstating SAT requirements, a strong score is crucial. We're here to help you reach it." },
-  { emoji: "\u{1F30D}", title: "Economics shouldn't limit opportunity.", body: "There's a direct correlation between income and SAT scores — not because wealthier students are smarter, but because they can afford tutoring. We're working to close that gap." },
+  { tag: "The cost", title: "Test prep is expensive.", body: "The average cost of SAT tutoring is $200+/hour. Companies like Princeton Review charge upwards of $10,000 for complete prep programs." },
+  { tag: "The proof", title: "You don't need to overpay for a good score.", body: "Our founders scored 1550 and 1560 without any paid tutoring. We built Mass Tutoring on the strategies that actually worked for us." },
+  { tag: "The method", title: "Don't over-complicate studying.", body: "There's no magic strategy — just a solid study plan, consistent practice, and personalized guidance. That's what we provide, for free." },
+  { tag: "The people", title: "Learn from peers, not strangers.", body: "Every tutor just took the test themselves. They know what works because they recently succeeded using these exact methods." },
+  { tag: "The stakes", title: "The SAT matters more than ever.", body: "With more universities reinstating SAT requirements, a strong score is crucial. We're here to help you reach it." },
+  { tag: "The gap", title: "Economics shouldn't limit opportunity.", body: "There's a direct correlation between income and SAT scores — not because wealthier students are smarter, but because they can afford tutoring. We're working to close that gap." },
 ];
 
 function renderMissionPage() {
   const cards = MISSION_CARDS.map(
     (c) => `
-      <div class="mission-card mt-card-hover">
-        <div class="emoji">${c.emoji}</div>
+      <div class="mission-card">
+        <p class="eyebrow">${esc(c.tag)}</p>
         <h3>${esc(c.title)}</h3>
         <p>${esc(c.body)}</p>
       </div>
@@ -250,39 +333,41 @@ function renderMissionPage() {
   ).join("");
 
   return `
-    <section class="mission-hero">
+    <section class="page-hero">
+      <p class="eyebrow">Why we exist</p>
       <h1>Our Mission</h1>
-    </section>
-
-    <section class="mission-intro">
       <p class="lede"><strong>Ethan Moran</strong> and <strong>Albert Wen</strong>, students at Buckingham Browne &amp; Nichols School in Cambridge, Massachusetts, founded Mass Tutoring with one mission: make SAT prep simple, accessible, and free for every student.</p>
-      <div class="mission-image-wrap">
-        <img src="https://images.unsplash.com/photo-1721702754494-fdd7189f946c?auto=format&fit=crop&w=1400&q=80" alt="A library filled with books" />
-      </div>
-      <div class="mission-cards-grid">${cards}</div>
     </section>
 
-    <section class="founders-section">
-      <h2>Meet the Founders</h2>
-      <div class="founders-grid">
-        <div class="founder">
-          <div class="founder-avatar">EM</div>
-          <p class="founder-name">Ethan Moran</p>
-          <p class="founder-score">SAT Superscore: 1550</p>
-          <p class="founder-placeholder">[ photo placeholder ]</p>
-        </div>
-        <div class="founder">
-          <div class="founder-avatar">AW</div>
-          <p class="founder-name">Albert Wen</p>
-          <p class="founder-score">SAT Superscore: 1560</p>
-          <p class="founder-placeholder">[ photo placeholder ]</p>
-        </div>
+    <section class="section">
+      <div class="inner">
+        <div class="mission-cards-grid">${cards}</div>
       </div>
-      <div class="founders-letter">
-        <p>Hi, we're Ethan and Albert. In every student's journey, standardized testing plays a vital role. While the SAT definitely isn't a measure of intelligence, it matters for college admissions and can shape your opportunities.</p>
-        <p>The major problem? Access to tutoring. With companies charging over $200/hour, quality test prep isn't accessible to most families. Wealthier students score higher — not because they're smarter, but because they can afford expensive tutoring.</p>
-        <p>We created Mass Tutoring to break that cycle. Both of us scored highly (1550 and 1560) without any paid tutoring. By connecting tutors who scored 1530+ with students who need help, we're making test prep accessible to everyone.</p>
-        <p class="signoff"><strong>Your goals are our goals too.</strong><br />With care, Ethan Moran &amp; Albert Wen</p>
+    </section>
+
+    <section class="section founders">
+      <div class="inner center">
+        <p class="eyebrow">The founders</p>
+        <h2 class="section-title">Meet Ethan &amp; Albert</h2>
+        <p class="section-sub">Two students who did it without paid tutoring — and wrote down how.</p>
+        <div class="founders-grid">
+          <div class="founder">
+            <div class="founder-avatar">EM</div>
+            <p class="founder-name">Ethan Moran</p>
+            <p class="founder-score">SAT SUPERSCORE 1550</p>
+          </div>
+          <div class="founder">
+            <div class="founder-avatar">AW</div>
+            <p class="founder-name">Albert Wen</p>
+            <p class="founder-score">SAT SUPERSCORE 1560</p>
+          </div>
+        </div>
+        <div class="letter">
+          <p>Hi, we're Ethan and Albert. In every student's journey, standardized testing plays a vital role. While the SAT definitely isn't a measure of intelligence, it matters for college admissions and can shape your opportunities.</p>
+          <p>The major problem? Access to tutoring. With companies charging over $200/hour, quality test prep isn't accessible to most families. Wealthier students score higher — not because they're smarter, but because they can afford expensive tutoring.</p>
+          <p>We created Mass Tutoring to break that cycle. Both of us scored highly (1550 and 1560) without any paid tutoring. By connecting tutors who scored 1530+ with students who need help, we're making test prep accessible to everyone.</p>
+          <p class="signoff"><strong>Your goals are our goals too.</strong><br />With care, Ethan Moran &amp; Albert Wen</p>
+        </div>
       </div>
     </section>
   `;
@@ -304,7 +389,7 @@ const GUIDE_STEPS = [
 function renderGuidePage() {
   const steps = GUIDE_STEPS.map(
     (s, i) => `
-      <div class="guide-step mt-card-hover">
+      <div class="guide-step">
         <div class="guide-step-num">${i + 1}</div>
         <div>
           <h4>${esc(s.title)}</h4>
@@ -315,58 +400,58 @@ function renderGuidePage() {
   ).join("");
 
   return `
-    <section class="guide-hero">
+    <section class="page-hero">
+      <p class="eyebrow">The syllabus</p>
       <h1>Ultimate SAT Study Guide</h1>
-      <p>Everything you need to ace the SAT, completely free.</p>
+      <p class="lede">Everything you need to ace the SAT, completely free.</p>
     </section>
 
-    <div class="guide-image-wrap">
-      <div class="guide-image-inner">
-        <img src="https://images.unsplash.com/photo-1514369118554-e20d93546b30?auto=format&fit=crop&w=1400&q=80" alt="A student writing in a notebook" />
-      </div>
-    </div>
-
-    <section class="guide-section">
-      <div class="guide-resources-grid">
-        <div class="guide-card mt-card-hover">
-          <span class="guide-pill free">FREE — $0</span>
-          <h3>Practice Questions</h3>
-          <p>200 original questions on this site (100 Math, 100 Reading &amp; Writing), plus Question Bank (non-active), Khan Academy, and Miyagi Labs.</p>
-          <h3>Videos</h3>
-          <p>Khan Academy.</p>
-          <h3>Practice Tests</h3>
-          <p>Blue Book (official College Board — only 10, use wisely), Princeton Review (1 free with sign-up), Miyagi Labs.</p>
+    <section class="section">
+      <div class="inner">
+        <div class="guide-resources-grid">
+          <div class="guide-card">
+            <span class="guide-pill free">FREE — $0</span>
+            <h3>Practice questions</h3>
+            <p>200 original questions on this site (100 Math, 100 Reading &amp; Writing), plus Question Bank (non-active), Khan Academy, and Miyagi Labs.</p>
+            <h3>Videos</h3>
+            <p>Khan Academy.</p>
+            <h3>Practice tests</h3>
+            <p>Blue Book (official College Board — only 10, use wisely), Princeton Review (1 free with sign-up), Miyagi Labs.</p>
+          </div>
+          <div class="guide-card">
+            <span class="guide-pill paid">OPTIONAL — PAID</span>
+            <h3>Recommended books</h3>
+            <p>Princeton Review, Erica Meltzer (highly recommended for R&amp;W), Kaplan. Some can be found secondhand.</p>
+          </div>
         </div>
-        <div class="guide-card mt-card-hover">
-          <span class="guide-pill paid">OPTIONAL — PAID</span>
-          <h3>Recommended Books</h3>
-          <p>Princeton Review, Erica Meltzer (highly recommended for R&amp;W), Kaplan. Some can be found secondhand.</p>
+
+        <div class="center">
+          <h2 class="section-title">Example study plan</h2>
+          <p class="section-sub" style="margin-left:auto;margin-right:auto">Six steps, three months, zero dollars.</p>
         </div>
-      </div>
+        <div class="guide-steps">${steps}</div>
 
-      <h2 class="guide-plan-title">Example Study Plan</h2>
-      <div class="guide-steps">${steps}</div>
-
-      <div class="vocab-note">
-        <p class="label">A NOTE ON VOCABULARY</p>
-        <p class="body">This is the one section almost everyone agrees you can't really study for short-term. Unless you start 6+ months out or read consistently for a year, vocab is partially out of your control. If you're missing more than 3–5 vocab questions, try SAT vocab lists on Quizlet.</p>
-      </div>
-
-      <div class="strategy-cards-grid">
-        <div class="strategy-card mt-card-hover">
-          <p class="strategy-pill">DESMOS</p>
-          <h3>The 15-second Desmos decision</h3>
-          <p>Identify the requested quantity → ask if it's an intersection, intercept, vertex, regression, parameter, or batch-check problem → write the equation(s) before opening Desmos → choose the shortest move → read only what's asked → check sign, scale, domain, and rounding.</p>
+        <div class="sticky-note">
+          <p class="label">A NOTE ON VOCABULARY</p>
+          <p class="body">This is the one section almost everyone agrees you can't really study for short-term. Unless you start 6+ months out or read consistently for a year, vocab is partially out of your control. If you're missing more than 3–5 vocab questions, try SAT vocab lists on Quizlet.</p>
         </div>
-        <div class="strategy-card mt-card-hover">
-          <p class="strategy-pill">READING &amp; WRITING</p>
-          <h3>The same-pattern approach</h3>
-          <p>Name the question type first (words in context, transitions, agreement, etc.) → answer the question using only the passage, before reading the choices → eliminate choices that are true but off-topic, or that add unsupported claims → for grammar, isolate the core subject and verb before worrying about commas.</p>
-        </div>
-      </div>
 
-      <div class="guide-cta-row">
-        <button class="btn-primary mt-btn" id="guide-try-all">Try all 200 questions →</button>
+        <div class="strategy-grid">
+          <div class="strategy-card">
+            <span class="guide-pill paid">DESMOS</span>
+            <h3>The 15-second Desmos decision</h3>
+            <p>Identify the requested quantity → ask if it's an intersection, intercept, vertex, regression, parameter, or batch-check problem → write the equation(s) before opening Desmos → choose the shortest move → read only what's asked → check sign, scale, domain, and rounding.</p>
+          </div>
+          <div class="strategy-card">
+            <span class="guide-pill paid">READING &amp; WRITING</span>
+            <h3>The same-pattern approach</h3>
+            <p>Name the question type first (words in context, transitions, agreement, etc.) → answer the question using only the passage, before reading the choices → eliminate choices that are true but off-topic, or that add unsupported claims → for grammar, isolate the core subject and verb before worrying about commas.</p>
+          </div>
+        </div>
+
+        <div class="center">
+          <button class="btn btn--ink" id="guide-try-all">Try all 200 questions →</button>
+        </div>
       </div>
     </section>
   `;
@@ -427,13 +512,13 @@ function renderPracticePage() {
       <div class="no-questions">
         ${subjectToggleHtml()}
         <p>No questions match these filters.</p>
+        <button class="btn btn--ghost btn--sm" id="clear-filters-btn">Clear filters</button>
       </div>
     `;
   }
 
   if (p.finished) {
     const pct = Math.round((p.score.correct / p.score.total) * 100);
-    const emoji = pct >= 80 ? "\u{1F3AF}" : pct >= 50 ? "\u{1F4C8}" : "\u{1F4AA}";
     const headline = p.missed.length === 0 ? "Clean sweep — nice work." : `Questions to review: #${p.missed.join(", #")}`;
     const detail =
       p.missed.length === 0
@@ -442,19 +527,24 @@ function renderPracticePage() {
     const otherSubject = p.subject === "Math" ? "Reading & Writing" : "Math";
 
     return `
-      <div class="results-wrap mt-fade-in">
+      <div class="results-wrap fade-in">
         <div class="results-inner">
-          <div class="results-emoji">${emoji}</div>
-          <h1>Set complete!</h1>
-          <p class="score-line">You got <strong>${p.score.correct}/${p.score.total}</strong> correct (${pct}%).</p>
-          <div class="results-summary">
-            <p class="headline">${esc(headline)}</p>
-            <p class="detail">${esc(detail)}</p>
+          <div class="report-card">
+            <div class="report-head">
+              <span>Score report</span>
+              <span>${esc(p.subject)}</span>
+            </div>
+            <p class="report-score">${p.score.correct}<span class="of"> / ${p.score.total}</span></p>
+            <p class="report-pct">${pct}% CORRECT</p>
+            <div class="report-note">
+              <p class="headline">${esc(headline)}</p>
+              <p class="detail">${esc(detail)}</p>
+            </div>
           </div>
           <div class="results-actions">
-            <button class="btn-solid mt-btn" id="try-again-btn">Try Again</button>
-            <button class="btn-outline mt-btn" id="all-questions-btn">All ${getQuestions().length} Questions</button>
-            <button class="btn-outline-accent mt-btn" id="switch-subject-btn">Switch to ${esc(otherSubject)}</button>
+            <button class="btn btn--ink" id="try-again-btn">Try again</button>
+            <button class="btn btn--ghost" id="all-questions-btn">All ${getQuestions().length} questions</button>
+            <button class="btn btn--ghost" id="switch-subject-btn">Switch to ${esc(otherSubject)}</button>
           </div>
         </div>
       </div>
@@ -464,18 +554,14 @@ function renderPracticePage() {
   const diffChips = ["All", ...DIFFICULTIES]
     .map((d) => {
       const isActive = p.diffFilter === d;
-      const activeColor = DIFF_COLORS[d] ? DIFF_COLORS[d].text : "#f59e0b";
-      const style = isActive
-        ? `background:${activeColor};color:#0b0f17;border-color:transparent;`
-        : `color:${DIFF_COLORS[d] ? DIFF_COLORS[d].text : "#94a3b8"};`;
-      return `<button class="chip mt-chip" style="${style}" data-diff="${escAttr(d)}">${esc(d)}</button>`;
+      return `<button class="chip${isActive ? " active" : ""}" data-diff="${escAttr(d)}">${esc(d)}</button>`;
     })
     .join("");
 
   const domainChips = ["All", ...DOMAINS]
     .map((d) => {
       const isActive = p.domainFilter === d;
-      return `<button class="chip mt-chip${isActive ? " active-domain" : ""}" data-domain="${escAttr(d)}">${esc(d)}</button>`;
+      return `<button class="chip${isActive ? " active" : ""}" data-domain="${escAttr(d)}">${esc(d)}</button>`;
     })
     .join("");
 
@@ -489,30 +575,35 @@ function renderPracticePage() {
   let choicesHtml = "";
   if (q.type === "mc") {
     const buttons = q.choices
-      .map((c) => {
-        const isThisCorrect = c.trim().toLowerCase() === q.answer.trim().toLowerCase();
+      .map((c, i) => {
+        const isThisCorrect = isAnswer(q, c);
         const isThisSelected = c === p.selected;
         let cls = "";
-        if (p.revealed && isThisCorrect) cls = "correct mt-pop";
-        else if (p.revealed && isThisSelected && !isThisCorrect) cls = "incorrect";
-        return `<button class="choice-btn mt-choice ${cls}" data-choice="${escAttr(c)}" ${p.revealed ? "disabled" : ""}>${esc(c)}</button>`;
+        if (p.revealed && isThisCorrect) cls = " is-correct";
+        else if (p.revealed && isThisSelected && !isThisCorrect) cls = " is-incorrect";
+        return `
+          <button class="bubble-choice${cls}" data-choice="${escAttr(c)}" ${p.revealed ? "disabled" : ""}>
+            <span class="bubble">${BUBBLE_LETTERS[i]}</span>
+            <span>${esc(c)}</span>
+          </button>
+        `;
       })
       .join("");
     choicesHtml = `<div class="choices">${buttons}</div>`;
   } else {
     choicesHtml = `
       <div class="free-response-row">
-        <input type="text" id="free-response-input" placeholder="Type your answer" value="${escAttr(p.selected)}" ${p.revealed ? "disabled" : ""} />
+        <input type="text" id="free-response-input" placeholder="Type your answer" value="${escAttr(p.selected)}" ${p.revealed ? "disabled" : ""} aria-label="Your answer" />
         <button id="free-response-check" ${p.revealed || !p.selected ? "disabled" : ""}>Check</button>
       </div>
     `;
   }
 
-  const isCorrect = p.revealed && p.selected.trim().toLowerCase() === q.answer.trim().toLowerCase();
+  const isCorrect = p.revealed && isAnswer(q, p.selected);
 
   let explanationHtml = "";
   if (p.revealed) {
-    const statusText = isCorrect ? "Correct!" : `Not quite — the answer is ${q.answer}`;
+    const statusText = isCorrect ? "CORRECT." : `NOT QUITE — THE ANSWER IS ${q.answer}`;
     let methodHtml = "";
     if (q.desmos) {
       const lines = q.desmos.map((line) => `<code class="desmos-line">${esc(line)}</code>`).join("");
@@ -521,7 +612,7 @@ function renderPracticePage() {
       methodHtml = `<p class="explanation-label">STRATEGY</p><p class="strategy-box">${esc(q.strategy)}</p>`;
     }
     explanationHtml = `
-      <div class="explanation mt-fade-in${isCorrect ? " is-correct" : ""}">
+      <div class="explanation fade-in${isCorrect ? " is-correct" : ""}">
         <p class="explanation-status${isCorrect ? " is-correct" : ""}">${esc(statusText)}</p>
         <p class="explanation-body">${esc(q.solution)}</p>
         ${methodHtml}
@@ -530,15 +621,16 @@ function renderPracticePage() {
   }
 
   const isLast = p.index + 1 >= pool.length;
+  const diffClass = DIFF_CLASS[q.difficulty] || "tag--medium";
 
   return `
     <div class="practice-wrap">
       <div class="practice-inner">
         <div class="practice-header">
-          ${catMarkSvg(30)}
+          ${catMarkSvg(34)}
           <div>
-            <h1>Practice — 200 Questions</h1>
-            <p>${visitorCount.toLocaleString()} students have used this tool</p>
+            <h1>Practice — 200 questions</h1>
+            <p>${visitorCount.toLocaleString()} STUDENTS HAVE USED THIS TOOL</p>
           </div>
         </div>
 
@@ -553,11 +645,11 @@ function renderPracticePage() {
         </div>
         <div class="progress-bar">${progressSegs}</div>
 
-        <div class="question-card mt-fade-in" key="${state.practice.subject}-${q.n}">
+        <div class="question-card fade-in">
           <div class="question-tags">
-            <span class="tag-num">#${q.n}</span>
-            <span class="tag-diff" style="background:${DIFF_COLORS[q.difficulty].bg};color:${DIFF_COLORS[q.difficulty].text}">${esc(q.difficulty)}</span>
-            <span class="tag-domain">${esc(q.domain)}</span>
+            <span class="tag tag--num">No. ${q.n}</span>
+            <span class="tag ${diffClass}">${esc(q.difficulty)}</span>
+            <span class="tag tag--domain">${esc(q.domain)}</span>
           </div>
 
           <p class="question-prompt">${esc(q.prompt)}</p>
@@ -566,8 +658,8 @@ function renderPracticePage() {
           ${explanationHtml}
 
           <div class="question-footer">
-            <button class="next-btn mt-btn${p.revealed ? " ready" : ""}" id="next-question-btn" ${p.revealed ? "" : "disabled"}>
-              ${p.revealed ? (isLast ? "See Results →" : "Next Question →") : "Answer to continue"}
+            <button class="btn ${p.revealed ? "btn--amber" : "btn--ghost"}" id="next-question-btn" ${p.revealed ? "" : "disabled"}>
+              ${p.revealed ? (isLast ? "See results →" : "Next question →") : "Answer to continue"}
             </button>
           </div>
         </div>
@@ -591,7 +683,7 @@ function checkAnswer(choice) {
   if (p.revealed || !q) return;
   p.selected = choice;
   p.revealed = true;
-  const isCorrect = choice.trim().toLowerCase() === q.answer.trim().toLowerCase();
+  const isCorrect = isAnswer(q, choice);
   p.score.total += 1;
   if (isCorrect) p.score.correct += 1;
   else p.missed.push(q.n);
@@ -661,6 +753,9 @@ function wirePracticePage() {
       switchSubject(p.subject === "Math" ? "Reading & Writing" : "Math");
     });
   }
+
+  const clearFiltersBtn = document.getElementById("clear-filters-btn");
+  if (clearFiltersBtn) clearFiltersBtn.addEventListener("click", () => applyFilters("All", "All"));
 }
 
 // ============================================================
@@ -674,7 +769,7 @@ function wireNav() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  visitorCount += 1; // count this visit, like the React useEffect did on mount
+  visitorCount += 1;
   wireNav();
   render();
 });
