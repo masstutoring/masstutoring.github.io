@@ -1,33 +1,42 @@
 # Mass Tutoring — masstutoring.com
 
-Free peer-to-peer SAT tutoring, built by students, for students. Live at
+Free, student-created SAT resource hub with free peer tutoring. Live at
 [www.masstutoring.com](https://www.masstutoring.com).
 
-## What's here
+## How this repo works
 
-| File | Purpose |
-| --- | --- |
-| `index.html` | Site entry point: nav, footer, fonts, and the `#page-root` mount |
-| `styles.css` | The full design system ("study binder": loose-leaf paper, scantron bubbles, highlighter accents) |
-| `app.js` | Client-side renderer and router for the Home, Mission, Guide, and Practice pages |
-| `data.js` | Content: 200 original SAT questions (100 Math, 100 Reading & Writing), testimonials, features, FAQs |
-| `CNAME` | Custom domain for GitHub Pages |
-| `betterq/`, `guide/`, `mission/`, `tutors/` | Legacy standalone pages |
+The files at the repo root are the **built site**, served directly by GitHub
+Pages (no Jekyll — see `.nojekyll`). The **source** lives in
+[`masstutoring-redesign/`](masstutoring-redesign/):
 
-## How it works
-
-The site is a single-page app served by GitHub Pages. `app.js` renders each
-page into `#page-root` and re-renders on navigation. The Practice page filters
-`data.js` questions by subject, domain, and difficulty, grades answers
-(multiple-choice via scantron-style bubbles, or free response), and shows a
-worked solution with either the fastest Desmos move or a reusable strategy for
-every question.
-
-## Development
-
-No build step. Serve the folder and open it:
-
-```sh
-python3 -m http.server 8000
-# then visit http://localhost:8000
 ```
+masstutoring-redesign/
+  build.py                zero-dependency static site builder
+  src/
+    layout.html           shared shell (header, nav, footer)
+    data/resources.json   THE resource inventory — edit this to change the guide
+    pages/                one file per page
+  assets/                 css, js, fonts, favicon
+  docs/                   maintenance guide, audits, verification log
+  site/                   build output
+```
+
+## Making changes
+
+1. Edit `masstutoring-redesign/src/` (for resources, edit
+   `src/data/resources.json` — see `masstutoring-redesign/docs/MAINTENANCE.md`).
+2. Build and copy the output to the repo root:
+
+   ```sh
+   cd masstutoring-redesign
+   python3 build.py --check     # build + verify resource links
+   cp -r site/. ..
+   ```
+
+3. Commit and push. GitHub Pages deploys the root automatically.
+
+## Routes
+
+The main pages are `/` (home), `/sat-guide/` (hub + 12 category pages),
+`/tutoring/`, `/mission/`, `/faq/`, and `/accessibility/`. Legacy URLs
+(`/guide/`, `/tutors/`, `/betterq/`) redirect to their replacements.
