@@ -1,73 +1,78 @@
 /* ============================================================
-   MASS TUTORING — DESIGN SYSTEM v2
-   "A premium, light-mode SAT resource platform combining an
-   editorial learning guide with a modern software-product UI."
+   MASS TUTORING — DESIGN SYSTEM v3
+   "A clean, academically credible SAT resource platform built
+   around blue, white, black, and controlled neutral grays."
    ------------------------------------------------------------
    Typography: Sora (display) + Inter (body), self-hosted.
-   Contrast adjustments vs. the raw spec palette (documented in
-   docs/ACCESSIBILITY-AUDIT.md):
-   - Interactive text uses #286DAE (5.3:1 on white); #347FC4 is
-     reserved for borders/icons/large decorative elements.
-   - Primary CTAs use --accent-strong #B44A1E with white text
-     (5.3:1); soft coral stays decorative.
-   - Secondary text darkened to #5D6C7B (≥4.6:1 on all surfaces).
+   Color rules:
+   - One primary blue system: #1769AA (hover #12578F, active
+     #0E4776). All CTAs, links, active states share it.
+   - Blue guides attention; white creates clarity; near-black
+     (#101820 / #0D1721) provides structure; gray supports
+     hierarchy. Green/amber/red appear ONLY as status colors.
+   - Key contrast results (WCAG 2.2 AA) are recorded in
+     docs/COLOR-REDESIGN.md.
    ============================================================ */
 
 @import url("/assets/fonts/fonts.css");
 
 :root {
-  /* Surfaces */
-  --page-background: #F5F7FB;
+  /* Surfaces — blue, white, black, and neutral gray only */
+  --page-background: #F5F7FA;
   --surface-primary: #FFFFFF;
   --surface-secondary: #EEF4FA;
-  --surface-warm: #FFF5EF;
-  --surface-mint: #EDF8F4;
-  --surface-lavender: #F3EFFB;
-  --surface-navy: #16283A;
-  --surface-navy-2: #1D3349;
+  --surface-muted: #F8FAFC;
+  --surface-warm: #EEF4FA;       /* legacy alias → soft blue */
+  --surface-mint: #EDF3F7;       /* legacy alias → blue-gray */
+  --surface-lavender: #F1F6FA;   /* legacy alias → extra-light blue */
+  --surface-navy: #0D1721;
+  --surface-navy-2: #15242F;
 
   /* Text */
-  --text-heading: #16283A;
-  --text-primary: #263746;
-  --text-secondary: #5D6C7B;
-  --text-on-dark: #F2F7FC;
-  --text-on-dark-secondary: #A9BDD1;
+  --text-heading: #101820;
+  --text-primary: #1D2935;
+  --text-secondary: #5E6B76;
+  --text-on-dark: #FFFFFF;
+  --text-on-dark-secondary: #B8C4CE;
 
-  /* Brand */
-  --primary: #347FC4;
-  --primary-hover: #286DAE;
-  --primary-soft: #DCECF9;
-  --link: #286DAE;
+  /* Primary blue system */
+  --primary: #1769AA;
+  --primary-hover: #12578F;
+  --primary-active: #0E4776;
+  --primary-soft: #DCEAF6;
+  --primary-extra-light: #F1F6FA;
+  --link: #1769AA;
 
-  --accent: #F0805A;
-  --accent-strong: #B44A1E;
-  --accent-strong-hover: #983D17;
-  --accent-soft: #FDE8DF;
+  /* Legacy accent aliases — all routes lead to the blue system */
+  --accent: #1769AA;
+  --accent-strong: #1769AA;
+  --accent-strong-hover: #12578F;
+  --accent-soft: #DCEAF6;
 
   /* Borders */
-  --border-light: #DFE7EE;
-  --border-medium: #C8D5DF;
+  --border-light: #DCE3E9;
+  --border-medium: #BCC9D3;
 
-  /* Status */
-  --success-background: #DDF4E7;
-  --success-text: #1F5E43;
+  /* Status — the only non-blue/gray colors, reserved for meaning */
+  --success-background: #E7F4EC;
+  --success-text: #27653F;
   --warning-background: #FFF4D8;
-  --warning-text: #6B4E10;
-  --error-background: #FDE8E8;
-  --error-text: #A33A3A;
-  --official-background: #E3EEFB;
-  --official-text: #2A578C;
-  --recommended-background: #FDE8DF;
-  --recommended-text: #96431F;
+  --warning-text: #75550E;
+  --error-background: #FBE9E9;
+  --error-text: #9B3030;
+  --official-background: #DCEAF6;
+  --official-text: #0E4776;
+  --recommended-background: #101820;
+  --recommended-text: #FFFFFF;
 
-  /* Category tints */
-  --tint-math: #E4F1FC;
-  --tint-rw: #F3EFFB;
-  --tint-desmos: #EDF8F4;
-  --tint-practice: #FFF3E8;
-  --tint-plans: #FFF8DC;
-  --tint-wellness: #FDECEF;
-  --tint-official: #E3EEFB;
+  /* Category tints — blue-gray family, differentiated by icon + label */
+  --tint-math: #E5F0F8;
+  --tint-rw: #DCEAF6;
+  --tint-desmos: #EDF3F7;
+  --tint-practice: #EEF1F4;
+  --tint-plans: #F1F6FA;
+  --tint-wellness: #EDF3F7;
+  --tint-official: #DCEAF6;
   --tint-strategy: #EAF1F6;
 
   /* Shape + depth — ONE radius system (3 steps), THREE shadow levels */
@@ -75,9 +80,9 @@
   --radius-medium: 16px;  /* cards, callouts, media */
   --radius-large: 24px;   /* large panels */
   --radius-xl: var(--radius-large);
-  --shadow-small: 0 2px 10px rgba(24, 48, 70, 0.06);
-  --shadow-card: 0 6px 20px rgba(24, 48, 70, 0.06);
-  --shadow-hover: 0 12px 30px rgba(24, 48, 70, 0.11);
+  --shadow-small: 0 2px 10px rgba(13, 23, 33, 0.06);
+  --shadow-card: 0 6px 20px rgba(13, 23, 33, 0.07);
+  --shadow-hover: 0 12px 30px rgba(13, 23, 33, 0.12);
   --shadow-soft: var(--shadow-card);
   --shadow-nav: var(--shadow-small);
 
@@ -309,8 +314,8 @@ a:hover { color: var(--text-heading); }
 .page-hero {
   padding: 4rem 0 4.25rem;
   background:
-    radial-gradient(circle at 85% 15%, rgba(87, 165, 226, 0.16), transparent 38%),
-    radial-gradient(circle at 10% 85%, rgba(240, 128, 90, 0.10), transparent 32%),
+    radial-gradient(circle at 85% 15%, rgba(23, 105, 170, 0.14), transparent 38%),
+    radial-gradient(circle at 10% 85%, rgba(13, 23, 33, 0.05), transparent 32%),
     var(--page-background);
   border-bottom: 1px solid var(--border-light);
 }
@@ -348,8 +353,8 @@ a:hover { color: var(--text-heading); }
 
 .hero {
   background:
-    radial-gradient(circle at 80% 20%, rgba(87, 165, 226, 0.18), transparent 34%),
-    radial-gradient(circle at 15% 75%, rgba(240, 128, 90, 0.13), transparent 30%),
+    radial-gradient(circle at 80% 20%, rgba(23, 105, 170, 0.14), transparent 34%),
+    radial-gradient(circle at 15% 75%, rgba(13, 23, 33, 0.05), transparent 30%),
     var(--page-background);
   border-bottom: 1px solid var(--border-light);
   padding: 4.5rem 0 4.75rem;
@@ -516,13 +521,13 @@ a:hover { color: var(--text-heading); }
   transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
 }
 .rcard:hover {
-  border-color: #BDD2E2;
+  border-color: #9EBED6;
   box-shadow: var(--shadow-hover);
   transform: translateY(-3px);
 }
 .rcard:focus-within {
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(52, 127, 196, 0.2), var(--shadow-hover);
+  box-shadow: 0 0 0 3px rgba(23, 105, 170, 0.2), var(--shadow-hover);
   transform: translateY(-3px);
 }
 .card-body {
@@ -595,13 +600,13 @@ a:hover { color: var(--text-heading); }
     radial-gradient(circle at 82% 18%, rgba(255, 255, 255, 0.24), transparent 42%),
     repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px 22px),
     repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px 22px),
-    linear-gradient(150deg, #2F609B 0%, #16283A 100%);
+    linear-gradient(150deg, #1D4E79 0%, #0D1721 100%);
 }
 
 .media-cta {
   position: absolute;
   left: 0.8rem; bottom: 0.8rem;
-  background: rgba(22, 40, 58, 0.88);
+  background: rgba(13, 23, 33, 0.88);
   color: #fff;
   font-size: 0.8rem; font-weight: 650;
   padding: 0.35rem 0.85rem;
@@ -619,7 +624,7 @@ a:hover { color: var(--text-heading); }
   transform: translate(-50%, -50%);
   width: 54px; height: 54px;
   border-radius: 50%;
-  background: rgba(22, 40, 58, 0.82);
+  background: rgba(13, 23, 33, 0.82);
   color: #fff;
   display: flex; align-items: center; justify-content: center;
   transition: transform var(--speed) ease, background var(--speed) ease;
@@ -632,7 +637,7 @@ a:hover { color: var(--text-heading); }
 .duration-badge {
   position: absolute;
   right: 0.65rem; bottom: 0.65rem;
-  background: rgba(22, 40, 58, 0.88);
+  background: rgba(13, 23, 33, 0.88);
   color: #fff;
   font-size: 0.78rem; font-weight: 650;
   padding: 0.14rem 0.5rem;
@@ -651,7 +656,7 @@ a:hover { color: var(--text-heading); }
     radial-gradient(circle at 82% 18%, rgba(255, 255, 255, 0.28), transparent 42%),
     repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px 22px),
     repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px 22px),
-    linear-gradient(150deg, var(--fb) 0%, color-mix(in srgb, var(--fb) 72%, #16283A) 100%);
+    linear-gradient(150deg, var(--fb) 0%, color-mix(in srgb, var(--fb) 72%, #0D1721) 100%);
   color: #fff;
   overflow: hidden;
   transition: padding-bottom var(--speed) ease;
@@ -675,7 +680,7 @@ a:hover { color: var(--text-heading); }
   background: rgba(255, 255, 255, 0.08);
 }
 @supports not (background: color-mix(in srgb, red 50%, blue)) {
-  .media-fallback { background: linear-gradient(150deg, var(--fb), #16283A 160%); }
+  .media-fallback { background: linear-gradient(150deg, var(--fb), #0D1721 160%); }
 }
 .fb-mark {
   position: absolute; top: 0.9rem; left: 1rem;
@@ -697,7 +702,7 @@ a:hover { color: var(--text-heading); }
 .fb-kind {
   position: absolute; top: 1rem; right: 1rem;
   font-size: 0.72rem; font-weight: 650;
-  background: rgba(22, 40, 58, 0.45);
+  background: rgba(13, 23, 33, 0.45);
   border: 1px solid rgba(255, 255, 255, 0.35);
   padding: 0.15rem 0.6rem; border-radius: 999px;
 }
@@ -724,14 +729,14 @@ a:hover { color: var(--text-heading); }
   display: flex; align-items: center; justify-content: center;
   background:
     radial-gradient(circle at 80% 12%, rgba(255, 255, 255, 0.2), transparent 46%),
-    linear-gradient(160deg, var(--fb), color-mix(in srgb, var(--fb) 65%, #16283A));
+    linear-gradient(160deg, var(--fb), color-mix(in srgb, var(--fb) 65%, #0D1721));
 }
 .cover-designed .cover-text {
   display: flex; flex-direction: column; justify-content: space-between;
   width: 62%; height: 78%;
   background: rgba(255, 255, 255, 0.97);
   border-radius: 6px;
-  box-shadow: 0 10px 24px rgba(22, 40, 58, 0.35);
+  box-shadow: 0 10px 24px rgba(13, 23, 33, 0.35);
   padding: 1rem 0.9rem;
 }
 .cover-designed .cover-title {
@@ -803,7 +808,7 @@ a:hover { color: var(--text-heading); }
     radial-gradient(circle at 78% 20%, rgba(255, 255, 255, 0.30), transparent 55%),
     repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.09) 0 1px, transparent 1px 12px),
     repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.09) 0 1px, transparent 1px 12px),
-    linear-gradient(150deg, var(--fb), color-mix(in srgb, var(--fb) 70%, #16283A));
+    linear-gradient(150deg, var(--fb), color-mix(in srgb, var(--fb) 70%, #0D1721));
   color: #fff;
   font-family: var(--font-display);
   font-weight: 800; font-size: 1.05rem;
@@ -864,7 +869,7 @@ a:hover { color: var(--text-heading); }
   border-radius: var(--radius-small);
   font-size: 1.5rem;
   margin-bottom: 1rem;
-  box-shadow: inset 0 0 0 1px rgba(22, 40, 58, 0.06);
+  box-shadow: inset 0 0 0 1px rgba(13, 23, 33, 0.06);
 }
 .category-card h3 { margin-bottom: 0.3rem; }
 .category-card p { color: var(--text-secondary); margin: 0; font-size: 0.93rem; }
@@ -912,11 +917,11 @@ a:hover { color: var(--text-heading); }
   border-radius: 999px;
   white-space: nowrap;
 }
-.badge-free { background: var(--success-background); color: var(--success-text); }
+.badge-free { background: #EEF4FA; color: #12578F; border: 1px solid #C7DCEB; }
 .badge-official { background: var(--official-background); color: var(--official-text); }
 .badge-recommended { background: var(--recommended-background); color: var(--recommended-text); }
 .badge-paid { background: var(--warning-background); color: var(--warning-text); }
-.badge-neutral { background: var(--page-background); color: var(--text-secondary); border: 1px solid var(--border-light); }
+.badge-neutral { background: #F1F3F5; color: #45525D; border: 1px solid var(--border-light); }
 
 /* ============================== search + filters ============================== */
 
@@ -944,7 +949,7 @@ a:hover { color: var(--text-heading); }
 .search-input:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(52, 127, 196, 0.25);
+  box-shadow: 0 0 0 3px rgba(23, 105, 170, 0.25);
 }
 fieldset.filter-group { border: 0; padding: 0; margin: 1.1rem 0 0; }
 fieldset.filter-group legend { font-weight: 650; padding: 0; margin-bottom: 0.5rem; font-size: 0.95rem; }
