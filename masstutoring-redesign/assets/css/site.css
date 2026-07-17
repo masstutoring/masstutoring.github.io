@@ -1352,3 +1352,212 @@ table.mt-table { border-collapse: collapse; width: 100%; min-width: 560px; backg
   padding: var(--space-2) var(--space-4);
   text-align: center;
 }
+
+/* ============================== hero mascot (activates with official art) ============================== */
+
+.hero-mascot-wrap { position: relative; display: flex; justify-content: center; align-items: flex-end; }
+.hero-mascot { position: relative; width: clamp(300px, 34vw, 520px); height: auto; object-fit: contain; z-index: 1; filter: drop-shadow(0 18px 20px rgba(13, 23, 33, 0.18)); }
+.hero-mascot-halo {
+  position: absolute; inset: auto 50% 6% auto;
+  transform: translateX(50%);
+  width: min(90%, 460px); aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 42%, #DCEAF6 0%, #EEF4FA 62%, transparent 72%);
+}
+.hero-mascot-badge {
+  position: absolute; top: 8%; right: 4%; z-index: 2;
+  background: var(--surface-primary);
+  border: 1px solid var(--border-light);
+  border-radius: 999px;
+  box-shadow: var(--shadow-card);
+  padding: 0.4rem 0.9rem;
+  font-weight: 700; font-size: 0.85rem; color: var(--primary-hover);
+}
+@media (max-width: 860px) {
+  .hero-mascot-wrap { order: 2; margin-top: 0.5rem; }
+  .hero-mascot { width: clamp(220px, 60vw, 320px); }
+}
+
+/* ============================== nav search + toast ============================== */
+
+.nav-search-ico { display: inline-flex; vertical-align: -2px; margin-right: 0.15rem; }
+.mt-toast {
+  position: fixed; left: 50%; bottom: 1.25rem; z-index: 300;
+  transform: translate(-50%, 12px);
+  background: var(--surface-navy); color: #fff;
+  border-radius: 999px; padding: 0.6rem 1.2rem;
+  font-size: 0.92rem; font-weight: 600;
+  opacity: 0; pointer-events: none;
+  transition: opacity var(--speed) ease, transform var(--speed) ease;
+}
+.mt-toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* ============================== card actions + quick view ============================== */
+
+.icon-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px;
+  background: var(--surface-primary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-small);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: border-color var(--speed) ease, color var(--speed) ease, background var(--speed) ease;
+}
+.icon-btn:hover { border-color: var(--primary); color: var(--primary-hover); }
+.icon-btn[aria-pressed="true"] { background: var(--primary-soft); border-color: var(--primary); color: var(--primary-active); }
+.icon-btn[aria-pressed="true"] svg { fill: currentColor; }
+.card-actions { display: flex; gap: 0.5rem; margin-top: auto; padding-top: 0.75rem; }
+.card-actions .icon-btn { width: 38px; height: 38px; }
+
+.qv-open { overflow: hidden; }
+.qv-root { position: fixed; inset: 0; z-index: 400; }
+.qv-overlay { position: absolute; inset: 0; background: rgba(13, 23, 33, 0.45); }
+.qv-panel {
+  position: absolute; top: 0; right: 0; bottom: 0;
+  width: min(440px, 92vw);
+  background: var(--surface-primary);
+  box-shadow: -12px 0 40px rgba(13, 23, 33, 0.2);
+  display: flex; flex-direction: column;
+  animation: qv-in 200ms ease-out;
+}
+@keyframes qv-in { from { transform: translateX(30px); opacity: 0; } to { transform: none; opacity: 1; } }
+.qv-head {
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem;
+  padding: 1.25rem 1.4rem 1rem;
+  border-bottom: 1px solid var(--border-light);
+}
+.qv-head h2 { font-size: 1.15rem; margin: 0; }
+.qv-creator { color: var(--text-secondary); font-size: 0.9rem; margin: 0.2rem 0 0; }
+.qv-body { padding: 1.25rem 1.4rem; overflow-y: auto; }
+.qv-body .card-meta { display: flex; flex-wrap: wrap; gap: 0.45rem; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.9rem; }
+.qv-action { margin: 1.25rem 0 0; }
+@media (max-width: 560px) {
+  .qv-panel { top: auto; left: 0; width: 100%; max-height: 88vh; border-radius: var(--radius-large) var(--radius-large) 0 0; animation: qv-up 220ms ease-out; }
+  @keyframes qv-up { from { transform: translateY(40px); opacity: 0; } to { transform: none; opacity: 1; } }
+}
+@media (prefers-reduced-motion: reduce) { .qv-panel { animation: none; } }
+
+/* ============================== SAT countdown ============================== */
+
+.sat-countdown {
+  display: flex; gap: clamp(1.25rem, 4vw, 3rem); align-items: center; flex-wrap: wrap;
+  background: var(--surface-primary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-large);
+  box-shadow: var(--shadow-card);
+  padding: 1.25rem clamp(1.25rem, 3vw, 2rem);
+}
+.sc-label { font-weight: 700; font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--primary-hover); margin: 0 0 0.2rem; }
+.sc-days { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.9rem, 4vw, 2.6rem); letter-spacing: -0.03em; color: var(--text-heading); margin: 0; line-height: 1.05; }
+.sc-date { color: var(--text-secondary); margin: 0.2rem 0 0; }
+.sc-side { flex: 1; min-width: 240px; }
+.sc-status { font-weight: 600; margin: 0 0 0.35rem; }
+.sc-details summary { cursor: pointer; color: var(--link); font-weight: 600; font-size: 0.92rem; }
+.sc-details-body { font-size: 0.92rem; color: var(--text-secondary); padding-top: 0.4rem; }
+.sc-details-body ul { margin: 0.3rem 0; }
+.sc-source { font-size: 0.88rem; margin: 0.45rem 0 0; }
+
+/* ============================== homepage My Study promo ============================== */
+
+.mystudy-promo { display: grid; grid-template-columns: minmax(0, 11fr) minmax(0, 9fr); gap: clamp(2rem, 4vw, 3.5rem); align-items: center; }
+@media (max-width: 860px) { .mystudy-promo { grid-template-columns: 1fr; gap: 1.5rem; } }
+.mystudy-snapshot {
+  background: var(--surface-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-medium);
+  padding: 1.4rem 1.5rem;
+}
+.ms-snap-label { font-weight: 700; font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--primary-hover); margin: 0 0 0.3rem; }
+.ms-snap-task { font-weight: 650; color: var(--text-heading); margin: 0 0 0.8rem; }
+.ms-snap-stats { list-style: none; display: flex; flex-wrap: wrap; gap: 0.5rem 1.4rem; margin: 0; padding: 0; font-size: 0.9rem; color: var(--text-secondary); }
+.ms-snap-stats li { margin: 0; }
+.ms-snap-stats strong { color: var(--text-heading); }
+
+/* ============================== My Study dashboard ============================== */
+
+.ms-statusrow { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr)); gap: 0.75rem; margin-bottom: 1.25rem; }
+.ms-stat {
+  background: var(--surface-primary); border: 1px solid var(--border-light);
+  border-radius: var(--radius-medium); padding: 0.9rem 1.1rem;
+  display: flex; flex-direction: column;
+}
+.ms-stat strong { font-family: var(--font-display); font-size: 1.35rem; color: var(--text-heading); }
+.ms-stat span { font-size: 0.82rem; color: var(--text-secondary); }
+
+.ms-today {
+  background: var(--surface-secondary); border: 1px solid var(--border-light);
+  border-radius: var(--radius-large); padding: clamp(1.25rem, 3vw, 1.9rem);
+  margin-bottom: 1.5rem;
+}
+.ms-today-title { font-size: 1.25rem; margin-bottom: 0.3em; }
+.ms-today-hint { color: var(--text-secondary); font-size: 0.95rem; }
+.ms-today-actions { display: flex; align-items: center; gap: 0.9rem; flex-wrap: wrap; margin-top: 0.9rem; }
+.ms-mini-btn {
+  background: none; border: none; padding: 0.45rem 0.3rem; cursor: pointer;
+  color: var(--link); font: inherit; font-size: 0.92rem; font-weight: 600;
+  text-decoration: underline; text-underline-offset: 2px; border-radius: 4px;
+}
+.ms-mini-btn:hover { color: var(--text-heading); }
+
+.ms-tabs { display: flex; gap: 0.25rem; border-bottom: 2px solid var(--border-light); margin-bottom: 1.25rem; overflow-x: auto; }
+.ms-tabs [role="tab"] {
+  font: inherit; font-weight: 600; font-size: 0.98rem;
+  background: none; border: none; border-bottom: 3px solid transparent;
+  padding: 0.7rem 1rem; margin-bottom: -2px;
+  color: var(--text-secondary); cursor: pointer; white-space: nowrap;
+  min-height: 44px;
+}
+.ms-tabs [role="tab"][aria-selected="true"] { color: var(--primary-hover); border-bottom-color: var(--primary); }
+[role="tabpanel"] { padding: 0.25rem 0 1rem; }
+
+.ms-wizard { max-width: 560px; }
+.ms-wiz-progress { font-size: 0.85rem; font-weight: 700; color: var(--primary-hover); text-transform: uppercase; letter-spacing: 0.06em; }
+.ms-wiz-nav { display: flex; gap: 0.8rem; margin-top: 1.25rem; }
+.ms-field { display: block; margin-bottom: 0.9rem; font-weight: 600; font-size: 0.95rem; }
+.ms-field input, .ms-field select, .ms-field textarea {
+  display: block; width: 100%; margin-top: 0.3rem;
+  font: inherit; font-weight: 400;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--border-medium); border-radius: var(--radius-small);
+  background: var(--surface-primary); color: var(--text-primary);
+}
+.ms-field input:focus, .ms-field select:focus, .ms-field textarea:focus { outline: 3px solid var(--primary-hover); outline-offset: 1px; }
+fieldset.ms-field { border: 1px solid var(--border-light); border-radius: var(--radius-small); padding: 0.7rem 0.9rem; }
+fieldset.ms-field label { display: inline-flex; gap: 0.4rem; margin-right: 1.2rem; font-weight: 400; }
+.ms-note { font-size: 0.88rem; color: var(--text-secondary); }
+
+.ms-plan-head { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 0.75rem; }
+.ms-week { border: 1px solid var(--border-light); border-radius: var(--radius-medium); background: var(--surface-primary); margin-bottom: 0.6rem; }
+.ms-week summary { cursor: pointer; font-weight: 650; padding: 0.8rem 1.1rem; display: flex; justify-content: space-between; gap: 1rem; }
+.ms-week-count { color: var(--text-secondary); font-weight: 500; font-size: 0.9rem; }
+.ms-tasklist { list-style: none; margin: 0; padding: 0 1.1rem 0.9rem; }
+.ms-tasklist li { margin: 0 0 0.45rem; }
+.ms-tasklist label { display: flex; gap: 0.6rem; align-items: flex-start; }
+.ms-tasklist input { margin-top: 0.25rem; width: 18px; height: 18px; }
+
+.ms-addform { border: 1px solid var(--border-light); border-radius: var(--radius-medium); background: var(--surface-primary); margin-bottom: 1rem; }
+.ms-addform summary { cursor: pointer; font-weight: 650; padding: 0.8rem 1.1rem; color: var(--primary-hover); }
+.ms-addform form { padding: 0 1.1rem 1.1rem; }
+.ms-form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: 0 1rem; }
+.ms-insights { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; font-size: 0.9rem; color: var(--text-secondary); background: var(--surface-secondary); border-radius: var(--radius-small); padding: 0.7rem 1rem; margin-bottom: 1rem; }
+.ms-err { border: 1px solid var(--border-light); border-radius: var(--radius-small); background: var(--surface-primary); margin-bottom: 0.5rem; }
+.ms-err summary { cursor: pointer; padding: 0.65rem 1rem; display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; font-weight: 600; font-size: 0.95rem; }
+.ms-err-tags { color: var(--text-secondary); font-weight: 500; font-size: 0.85rem; }
+.ms-err-body { padding: 0 1rem 0.8rem; font-size: 0.93rem; }
+.ms-err-actions { display: flex; gap: 1rem; margin: 0.4rem 0 0; }
+
+.ms-savedlist { list-style: none; margin: 0 0 1.25rem; padding: 0; }
+.ms-savedlist li { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; align-items: center; border: 1px solid var(--border-light); border-radius: var(--radius-small); background: var(--surface-primary); padding: 0.6rem 1rem; margin-bottom: 0.45rem; }
+.ms-saved-actions { display: flex; gap: 0.8rem; }
+
+.ms-checklist { list-style: none; margin: 0 0 1.25rem; padding: 0; }
+.ms-checklist li { margin: 0 0 0.4rem; }
+.ms-checklist label { display: flex; gap: 0.6rem; align-items: center; min-height: 32px; }
+.ms-checklist input { width: 18px; height: 18px; }
+
+.ms-settings { margin-top: 2rem; border-top: 1px solid var(--border-light); padding-top: 1rem; }
+.ms-settings summary { cursor: pointer; font-weight: 650; color: var(--text-secondary); }
+.ms-settings-body { padding-top: 0.75rem; font-size: 0.93rem; }
+.ms-settings-actions { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+.ms-import-label { cursor: pointer; }

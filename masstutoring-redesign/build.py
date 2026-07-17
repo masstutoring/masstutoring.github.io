@@ -352,20 +352,112 @@ INTERIM_MARK = '''<svg class="brand-mark" width="{s}" height="{s}" viewBox="0 0 
   <line x1="50" y1="40" x2="42" y2="40" stroke="#101820" stroke-width="1.4" />
 </svg>'''
 
+BRANDING = ROOT / "assets" / "branding"
+
+def build_brand_derivatives():
+    """When the official mascot PNG exists, generate every site derivative:
+    transparent background, tight crop, hero/standard/small sizes (PNG+WebP),
+    and favicon crops. Never modifies the original file."""
+    if not LOGO_PRESENT:
+        return False
+    try:
+        from PIL import Image
+    except ImportError:
+        print("  ⚠ Pillow not installed — brand derivatives skipped (pip install pillow)")
+        return False
+    marker = BRANDING / ".generated-from"
+    if marker.exists() and marker.read_text() == str(LOGO_FILE.stat().st_mtime):
+        return True  # up to date
+    BRANDING.mkdir(parents=True, exist_ok=True)
+    src = Image.open(LOGO_FILE).convert("RGBA")
+    (BRANDING / "mass-tutoring-cat-original.png").write_bytes(LOGO_FILE.read_bytes())
+
+    # Remove ONLY the outer white background: flood-fill near-white pixels
+    # connected to the border, so the cat's white chest/eyes are preserved.
+    from collections import deque
+    w, h = src.size
+    px = src.load()
+    seen = bytearray(w * h)
+    q = deque()
+    def near_white(p):
+        return p[0] > 238 and p[1] > 238 and p[2] > 238
+    for x in range(w):
+        for y in (0, h - 1):
+            if near_white(px[x, y]) and not seen[y * w + x]:
+                seen[y * w + x] = 1; q.append((x, y))
+    for y in range(h):
+        for x in (0, w - 1):
+            if near_white(px[x, y]) and not seen[y * w + x]:
+                seen[y * w + x] = 1; q.append((x, y))
+    while q:
+        x, y = q.popleft()
+        px[x, y] = (255, 255, 255, 0)
+        for nx, ny in ((x+1,y),(x-1,y),(x,y+1),(x,y-1)):
+            if 0 <= nx < w and 0 <= ny < h and not seen[ny * w + nx] and near_white(px[nx, ny]):
+                seen[ny * w + nx] = 1; q.append((nx, ny))
+
+    # tight crop with ~4% breathing room around ears/pencil/tail/feet
+    bbox = src.getbbox()
+    pad = max(2, int(0.04 * max(bbox[2] - bbox[0], bbox[3] - bbox[1])))
+    crop = src.crop((max(0, bbox[0]-pad), max(0, bbox[1]-pad),
+                     min(w, bbox[2]+pad), min(h, bbox[3]+pad)))
+    crop.save(BRANDING / "mass-tutoring-cat-transparent.png")
+
+    def emit(img, stem, size):
+        im = img.copy(); im.thumbnail((size, size), Image.LANCZOS)
+        im.save(BRANDING / f"{stem}.png")
+        im.save(BRANDING / f"{stem}.webp", quality=92, method=6)
+        return im.size
+    emit(crop, "mass-tutoring-cat-hero", 900)
+    emit(crop, "mass-tutoring-cat-standard", 500)
+    emit(crop, "mass-tutoring-cat-small", 128)
+
+    # favicon: head-and-glasses crop from the top of the artwork (no redraw)
+    cw, ch = crop.size
+    head = crop.crop((int(cw*0.18), 0, int(cw*0.88), int(ch*0.52)))
+    side = max(head.size)
+    sq = Image.new("RGBA", (side, side), (255, 255, 255, 0))
+    sq.paste(head, ((side - head.size[0]) // 2, (side - head.size[1]) // 2), head)
+    for s in (512, 192, 180, 48, 32, 16):
+        f = sq.copy(); f.thumbnail((s, s), Image.LANCZOS)
+        f.save(BRANDING / f"mass-tutoring-cat-favicon-{s}.png")
+    marker.write_text(str(LOGO_FILE.stat().st_mtime))
+    print(f"  ✔ Brand derivatives generated from {LOGO_FILE.name}")
+    return True
+
+BRAND_READY = build_brand_derivatives()
+
 def brand_logo(size):
     """Brand image at a given rendered height. Empty alt: the wrapping link
     carries the accessible name (avoids duplicate announcements)."""
-    if LOGO_PRESENT:
-        return (f'<img class="brand-logo" src="/assets/logo/mass-tutoring-logo.png" alt="" '
-                f'width="{size}" height="{size}" decoding="async" />')
+    if BRAND_READY:
+        return (f'<img class="brand-logo" src="/assets/branding/mass-tutoring-cat-small.png" alt="" '
+                f'width="{size}" height="{size}" decoding="async" style="object-fit:contain" />')
+    return INTERIM_MARK.format(s=size)
+
+def brand_mascot(size, cls="mascot-img"):
+    """Larger mascot placement (guide/tutoring/mission/empty states)."""
+    if BRAND_READY:
+        return (f'<img class="{cls}" src="/assets/branding/mass-tutoring-cat-standard.png" alt="" '
+                f'width="{size}" height="{size}" loading="lazy" decoding="async" style="object-fit:contain" />')
     return INTERIM_MARK.format(s=size)
 
 def expand_brand(html):
-    return (html
+    html = (html
             .replace("{{brand-logo-nav}}", brand_logo(38))
             .replace("{{brand-logo-footer}}", brand_logo(44))
             .replace("{{brand-logo-hero}}", brand_logo(28))
-            .replace("{{brand-logo-mascot}}", brand_logo(64)))
+            .replace("{{brand-logo-mascot}}", brand_mascot(64))
+            .replace("{{brand-mascot-medium}}", brand_mascot(220))
+            .replace("{{brand-mascot-hero}}",
+                      ('<img class="hero-mascot" src="/assets/branding/mass-tutoring-cat-hero.png" '
+                       'alt="Mass Tutoring cat mascot holding a pencil" width="900" height="900" '
+                       'fetchpriority="high" decoding="async" />') if BRAND_READY else ""))
+    # conditional blocks: keep the logo branch only when the official art exists
+    keep, drop = ("if-logo", "if-no-logo") if BRAND_READY else ("if-no-logo", "if-logo")
+    html = re.sub(rf"<!--\s*{drop}\s*-->[\s\S]*?<!--\s*end-{drop}\s*-->", "", html)
+    html = re.sub(rf"<!--\s*(end-)?{keep}\s*-->", "", html)
+    return html
 
 
 def badges_html(r, limit=3):
@@ -414,6 +506,53 @@ def details_block(r, include_book=False):
     inner = "\n        ".join(bits)
     return (f'<details class="card-more"><summary>Why we recommend it &amp; details</summary>'
             f'<div class="card-more-body">{inner}</div></details>')
+
+
+
+BOOKMARK_ICON = ('<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" '
+                 'stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+                 '<path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg>')
+INFO_ICON = ('<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" '
+             'stroke-width="2" stroke-linecap="round" aria-hidden="true">'
+             '<circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>')
+
+def card_actions(r):
+    """Bookmark + info icon buttons — the card's only non-destination controls."""
+    return (f'<div class="card-actions">'
+            f'<button type="button" class="icon-btn" data-bookmark="{esc(r["id"])}" '
+            f'data-name="{esc(r["name"])}" data-url="{esc(r["url"])}" aria-pressed="false" '
+            f'aria-label="Save {esc(r["name"])} to My Study">{BOOKMARK_ICON}</button>'
+            f'<button type="button" class="icon-btn" data-quickview="{esc(r["id"])}" '
+            f'aria-haspopup="dialog" aria-label="Details for {esc(r["name"])}">{INFO_ICON}</button>'
+            f'</div>')
+
+def qv_src(r, include_book=False):
+    """Inert quick-view payload; the drawer in site.js clones it on demand."""
+    verb = "Open" if r["resourceType"] in ("official-tool", "website", "question-bank") else "Visit"
+    bits = []
+    mr = meta_row(r)
+    if mr:
+        bits.append(f'<p class="card-meta">{mr}</p>')
+    if r.get("whyRecommended"):
+        bits.append(f'<p class="card-why"><strong>Why we recommend it:</strong> {esc(r["whyRecommended"])}</p>')
+    if r.get("accountRequired"):
+        bits.append('<p class="card-note">Requires a free account.</p>')
+    if r.get("limitations"):
+        bits.append(f'<p class="card-limitations"><strong>Know before you go:</strong> {esc(r["limitations"])}</p>')
+    if include_book:
+        rows = [("Author", r.get("author")), ("Publisher", r.get("publisher")),
+                ("Edition", r.get("edition")), ("Approximate price", r.get("approximatePrice"))]
+        dl = "".join(f'<div class="book-detail"><dt>{esc(k)}</dt><dd>{esc(v)}</dd></div>'
+                     for k, v in rows if v is not None)
+        if dl:
+            bits.append(f'<dl class="book-details">{dl}</dl>')
+        if r.get("libraryRecommended"):
+            bits.append('<p class="library-note">Check your school or local library before buying.</p>')
+    bits.append(f'<p class="card-reviewed">Last reviewed <time datetime="{esc(r["dateLastReviewed"])}">{esc(fmt_date(r["dateLastReviewed"]))}</time></p>')
+    bits.append(f'<p class="qv-action"><a class="button-primary" href="{esc(r["url"])}" target="_blank" rel="noopener">{esc(verb)} {esc(r["name"])}<span class="visually-hidden"> (opens in a new tab)</span></a></p>')
+    body = "\n      ".join(bits)
+    return (f'<template class="qv-src" data-qv-id="{esc(r["id"])}" data-qv-name="{esc(r["name"])}" '
+            f'data-qv-creator="{esc(r.get("creator", r.get("author", "")))}">{body}</template>')
 
 
 def meta_row(r):
@@ -490,10 +629,10 @@ def video_card(r, h):
       <div class="card-body">
         <h{h} class="card-title"><a href="{esc(r["url"])}" target="_blank" rel="noopener">{new_tab(r["name"])}</a></h{h}>
         <p class="card-creator">{esc(r.get("creator", ""))}{f" · {esc(dur)}" if dur else ""}</p>
-        <div class="card-badges">{badges_html(r)}</div>
+        <div class="card-badges">{badges_html(r, limit=2)}</div>
         <p class="card-desc">{esc(r["description"])}</p>
-        {details_block(r)}
-        <p class="card-reviewed">Verified <time datetime="{esc(r["dateLastReviewed"])}">{esc(fmt_date(r["dateLastReviewed"]))}</time> · Captions available</p>
+        {card_actions(r)}
+        {qv_src(r)}
       </div>
     </article>'''
 
@@ -514,10 +653,10 @@ def book_card(r, h):
       <div class="card-body">
         <h{h} class="card-title"><a href="{esc(r["url"])}" target="_blank" rel="noopener">{new_tab(r["name"])}</a></h{h}>
         <p class="card-creator">{esc(r.get("author", r.get("creator", "")))}</p>
-        <div class="card-badges">{badges_html(r)}</div>
+        <div class="card-badges">{badges_html(r, limit=2)}</div>
         <p class="card-desc">{esc(r["description"])}</p>
-        {details_block(r, include_book=True)}
-        <p class="card-reviewed">Last reviewed <time datetime="{esc(r["dateLastReviewed"])}">{esc(fmt_date(r["dateLastReviewed"]))}</time></p>
+        {card_actions(r)}
+        {qv_src(r, include_book=True)}
       </div>
     </article>'''
 
@@ -537,10 +676,10 @@ def creator_card(r, h):
         </div>
       </div>
       <div class="card-body creator-body">
-        <div class="card-badges">{badges_html(r)}</div>
+        <div class="card-badges">{badges_html(r, limit=2)}</div>
         <p class="card-desc">{esc(r["description"])}</p>
-        {details_block(r)}
-        <p class="card-reviewed">Last reviewed <time datetime="{esc(r["dateLastReviewed"])}">{esc(fmt_date(r["dateLastReviewed"]))}</time></p>
+        {card_actions(r)}
+        {qv_src(r)}
       </div>
     </article>'''
 
@@ -562,10 +701,10 @@ def website_card(r, h, variant="default"):
       <div class="card-body">
         <h{h} class="card-title"><a href="{esc(r["url"])}" target="_blank" rel="noopener">{new_tab(r["name"])}</a></h{h}>
         <p class="card-creator">{esc(r.get("creator", ""))}</p>
-        <div class="card-badges">{badges_html(r)}</div>
+        <div class="card-badges">{badges_html(r, limit=2)}</div>
         <p class="card-desc">{esc(r["description"])}</p>
-        {details_block(r)}
-        <p class="card-reviewed">Last reviewed <time datetime="{esc(r["dateLastReviewed"])}">{esc(fmt_date(r["dateLastReviewed"]))}</time></p>
+        {card_actions(r)}
+        {qv_src(r)}
       </div>
     </article>'''
 
@@ -579,7 +718,7 @@ def compact_card(r, h):
       <div class="card-body">
         <h{h} class="card-title"><a href="{esc(r["url"])}" target="_blank" rel="noopener" aria-label="{esc(aria)}">{new_tab(r["name"])}</a></h{h}>
         <p class="card-desc">{esc(r["description"])}</p>
-        <div class="card-badges">{badges_html(r)}</div>
+        <div class="card-badges">{badges_html(r, limit=2)}</div>
       </div>
     </article>'''
 
@@ -603,7 +742,8 @@ def essential_card(r, h):
         <p class="card-creator">{esc(r.get("creator", ""))}</p>
         <div class="card-badges">{badges_html(r, limit=2)}</div>
         <p class="card-desc">{esc(r["description"].split(". ")[0].rstrip(".") + ".")}</p>
-        <p class="card-reviewed"><a href="/sat-guide/official/">Details in the guide</a></p>
+        {card_actions(r)}
+        {qv_src(r)}
       </div>
     </article>'''
 
@@ -743,6 +883,18 @@ def main():
         print(f"  ✓ {meta['path']}")
 
     shutil.copytree(ROOT / "assets", OUT / "assets")
+
+    # runtime data for the countdown, quick views, and My Study planner
+    sat_dates = json.loads((SRC / "data" / "sat-dates.json").read_text())
+    lite = [{"id": r["id"], "name": r["name"], "url": r["url"],
+             "creator": r.get("creator", ""), "type": r["resourceType"],
+             "subject": r.get("subject", "general"),
+             "topics": r.get("topics", []), "cost": r.get("costType", "")}
+            for r in PUBLISHED]
+    (OUT / "assets" / "js" / "mt-data.js").write_text(
+        "// generated by build.py — edit src/data/*.json, not this file\n"
+        f"window.MT_SAT_SCHEDULE = {json.dumps(sat_dates)};\n"
+        f"window.MT_RESOURCES = {json.dumps(lite)};\n")
 
     urls = "\n".join(f"  <url><loc>{SITE_ORIGIN}{m['path']}</loc></url>"
                      for m in metas if m["path"] != "/404.html")

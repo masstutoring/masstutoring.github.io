@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Page Not Found | Mass Tutoring</title>
-<meta name="description" content="That page doesn&#x27;t exist — but the free SAT Guide does. Find your way back to the resources." />
-<link rel="canonical" href="https://www.masstutoring.com/404.html" />
-<meta property="og:title" content="Page Not Found | Mass Tutoring" />
-<meta property="og:description" content="That page doesn&#x27;t exist — but the free SAT Guide does. Find your way back to the resources." />
+<title>My Study | Mass Tutoring</title>
+<meta name="description" content="Your free personal SAT workspace: a study plan built around the next test date, one clear daily task, an error log, saved resources, and a test-day checklist. Everything stays on your device." />
+<link rel="canonical" href="https://www.masstutoring.com/my-study/" />
+<meta property="og:title" content="My Study | Mass Tutoring" />
+<meta property="og:description" content="Your free personal SAT workspace: a study plan built around the next test date, one clear daily task, an error log, saved resources, and a test-day checklist. Everything stays on your device." />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://www.masstutoring.com/404.html" />
+<meta property="og:url" content="https://www.masstutoring.com/my-study/" />
 <meta property="og:site_name" content="Mass Tutoring" />
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
 <link rel="preload" href="/assets/fonts/sora-xMQ9uFFYT72X5wkB_18qmnndmSdSnh2BAfO5mnuyOo1lfiQwV6-xo6eeIw.woff2" as="font" type="font/woff2" crossorigin />
@@ -45,7 +45,7 @@
 
     <ul class="nav-links" id="nav-links">
       <li><a href="/sat-guide/" data-nav="guide" class="nav-link">Guide</a></li>
-      <li><a href="/my-study/" data-nav="my-study" class="nav-link">My Study</a></li>
+      <li><a href="/my-study/" data-nav="my-study" class="nav-link is-active" aria-current="page">My Study</a></li>
       <li><a href="/tutoring/" data-nav="tutoring" class="nav-link">Free Tutoring</a></li>
       <li><a href="/mission/" data-nav="mission" class="nav-link">Mission</a></li>
       <li><a class="nav-search" href="/sat-guide/resources/" data-nav="search" class="nav-link"><span class="nav-search-ico" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span> Search</a></li>
@@ -54,29 +54,68 @@
 </header>
 
 <main id="main">
-<section class="section">
-  <div class="wrap-narrow center">
-    <svg width="88" height="88" viewBox="0 0 64 64" role="img" aria-hidden="true" focusable="false" style="margin-bottom:1rem">
-      <circle cx="32" cy="32" r="30" fill="#FFFFFF" stroke="#1769AA" stroke-width="3" />
-      <path d="M18 20 L24 30 L20 30 Z" fill="#101820" />
-      <path d="M46 20 L40 30 L44 30 Z" fill="#101820" />
-      <ellipse cx="32" cy="36" rx="15" ry="13" fill="#DCEAF6" />
-      <circle cx="26" cy="33" r="2.4" fill="#101820" />
-      <circle cx="38" cy="33" r="2.4" fill="#101820" />
-      <path d="M30 41 Q32 39 34 41" stroke="#101820" stroke-width="1.8" fill="none" stroke-linecap="round" />
-      <line x1="14" y1="37" x2="22" y2="36" stroke="#101820" stroke-width="1.4" />
-      <line x1="14" y1="40" x2="22" y2="40" stroke="#101820" stroke-width="1.4" />
-      <line x1="50" y1="37" x2="42" y2="36" stroke="#101820" stroke-width="1.4" />
-      <line x1="50" y1="40" x2="42" y2="40" stroke="#101820" stroke-width="1.4" />
-    </svg>
-    <h1>Page not found</h1>
-    <p class="section-lede">This page doesn't exist (or moved when we reorganized the site). The good news: everything useful is one click away.</p>
-    <div class="hero-actions" style="justify-content:center">
-      <a class="button-primary" href="/sat-guide/">Explore the SAT Guide</a>
-      <a class="button-secondary" href="/">Go to the Homepage</a>
+<section class="page-hero">
+  <div class="wrap">
+    <h1 class="page-title">My Study</h1>
+    <p class="section-lede">Your plan, your errors, your next step — stored only on this device, no account needed.</p>
+  </div>
+</section>
+
+<section class="section-tight">
+  <div class="wrap">
+    <noscript>
+      <div class="callout"><p><strong>My Study needs JavaScript.</strong> Your browser has it turned off, so the planner, error log, and saved resources can't run. The <a href="/sat-guide/">SAT Guide</a> works fully without it.</p></div>
+    </noscript>
+
+    <div id="ms-app" hidden>
+
+      <div class="ms-statusrow" role="group" aria-label="Study status">
+        <div class="ms-stat"><strong data-st-days>–</strong><span>days until SAT</span></div>
+        <div class="ms-stat"><strong data-st-week>0</strong><span>tasks this week</span></div>
+        <div class="ms-stat"><strong data-st-skill>–</strong><span>focus skill</span></div>
+        <div class="ms-stat"><strong data-st-saved>0</strong><span>saved resources</span></div>
+      </div>
+
+      <div class="ms-today" data-ms-today>
+        <p class="eyebrow">What to study today</p>
+        <h2 class="ms-today-title" data-today-label>Set up your plan to get a daily task.</h2>
+        <p class="ms-today-hint" data-today-hint></p>
+        <div class="ms-today-actions">
+          <a class="button-primary" data-today-open hidden target="_blank" rel="noopener">Open resource</a>
+          <button type="button" class="ms-mini-btn" data-today-done hidden>Mark complete</button>
+          <button type="button" class="ms-mini-btn" data-today-swap hidden>Swap task</button>
+        </div>
+      </div>
+
+      <div class="ms-tabs" role="tablist" aria-label="My Study tools">
+        <button role="tab" id="tab-plan" aria-controls="panel-plan" aria-selected="true">Plan</button>
+        <button role="tab" id="tab-errors" aria-controls="panel-errors" aria-selected="false" tabindex="-1">Error Log</button>
+        <button role="tab" id="tab-saved" aria-controls="panel-saved" aria-selected="false" tabindex="-1">Saved</button>
+        <button role="tab" id="tab-testday" aria-controls="panel-testday" aria-selected="false" tabindex="-1">Test Day</button>
+      </div>
+
+      <div id="panel-plan" role="tabpanel" aria-labelledby="tab-plan" tabindex="0"></div>
+      <div id="panel-errors" role="tabpanel" aria-labelledby="tab-errors" tabindex="0" hidden></div>
+      <div id="panel-saved" role="tabpanel" aria-labelledby="tab-saved" tabindex="0" hidden></div>
+      <div id="panel-testday" role="tabpanel" aria-labelledby="tab-testday" tabindex="0" hidden></div>
+
+      <details class="ms-settings">
+        <summary>Settings &amp; your data</summary>
+        <div class="ms-settings-body">
+          <p>Everything in My Study is stored only in this browser on this device. Nothing is uploaded, and clearing your browser data removes it.</p>
+          <p class="ms-settings-actions">
+            <button type="button" class="button-secondary" data-export>Export data</button>
+            <label class="button-secondary ms-import-label">Import data<input type="file" accept="application/json" data-import class="visually-hidden" /></label>
+            <button type="button" class="button-secondary" data-clear>Clear my data</button>
+          </p>
+        </div>
+      </details>
+
     </div>
   </div>
 </section>
+
+<script src="/assets/js/my-study.js" defer></script>
 </main>
 
 <footer class="site-footer">
