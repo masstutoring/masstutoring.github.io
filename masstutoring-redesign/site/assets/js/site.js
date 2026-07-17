@@ -37,7 +37,7 @@
 
   var searchInput = tools.querySelector("#guide-search");
   var chips = Array.prototype.slice.call(tools.querySelectorAll(".filter-chip input"));
-  var clearBtn = tools.querySelector(".clear-filters");
+  var clearBtns = Array.prototype.slice.call(document.querySelectorAll(".clear-filters"));
   var status = document.getElementById("results-status");
   var emptyState = document.querySelector("[data-empty-state]");
   // Scope search to the directory so featured cards elsewhere on the
@@ -94,12 +94,12 @@
 
   if (searchInput) searchInput.addEventListener("input", apply);
   chips.forEach(function (c) { c.addEventListener("change", apply); });
-  if (clearBtn) {
+  clearBtns.forEach(function (clearBtn) {
     clearBtn.addEventListener("click", function () {
       if (searchInput) searchInput.value = "";
       chips.forEach(function (c) { c.checked = false; });
       apply();
       if (searchInput) searchInput.focus();
     });
-  }
+  });
 })();
