@@ -435,6 +435,10 @@
       vertexShader: face_vert,
       fragmentShader: color_frag,
       transparent: true,
+      // The shader outputs premultiplied color (rgb already scaled by alpha),
+      // so the material must blend as premultiplied — otherwise NormalBlending
+      // multiplies alpha a second time and low-alpha edges darken toward black.
+      premultipliedAlpha: true,
       depthWrite: false,
       uniforms: {
         velocity:      { value: fbos.vel_0.texture },

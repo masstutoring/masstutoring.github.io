@@ -13,7 +13,7 @@
     if (!(probe.getContext("webgl") || probe.getContext("experimental-webgl"))) return;
     try {
       var fluid = new window.LiquidEther(hero, {
-        colors: ["#DCEAF6", "#9CC8EF", "#5DA3DC"],
+        colors: ["#BBD9F2", "#7FB4E8", "#3D8AD4"],
         mouseForce: 16,
         cursorSize: 110,
         isViscous: true,
