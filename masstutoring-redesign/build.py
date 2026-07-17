@@ -109,6 +109,228 @@ def expand_icons(content):
     return re.sub(r"<!--\s*icon:\s*([a-z-]+)\s*-->",
                   lambda m: icon_svg(m.group(1)), content)
 
+
+# --------------------------------------------------- category visuals
+# One visual language for every owned graphic: 2px strokes, blue on
+# pale-blue, rounded corners, no text baked into the image (the card's
+# own heading carries the information — graphics are aria-hidden).
+
+def _viz(body):
+    return ('<svg viewBox="0 0 220 130" fill="none" xmlns="http://www.w3.org/2000/svg" '
+            'aria-hidden="true" focusable="false" '
+            'stroke-linecap="round" stroke-linejoin="round">' + body + "</svg>")
+
+CAT_VIZ = {
+    # coordinate plane with a parabola
+    "math": _viz('''
+      <line x1="30" y1="108" x2="196" y2="108" stroke="#BCC9D3" stroke-width="2"/>
+      <line x1="46" y1="16" x2="46" y2="120" stroke="#BCC9D3" stroke-width="2"/>
+      <line x1="84" y1="104" x2="84" y2="112" stroke="#BCC9D3" stroke-width="2"/>
+      <line x1="122" y1="104" x2="122" y2="112" stroke="#BCC9D3" stroke-width="2"/>
+      <line x1="160" y1="104" x2="160" y2="112" stroke="#BCC9D3" stroke-width="2"/>
+      <path d="M56 34 Q 112 178 178 26" stroke="#1769AA" stroke-width="3"/>
+      <circle cx="117" cy="93" r="5" fill="#0E4776"/>
+      <circle cx="170" cy="38" r="5" fill="#FFFFFF" stroke="#1769AA" stroke-width="2.5"/>'''),
+    # passage with a highlighted phrase and an edit caret
+    "rw": _viz('''
+      <rect x="30" y="22" width="160" height="10" rx="5" fill="#DCEAF6"/>
+      <rect x="30" y="44" width="126" height="10" rx="5" fill="#DCEAF6"/>
+      <rect x="86" y="66" width="76" height="14" rx="7" fill="#1769AA" opacity="0.25"/>
+      <rect x="30" y="68" width="48" height="10" rx="5" fill="#DCEAF6"/>
+      <rect x="30" y="90" width="142" height="10" rx="5" fill="#DCEAF6"/>
+      <path d="M88 86 q 20 8 38 0 q 18 -8 36 0" stroke="#1769AA" stroke-width="2.5" fill="none"/>
+      <path d="M186 24 l10 10 M196 24 l-10 10" stroke="#0E4776" stroke-width="2.5"/>'''),
+    # two curves meeting at an intersection point
+    "desmos": _viz('''
+      <line x1="24" y1="24" x2="24" y2="106" stroke="#BCC9D3" stroke-width="2"/>
+      <line x1="24" y1="106" x2="198" y2="106" stroke="#BCC9D3" stroke-width="2"/>
+      <path d="M32 100 C 80 96 120 60 190 28" stroke="#1769AA" stroke-width="3"/>
+      <path d="M32 30 C 90 34 140 78 194 98" stroke="#0E4776" stroke-width="3"/>
+      <circle cx="112" cy="65" r="6" fill="#FFFFFF" stroke="#1769AA" stroke-width="3"/>'''),
+    # timed module: timer pill, answer rows, progress dots
+    "practice": _viz('''
+      <rect x="30" y="18" width="160" height="16" rx="8" fill="#DCEAF6"/>
+      <rect x="146" y="21" width="40" height="10" rx="5" fill="#1769AA"/>
+      <circle cx="44" cy="58" r="8" stroke="#1769AA" stroke-width="2.5" fill="#FFFFFF"/>
+      <rect x="62" y="53" width="118" height="10" rx="5" fill="#DCEAF6"/>
+      <circle cx="44" cy="86" r="8" fill="#1769AA"/>
+      <path d="M40.5 86 l2.5 2.5 5 -5" stroke="#FFFFFF" stroke-width="2"/>
+      <rect x="62" y="81" width="94" height="10" rx="5" fill="#DCEAF6"/>
+      <circle cx="88" cy="112" r="4" fill="#1769AA"/>
+      <circle cx="104" cy="112" r="4" fill="#1769AA"/>
+      <circle cx="120" cy="112" r="4" fill="#BCC9D3"/>
+      <circle cx="136" cy="112" r="4" fill="#BCC9D3"/>'''),
+    # month grid with checked study days
+    "plans": _viz('''
+      <rect x="40" y="20" width="140" height="94" rx="10" stroke="#1769AA" stroke-width="2.5" fill="#FFFFFF"/>
+      <line x1="40" y1="42" x2="180" y2="42" stroke="#1769AA" stroke-width="2.5"/>
+      <rect x="54" y="54" width="20" height="14" rx="4" fill="#DCEAF6"/>
+      <rect x="82" y="54" width="20" height="14" rx="4" fill="#1769AA"/>
+      <rect x="110" y="54" width="20" height="14" rx="4" fill="#DCEAF6"/>
+      <rect x="138" y="54" width="20" height="14" rx="4" fill="#DCEAF6"/>
+      <rect x="54" y="78" width="20" height="14" rx="4" fill="#DCEAF6"/>
+      <rect x="82" y="78" width="20" height="14" rx="4" fill="#DCEAF6"/>
+      <rect x="110" y="78" width="20" height="14" rx="4" fill="#1769AA"/>
+      <rect x="138" y="78" width="20" height="14" rx="4" fill="#0E4776"/>'''),
+    # stacked video tiles with play marks
+    "videos": _viz('''
+      <rect x="56" y="34" width="130" height="76" rx="10" fill="#DCEAF6"/>
+      <rect x="34" y="22" width="130" height="76" rx="10" fill="#FFFFFF" stroke="#1769AA" stroke-width="2.5"/>
+      <circle cx="99" cy="60" r="18" fill="#1769AA"/>
+      <path d="M94 51 l14 9 -14 9 z" fill="#FFFFFF"/>
+      <rect x="42" y="106" width="80" height="8" rx="4" fill="#BCC9D3"/>'''),
+    # shelf of book spines
+    "books": _viz('''
+      <rect x="38" y="30" width="20" height="76" rx="4" fill="#1769AA"/>
+      <rect x="62" y="20" width="24" height="86" rx="4" fill="#FFFFFF" stroke="#1769AA" stroke-width="2.5"/>
+      <rect x="90" y="36" width="18" height="70" rx="4" fill="#0E4776"/>
+      <rect x="112" y="26" width="24" height="80" rx="4" fill="#DCEAF6" stroke="#1769AA" stroke-width="2"/>
+      <rect x="140" y="40" width="20" height="66" rx="4" fill="#BCC9D3"/>
+      <path d="M166 106 l0 -70 22 12 0 58" fill="#FFFFFF" stroke="#1769AA" stroke-width="2.5"/>
+      <line x1="28" y1="108" x2="194" y2="108" stroke="#101820" stroke-width="3"/>'''),
+    # shield with a check
+    "official": _viz('''
+      <path d="M110 18 l44 14 v34 c0 26 -20 40 -44 48 c-24 -8 -44 -22 -44 -48 v-34 z"
+            fill="#DCEAF6" stroke="#1769AA" stroke-width="3"/>
+      <path d="M92 64 l13 13 25 -26" stroke="#0E4776" stroke-width="4" fill="none"/>'''),
+    # target with an arrow in the bull's-eye
+    "strategy": _viz('''
+      <circle cx="104" cy="66" r="44" stroke="#BCC9D3" stroke-width="2.5" fill="#FFFFFF"/>
+      <circle cx="104" cy="66" r="28" stroke="#1769AA" stroke-width="2.5" fill="#DCEAF6"/>
+      <circle cx="104" cy="66" r="10" fill="#0E4776"/>
+      <line x1="104" y1="66" x2="152" y2="22" stroke="#101820" stroke-width="2.5"/>
+      <path d="M152 22 l-14 2 M152 22 l-2 14" stroke="#101820" stroke-width="2.5"/>'''),
+    # test-day checklist and clock
+    "test-day": _viz('''
+      <rect x="36" y="20" width="104" height="90" rx="10" fill="#FFFFFF" stroke="#1769AA" stroke-width="2.5"/>
+      <rect x="66" y="12" width="44" height="16" rx="8" fill="#1769AA"/>
+      <path d="M50 48 l6 6 10 -10" stroke="#0E4776" stroke-width="2.5"/>
+      <rect x="74" y="44" width="52" height="8" rx="4" fill="#DCEAF6"/>
+      <path d="M50 72 l6 6 10 -10" stroke="#0E4776" stroke-width="2.5"/>
+      <rect x="74" y="68" width="42" height="8" rx="4" fill="#DCEAF6"/>
+      <rect x="74" y="92" width="48" height="8" rx="4" fill="#DCEAF6"/>
+      <circle cx="164" cy="82" r="26" fill="#DCEAF6" stroke="#1769AA" stroke-width="2.5"/>
+      <path d="M164 68 v14 l10 6" stroke="#0E4776" stroke-width="2.5" fill="none"/>'''),
+    # calm concentric arcs
+    "wellness": _viz('''
+      <path d="M60 96 a 50 50 0 0 1 100 0" stroke="#BCC9D3" stroke-width="2.5" fill="none"/>
+      <path d="M74 96 a 36 36 0 0 1 72 0" stroke="#1769AA" stroke-width="2.5" fill="none"/>
+      <path d="M88 96 a 22 22 0 0 1 44 0" stroke="#0E4776" stroke-width="2.5" fill="none"/>
+      <circle cx="110" cy="96" r="6" fill="#1769AA"/>
+      <line x1="46" y1="110" x2="174" y2="110" stroke="#BCC9D3" stroke-width="2.5"/>'''),
+    # numbered route from start to goal
+    "start-here": _viz('''
+      <path d="M40 100 C 80 100 70 44 110 44 C 150 44 140 86 180 86"
+            stroke="#BCC9D3" stroke-width="2.5" stroke-dasharray="1 9" fill="none"/>
+      <circle cx="40" cy="100" r="12" fill="#1769AA"/>
+      <circle cx="110" cy="44" r="12" fill="#FFFFFF" stroke="#1769AA" stroke-width="2.5"/>
+      <circle cx="180" cy="86" r="12" fill="#FFFFFF" stroke="#BCC9D3" stroke-width="2.5"/>
+      <path d="M180 74 l4 8 8 1 -6 6 2 9 -8 -5 -8 5 2 -9 -6 -6 8 -1 z"
+            fill="#0E4776" transform="scale(0.62) translate(112 44)"/>'''),
+}
+
+def expand_catviz(content):
+    return re.sub(r"<!--\s*catviz:\s*([a-z-]+)\s*-->",
+                  lambda m: CAT_VIZ.get(m.group(1), ""), content)
+
+
+# --------------------------------------------- fallback preview art
+# Interface-style motifs for resources without a verified image (spec:
+# "official logo on a designed preview" / "designed interface graphics").
+# Drawn in white on the panel's brand color; decorative (aria-hidden).
+
+def _art(body, vb="0 0 160 110"):
+    return (f'<svg viewBox="{vb}" fill="none" xmlns="http://www.w3.org/2000/svg" '
+            'stroke-linecap="round" stroke-linejoin="round">' + body + "</svg>")
+
+FB_ART = {
+    # filterable question bank: search, filter chips, question rows
+    "qbank": _art('''
+      <rect x="8" y="8" width="144" height="18" rx="9" fill="rgba(255,255,255,0.92)"/>
+      <circle cx="20" cy="17" r="5" stroke="#1D4E79" stroke-width="2" fill="none"/>
+      <line x1="24" y1="21" x2="28" y2="25" stroke="#1D4E79" stroke-width="2"/>
+      <rect x="8" y="34" width="42" height="14" rx="7" fill="rgba(255,255,255,0.85)"/>
+      <rect x="56" y="34" width="42" height="14" rx="7" fill="rgba(255,255,255,0.35)"/>
+      <rect x="104" y="34" width="42" height="14" rx="7" fill="rgba(255,255,255,0.35)"/>
+      <rect x="8" y="58" width="144" height="20" rx="6" fill="rgba(255,255,255,0.25)"/>
+      <rect x="16" y="64" width="8" height="8" rx="2" fill="rgba(255,255,255,0.9)"/>
+      <rect x="32" y="65" width="76" height="6" rx="3" fill="rgba(255,255,255,0.7)"/>
+      <rect x="8" y="84" width="144" height="20" rx="6" fill="rgba(255,255,255,0.25)"/>
+      <rect x="16" y="90" width="8" height="8" rx="2" fill="rgba(255,255,255,0.9)"/>
+      <rect x="32" y="91" width="58" height="6" rx="3" fill="rgba(255,255,255,0.7)"/>'''),
+    # digital testing app: timer, question, answer choices
+    "testing": _art('''
+      <rect x="8" y="8" width="144" height="14" rx="7" fill="rgba(255,255,255,0.25)"/>
+      <rect x="110" y="11" width="36" height="8" rx="4" fill="rgba(255,255,255,0.9)"/>
+      <rect x="8" y="32" width="112" height="7" rx="3.5" fill="rgba(255,255,255,0.7)"/>
+      <rect x="8" y="45" width="88" height="7" rx="3.5" fill="rgba(255,255,255,0.5)"/>
+      <rect x="8" y="62" width="144" height="18" rx="9" fill="rgba(255,255,255,0.9)"/>
+      <circle cx="20" cy="71" r="5" stroke="#1D4E79" stroke-width="2" fill="none"/>
+      <rect x="32" y="68" width="66" height="6" rx="3" fill="#1D4E79" opacity="0.55"/>
+      <rect x="8" y="86" width="144" height="18" rx="9" fill="rgba(255,255,255,0.3)"/>
+      <circle cx="20" cy="95" r="5" stroke="rgba(255,255,255,0.9)" stroke-width="2" fill="none"/>
+      <rect x="32" y="92" width="50" height="6" rx="3" fill="rgba(255,255,255,0.7)"/>'''),
+    # graphing calculator: grid, curve, intersection
+    "graph": _art('''
+      <line x1="12" y1="12" x2="12" y2="98" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+      <line x1="12" y1="98" x2="148" y2="98" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+      <line x1="46" y1="12" x2="46" y2="98" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+      <line x1="80" y1="12" x2="80" y2="98" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+      <line x1="114" y1="12" x2="114" y2="98" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+      <line x1="12" y1="40" x2="148" y2="40" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+      <line x1="12" y1="69" x2="148" y2="69" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+      <path d="M16 92 C 60 88 90 40 144 18" stroke="rgba(255,255,255,0.95)" stroke-width="3" fill="none"/>
+      <path d="M16 22 C 66 28 108 70 144 88" stroke="rgba(255,255,255,0.55)" stroke-width="3" fill="none"/>
+      <circle cx="86" cy="52" r="5.5" fill="#FFFFFF"/>'''),
+    # practice test: score dial and module progress
+    "ptest": _art('''
+      <path d="M40 74 a 34 34 0 1 1 68 0" stroke="rgba(255,255,255,0.35)" stroke-width="8" fill="none"/>
+      <path d="M40 74 a 34 34 0 0 1 50 -30" stroke="rgba(255,255,255,0.95)" stroke-width="8" fill="none"/>
+      <circle cx="74" cy="74" r="5" fill="#FFFFFF"/>
+      <rect x="24" y="90" width="112" height="9" rx="4.5" fill="rgba(255,255,255,0.3)"/>
+      <rect x="24" y="90" width="64" height="9" rx="4.5" fill="rgba(255,255,255,0.9)"/>'''),
+    # website: browser frame with content
+    "browser": _art('''
+      <rect x="8" y="8" width="144" height="96" rx="10" fill="rgba(255,255,255,0.14)"/>
+      <circle cx="20" cy="20" r="3.5" fill="rgba(255,255,255,0.9)"/>
+      <circle cx="32" cy="20" r="3.5" fill="rgba(255,255,255,0.6)"/>
+      <circle cx="44" cy="20" r="3.5" fill="rgba(255,255,255,0.35)"/>
+      <rect x="56" y="14" width="88" height="12" rx="6" fill="rgba(255,255,255,0.3)"/>
+      <rect x="18" y="38" width="60" height="42" rx="6" fill="rgba(255,255,255,0.9)"/>
+      <path d="M24 72 l12 -14 8 8 10 -12 12 18 z" fill="#1D4E79" opacity="0.5"/>
+      <rect x="86" y="40" width="56" height="7" rx="3.5" fill="rgba(255,255,255,0.8)"/>
+      <rect x="86" y="53" width="44" height="7" rx="3.5" fill="rgba(255,255,255,0.5)"/>
+      <rect x="86" y="66" width="50" height="7" rx="3.5" fill="rgba(255,255,255,0.5)"/>
+      <rect x="18" y="88" width="124" height="8" rx="4" fill="rgba(255,255,255,0.25)"/>'''),
+    # registration and logistics: calendar with a marked date
+    "calendar": _art('''
+      <rect x="20" y="14" width="120" height="90" rx="10" fill="rgba(255,255,255,0.14)"/>
+      <rect x="20" y="14" width="120" height="22" rx="10" fill="rgba(255,255,255,0.9)"/>
+      <line x1="48" y1="8" x2="48" y2="22" stroke="rgba(255,255,255,0.95)" stroke-width="3"/>
+      <line x1="112" y1="8" x2="112" y2="22" stroke="rgba(255,255,255,0.95)" stroke-width="3"/>
+      <rect x="32" y="46" width="20" height="14" rx="4" fill="rgba(255,255,255,0.35)"/>
+      <rect x="58" y="46" width="20" height="14" rx="4" fill="rgba(255,255,255,0.35)"/>
+      <rect x="84" y="46" width="20" height="14" rx="4" fill="rgba(255,255,255,0.9)"/>
+      <rect x="110" y="46" width="20" height="14" rx="4" fill="rgba(255,255,255,0.35)"/>
+      <rect x="32" y="68" width="20" height="14" rx="4" fill="rgba(255,255,255,0.35)"/>
+      <rect x="58" y="68" width="20" height="14" rx="4" fill="rgba(255,255,255,0.35)"/>
+      <rect x="84" y="68" width="20" height="14" rx="4" fill="rgba(255,255,255,0.35)"/>
+      <rect x="110" y="68" width="20" height="14" rx="4" fill="rgba(255,255,255,0.35)"/>
+      <path d="M88 50 l4 4 8 -8" stroke="#1D4E79" stroke-width="2.5" fill="none"/>'''),
+}
+
+def art_kind(r):
+    if r["id"] == "desmos-calculator" or "desmos" in (r.get("topics") or []):
+        return "graph"
+    if r["resourceType"] == "official-tool":
+        return "testing"
+    return {"question-bank": "qbank", "practice-test": "ptest",
+            "website": "browser", "registration-resource": "calendar"}.get(r["resourceType"], "")
+
+def fb_art(r):
+    art = FB_ART.get(art_kind(r))
+    return f'<span class="fb-art" aria-hidden="true">{art}</span>' if art else ""
+
 # ------------------------------------------------------------- brand / logo
 # Official logo integration (see docs/MAINTENANCE.md → "Official logo").
 # Drop the approved asset at assets/logo/mass-tutoring-logo.png and rebuild:
@@ -142,7 +364,8 @@ def expand_brand(html):
     return (html
             .replace("{{brand-logo-nav}}", brand_logo(38))
             .replace("{{brand-logo-footer}}", brand_logo(44))
-            .replace("{{brand-logo-hero}}", brand_logo(28)))
+            .replace("{{brand-logo-hero}}", brand_logo(28))
+            .replace("{{brand-logo-mascot}}", brand_logo(64)))
 
 
 def badges_html(r):
@@ -224,6 +447,7 @@ def fallback_media(r, kind_label):
     color = (r.get("visual") or {}).get("dominantColor", "#1D4E79")
     dom = domain_of(r.get("url"))
     return f'''<span class="media-fallback" style="--fb:{esc(color)}" aria-hidden="true">
+        {fb_art(r)}
         <span class="fb-mark">{esc(initials(r.get("creator") or r["name"]))}</span>
         <span class="fb-name">{esc(r["name"])}</span>
         {f'<span class="fb-domain">{esc(dom)}</span>' if dom else ''}
@@ -423,7 +647,7 @@ def build_page(src_file, layout):
     if not m:
         raise SystemExit(f"Missing <!--meta ...--> front matter in {src_file}")
     meta = json.loads(m.group(1))
-    content = expand_icons(expand_markers(raw[m.end():].strip(), meta["path"]))
+    content = expand_icons(expand_catviz(expand_markers(raw[m.end():].strip(), meta["path"])))
 
     page = (layout
             .replace("{{title}}", esc(meta["title"]))

@@ -582,6 +582,23 @@ a:hover { color: var(--text-heading); }
   background: var(--surface-secondary);
   overflow: hidden;
 }
+/* image skeleton: fixed-ratio panels shimmer until the (opaque) thumbnail,
+   fallback panel, or cover paints over it — no layout shift, no spinners */
+.card-media::before, .book-cover::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 32%, rgba(255, 255, 255, 0.6) 50%, transparent 68%);
+  background-size: 220% 100%;
+  animation: skeleton-sheen 1.8s ease-in-out infinite;
+}
+@keyframes skeleton-sheen {
+  from { background-position: 120% 0; }
+  to { background-position: -120% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .card-media::before, .book-cover::before { animation: none; background: none; }
+}
 .ratio-16x9 { aspect-ratio: 16 / 9; }
 .card-media img {
   width: 100%; height: 100%;
@@ -596,6 +613,7 @@ a:hover { color: var(--text-heading); }
 .card-media.media-error::before, [data-media].media-error::before {
   content: "";
   position: absolute; inset: 0;
+  animation: none;
   background:
     radial-gradient(circle at 82% 18%, rgba(255, 255, 255, 0.24), transparent 42%),
     repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px 22px),
@@ -679,6 +697,17 @@ a:hover { color: var(--text-heading); }
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.08);
 }
+
+/* interface-style motif inside designed previews */
+.fb-art {
+  position: absolute;
+  inset: 12% 8% 34% 34%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.fb-art svg { height: 100%; width: auto; max-width: 100%; }
+.feature-card .fb-art { inset: 14% 8% 30% 30%; }
 @supports not (background: color-mix(in srgb, red 50%, blue)) {
   .media-fallback { background: linear-gradient(150deg, var(--fb), #0D1721 160%); }
 }
@@ -871,6 +900,36 @@ a:hover { color: var(--text-heading); }
   margin-bottom: 1rem;
   box-shadow: inset 0 0 0 1px rgba(13, 23, 33, 0.06);
 }
+
+/* --- category visuals: one drawing system (2px strokes, blue on pale blue) --- */
+.cat-viz {
+  display: block;
+  background: var(--surface-primary);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+.cat-viz svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform 180ms ease;
+}
+.category-card:hover .cat-viz svg,
+.category-card:focus-visible .cat-viz svg { transform: scale(1.03); }
+
+/* category page heroes: the category's graphic in a framed panel */
+.hero-illus-viz {
+  background: var(--surface-primary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-medium);
+  box-shadow: var(--shadow-card);
+  padding: 1.25rem;
+  width: 100%;
+  max-width: 400px;
+}
+.hero-illus-viz svg { display: block; width: 100%; height: auto; }
 .category-card h3 { margin-bottom: 0.3rem; }
 .category-card p { color: var(--text-secondary); margin: 0; font-size: 0.93rem; }
 .category-card .cat-go { display: inline-block; margin-top: 0.8rem; color: var(--link); font-weight: 650; font-size: 0.93rem; }
@@ -990,6 +1049,16 @@ fieldset.filter-group legend { font-weight: 650; padding: 0; margin-bottom: 0.5r
 }
 .clear-filters:hover { background: var(--surface-secondary); }
 .results-count { font-weight: 650; color: var(--text-heading); margin: 1.1rem 0 0; }
+.empty-state .empty-mascot { display: inline-block; margin-bottom: 0.75rem; }
+.empty-state .empty-mascot svg, .empty-state .empty-mascot img { display: block; }
+.empty-state .clear-filters { margin-top: 0.5rem; }
+
+.cta-mascot { display: inline-block; margin-bottom: 1rem; }
+.callout-quote { display: flex; gap: 1.25rem; align-items: flex-start; }
+.callout-quote .callout-mascot { flex-shrink: 0; }
+.callout-quote p { margin: 0; }
+@media (max-width: 560px) { .callout-quote { flex-direction: column; } }
+
 .empty-state {
   background: var(--surface-primary);
   border: 1px dashed var(--border-medium);

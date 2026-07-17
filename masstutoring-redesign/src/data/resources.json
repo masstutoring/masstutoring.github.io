@@ -36,7 +36,10 @@
       "thumbnailType": "custom-fallback",
       "aspectRatio": "16:9",
       "previewLastVerified": "2026-07-15",
-      "dominantColor": "#1D4E79"
+      "dominantColor": "#1D4E79",
+      "imageType": "fallback",
+      "fallbackType": "qbank-interface",
+      "usageApproved": true
     }
   },
   {
@@ -79,7 +82,10 @@
       "thumbnailType": "custom-fallback",
       "aspectRatio": "16:9",
       "previewLastVerified": "2026-07-15",
-      "dominantColor": "#1D4E79"
+      "dominantColor": "#1D4E79",
+      "imageType": "fallback",
+      "fallbackType": "testing-interface",
+      "usageApproved": true
     }
   },
   {
@@ -116,7 +122,10 @@
       "thumbnailType": "custom-fallback",
       "aspectRatio": "16:9",
       "previewLastVerified": "2026-07-15",
-      "dominantColor": "#1D4E79"
+      "dominantColor": "#1D4E79",
+      "imageType": "fallback",
+      "fallbackType": "score-dial",
+      "usageApproved": true
     }
   },
   {
@@ -160,7 +169,10 @@
       "thumbnailType": "custom-fallback",
       "aspectRatio": "16:9",
       "previewLastVerified": "2026-07-15",
-      "dominantColor": "#1D4E79"
+      "dominantColor": "#1D4E79",
+      "imageType": "fallback",
+      "fallbackType": "browser-preview",
+      "usageApproved": true
     }
   },
   {
@@ -196,7 +208,10 @@
       "thumbnailType": "custom-fallback",
       "aspectRatio": "16:9",
       "previewLastVerified": "2026-07-15",
-      "dominantColor": "#1D4E79"
+      "dominantColor": "#1D4E79",
+      "imageType": "fallback",
+      "fallbackType": "calendar",
+      "usageApproved": true
     }
   },
   {
@@ -228,7 +243,10 @@
       "thumbnailType": "custom-fallback",
       "aspectRatio": "16:9",
       "previewLastVerified": "2026-07-15",
-      "dominantColor": "#1D4E79"
+      "dominantColor": "#1D4E79",
+      "imageType": "fallback",
+      "fallbackType": "calendar",
+      "usageApproved": true
     }
   },
   {
@@ -260,7 +278,10 @@
       "thumbnailType": "custom-fallback",
       "aspectRatio": "16:9",
       "previewLastVerified": "2026-07-15",
-      "dominantColor": "#1D4E79"
+      "dominantColor": "#1D4E79",
+      "imageType": "fallback",
+      "fallbackType": "calendar",
+      "usageApproved": true
     }
   },
   {
@@ -293,7 +314,10 @@
       "thumbnailType": "custom-fallback",
       "aspectRatio": "16:9",
       "previewLastVerified": "2026-07-15",
-      "dominantColor": "#1D4E79"
+      "dominantColor": "#1D4E79",
+      "imageType": "fallback",
+      "fallbackType": "calendar",
+      "usageApproved": true
     }
   },
   {
@@ -325,7 +349,10 @@
       "thumbnailType": "custom-fallback",
       "aspectRatio": "16:9",
       "previewLastVerified": "2026-07-15",
-      "dominantColor": "#1D4E79"
+      "dominantColor": "#1D4E79",
+      "imageType": "fallback",
+      "fallbackType": "calendar",
+      "usageApproved": true
     }
   },
   {
@@ -364,7 +391,10 @@
       "thumbnailType": "custom-fallback",
       "aspectRatio": "16:9",
       "previewLastVerified": "2026-07-15",
-      "dominantColor": "#12578F"
+      "dominantColor": "#12578F",
+      "imageType": "fallback",
+      "fallbackType": "browser-preview",
+      "usageApproved": true
     }
   },
   {
@@ -404,7 +434,10 @@
       "thumbnailType": "custom-fallback",
       "aspectRatio": "16:9",
       "previewLastVerified": "2026-07-15",
-      "dominantColor": "#12578F"
+      "dominantColor": "#12578F",
+      "imageType": "fallback",
+      "fallbackType": "browser-preview",
+      "usageApproved": true
     }
   },
   {
@@ -443,7 +476,10 @@
       "thumbnailType": "custom-fallback",
       "aspectRatio": "16:9",
       "previewLastVerified": "2026-07-15",
-      "dominantColor": "#12578F"
+      "dominantColor": "#12578F",
+      "imageType": "fallback",
+      "fallbackType": "browser-preview",
+      "usageApproved": true
     }
   },
   {
@@ -481,7 +517,10 @@
       "thumbnailType": "custom-fallback",
       "aspectRatio": "16:9",
       "previewLastVerified": "2026-07-15",
-      "dominantColor": "#0E4776"
+      "dominantColor": "#0E4776",
+      "imageType": "fallback",
+      "fallbackType": "testing-interface",
+      "usageApproved": true
     }
   },
   {
@@ -523,7 +562,11 @@
       "thumbnailUrl": "https://yt3.googleusercontent.com/HHgf301JwRL4Q1Yu6Vk_jOJjT0iRUKqSLPrEi2oBaT-Zwbl_WqcmNJZoi9VIaeMXnVVDCRKX5OY=s900-c-k-c0x00ffffff-no-rj",
       "previewSource": "open-graph",
       "imageWidth": 900,
-      "imageHeight": 900
+      "imageHeight": 900,
+      "imageType": "creator-avatar",
+      "usageApproved": true,
+      "imageSourceName": "YouTube",
+      "dateLastVerified": "2026-07-15"
     }
   },
   {
@@ -565,7 +608,11 @@
       "thumbnailUrl": "https://yt3.googleusercontent.com/DrMNBph6JTtlj4MqVNBdrlQ02_iPEPC-kIjKs6Zen5o788S3gNHf6MBF0EGhX3N9Y1VSGcrJ-g=s900-c-k-c0x00ffffff-no-rj",
       "previewSource": "open-graph",
       "imageWidth": 900,
-      "imageHeight": 900
+      "imageHeight": 900,
+      "imageType": "creator-avatar",
+      "usageApproved": true,
+      "imageSourceName": "YouTube",
+      "dateLastVerified": "2026-07-15"
     }
   },
   {
@@ -607,7 +654,11 @@
       "thumbnailUrl": "https://yt3.googleusercontent.com/ult3GM08l3WKKBxZIQtILKNdd3mp71Zb6olOL819NN79_mgIW0rWBszKYF3wYYaFcWoyqUWyIw=s900-c-k-c0x00ffffff-no-rj",
       "previewSource": "open-graph",
       "imageWidth": 900,
-      "imageHeight": 900
+      "imageHeight": 900,
+      "imageType": "creator-avatar",
+      "usageApproved": true,
+      "imageSourceName": "YouTube",
+      "dateLastVerified": "2026-07-15"
     }
   },
   {
@@ -649,7 +700,11 @@
       "thumbnailUrl": "https://yt3.googleusercontent.com/nvwar4bVT-qBYl2SHxL6E8aI_mw8wWwluMU31m8mtI5xgOS2pkJy6CygKGCPQGCz5VbUAW52HL4=s900-c-k-c0x00ffffff-no-rj",
       "previewSource": "open-graph",
       "imageWidth": 900,
-      "imageHeight": 900
+      "imageHeight": 900,
+      "imageType": "creator-avatar",
+      "usageApproved": true,
+      "imageSourceName": "YouTube",
+      "dateLastVerified": "2026-07-15"
     }
   },
   {
@@ -691,7 +746,11 @@
       "thumbnailUrl": "https://yt3.googleusercontent.com/IeAXPmYtmsxsvsxnU5sTtQ2GaixLI5xAZKPIoGfcucGM14tkme3MisU8pbzxsz9PeQ9TYuLwTvg=s900-c-k-c0x00ffffff-no-rj",
       "previewSource": "open-graph",
       "imageWidth": 900,
-      "imageHeight": 900
+      "imageHeight": 900,
+      "imageType": "creator-avatar",
+      "usageApproved": true,
+      "imageSourceName": "YouTube",
+      "dateLastVerified": "2026-07-15"
     }
   },
   {
@@ -735,7 +794,10 @@
       "thumbnailType": "custom-fallback",
       "aspectRatio": "2:3",
       "previewLastVerified": "2026-07-15",
-      "dominantColor": "#37444F"
+      "dominantColor": "#37444F",
+      "imageType": "fallback",
+      "fallbackType": "designed-cover",
+      "usageApproved": true
     }
   },
   {
@@ -781,7 +843,11 @@
       "aspectRatio": "2:3",
       "previewLastVerified": "2026-07-15",
       "thumbnailUrl": "https://thecriticalreader.com/wp-content/uploads/2023/01/2025-SAT-Reading-6th-scaled.jpg",
-      "previewSource": "open-graph"
+      "previewSource": "open-graph",
+      "imageType": "book-cover",
+      "usageApproved": true,
+      "imageSourceName": "Publisher website",
+      "dateLastVerified": "2026-07-15"
     }
   },
   {
@@ -827,7 +893,11 @@
       "aspectRatio": "2:3",
       "previewLastVerified": "2026-07-15",
       "thumbnailUrl": "https://thecriticalreader.com/wp-content/uploads/2023/01/2023-SAT-Grammar-6th-scaled.jpg",
-      "previewSource": "open-graph"
+      "previewSource": "open-graph",
+      "imageType": "book-cover",
+      "usageApproved": true,
+      "imageSourceName": "Publisher website",
+      "dateLastVerified": "2026-07-15"
     }
   },
   {
@@ -870,7 +940,10 @@
       "thumbnailType": "custom-fallback",
       "aspectRatio": "2:3",
       "previewLastVerified": "2026-07-15",
-      "dominantColor": "#37444F"
+      "dominantColor": "#37444F",
+      "imageType": "fallback",
+      "fallbackType": "designed-cover",
+      "usageApproved": true
     }
   },
   {
@@ -913,7 +986,10 @@
       "thumbnailType": "custom-fallback",
       "aspectRatio": "2:3",
       "previewLastVerified": "2026-07-15",
-      "dominantColor": "#37444F"
+      "dominantColor": "#37444F",
+      "imageType": "fallback",
+      "fallbackType": "designed-cover",
+      "usageApproved": true
     }
   },
   {
@@ -957,7 +1033,10 @@
       "thumbnailType": "custom-fallback",
       "aspectRatio": "2:3",
       "previewLastVerified": "2026-07-15",
-      "dominantColor": "#37444F"
+      "dominantColor": "#37444F",
+      "imageType": "fallback",
+      "fallbackType": "designed-cover",
+      "usageApproved": true
     }
   },
   {
@@ -1001,7 +1080,10 @@
       "thumbnailType": "custom-fallback",
       "aspectRatio": "2:3",
       "previewLastVerified": "2026-07-15",
-      "dominantColor": "#37444F"
+      "dominantColor": "#37444F",
+      "imageType": "fallback",
+      "fallbackType": "designed-cover",
+      "usageApproved": true
     }
   },
   {
@@ -1046,7 +1128,11 @@
       "thumbnailUrl": "https://yt3.googleusercontent.com/CQBGcY74pMqc-_mq9axwkglsK8ABqDG6LrsQ_YYZbLDEEVKL3iPZ5ndndPtbZb0CHJwQvHMTbA=s900-c-k-c0x00ffffff-no-rj",
       "previewSource": "open-graph",
       "imageWidth": 900,
-      "imageHeight": 900
+      "imageHeight": 900,
+      "imageType": "creator-avatar",
+      "usageApproved": true,
+      "imageSourceName": "YouTube",
+      "dateLastVerified": "2026-07-15"
     }
   },
   {
@@ -1085,7 +1171,11 @@
       "previewSource": "open-graph",
       "previewLastVerified": "2026-07-15",
       "videoId": "8cxBQnzCyUM",
-      "duration": "18:57"
+      "duration": "18:57",
+      "imageType": "youtube-thumbnail",
+      "usageApproved": true,
+      "imageSourceName": "YouTube",
+      "dateLastVerified": "2026-07-15"
     }
   },
   {
@@ -1123,7 +1213,11 @@
       "previewSource": "open-graph",
       "previewLastVerified": "2026-07-15",
       "videoId": "TXhsGW5HWrs",
-      "duration": "13:08"
+      "duration": "13:08",
+      "imageType": "youtube-thumbnail",
+      "usageApproved": true,
+      "imageSourceName": "YouTube",
+      "dateLastVerified": "2026-07-15"
     }
   },
   {
@@ -1162,7 +1256,11 @@
       "previewSource": "open-graph",
       "previewLastVerified": "2026-07-15",
       "videoId": "uwVVBfb6FnE",
-      "duration": "20:22"
+      "duration": "20:22",
+      "imageType": "youtube-thumbnail",
+      "usageApproved": true,
+      "imageSourceName": "YouTube",
+      "dateLastVerified": "2026-07-15"
     }
   },
   {
@@ -1201,7 +1299,11 @@
       "previewSource": "open-graph",
       "previewLastVerified": "2026-07-15",
       "videoId": "wLTbifAiT3Y",
-      "duration": "17:55"
+      "duration": "17:55",
+      "imageType": "youtube-thumbnail",
+      "usageApproved": true,
+      "imageSourceName": "YouTube",
+      "dateLastVerified": "2026-07-15"
     }
   },
   {
@@ -1239,7 +1341,11 @@
       "previewSource": "open-graph",
       "previewLastVerified": "2026-07-15",
       "videoId": "HcG867qFZ5A",
-      "duration": "11:08"
+      "duration": "11:08",
+      "imageType": "youtube-thumbnail",
+      "usageApproved": true,
+      "imageSourceName": "YouTube",
+      "dateLastVerified": "2026-07-15"
     }
   },
   {
@@ -1277,7 +1383,11 @@
       "previewSource": "open-graph",
       "previewLastVerified": "2026-07-15",
       "videoId": "dRYq4Ga2K2k",
-      "duration": "18:53"
+      "duration": "18:53",
+      "imageType": "youtube-thumbnail",
+      "usageApproved": true,
+      "imageSourceName": "YouTube",
+      "dateLastVerified": "2026-07-15"
     }
   }
 ]
