@@ -1,0 +1,69 @@
+<!--meta {
+  "title": "My Study | Mass Tutoring",
+  "description": "Your free personal SAT workspace: a study plan built around the next test date, one clear daily task, an error log, saved resources, and a test-day checklist. Everything stays on your device.",
+  "path": "/my-study/",
+  "nav": "my-study"
+} -->
+
+<section class="page-hero">
+  <div class="wrap">
+    <h1 class="page-title">My Study</h1>
+    <p class="section-lede">Your plan, your errors, your next step — stored only on this device, no account needed.</p>
+  </div>
+</section>
+
+<section class="section-tight">
+  <div class="wrap">
+    <noscript>
+      <div class="callout"><p><strong>My Study needs JavaScript.</strong> Your browser has it turned off, so the planner, error log, and saved resources can't run. The <a href="/sat-guide/">SAT Guide</a> works fully without it.</p></div>
+    </noscript>
+
+    <div id="ms-app" hidden>
+
+      <div class="ms-statusrow" role="group" aria-label="Study status">
+        <div class="ms-stat"><strong data-st-days>–</strong><span>days until SAT</span></div>
+        <div class="ms-stat"><strong data-st-week>0</strong><span>tasks this week</span></div>
+        <div class="ms-stat"><strong data-st-skill>–</strong><span>focus skill</span></div>
+        <div class="ms-stat"><strong data-st-saved>0</strong><span>saved resources</span></div>
+      </div>
+
+      <div class="ms-today" data-ms-today>
+        <p class="eyebrow">What to study today</p>
+        <h2 class="ms-today-title" data-today-label>Set up your plan to get a daily task.</h2>
+        <p class="ms-today-hint" data-today-hint></p>
+        <div class="ms-today-actions">
+          <a class="button-primary" data-today-open hidden target="_blank" rel="noopener">Open resource</a>
+          <button type="button" class="ms-mini-btn" data-today-done hidden>Mark complete</button>
+          <button type="button" class="ms-mini-btn" data-today-swap hidden>Swap task</button>
+        </div>
+      </div>
+
+      <div class="ms-tabs" role="tablist" aria-label="My Study tools">
+        <button role="tab" id="tab-plan" aria-controls="panel-plan" aria-selected="true">Plan</button>
+        <button role="tab" id="tab-errors" aria-controls="panel-errors" aria-selected="false" tabindex="-1">Error Log</button>
+        <button role="tab" id="tab-saved" aria-controls="panel-saved" aria-selected="false" tabindex="-1">Saved</button>
+        <button role="tab" id="tab-testday" aria-controls="panel-testday" aria-selected="false" tabindex="-1">Test Day</button>
+      </div>
+
+      <div id="panel-plan" role="tabpanel" aria-labelledby="tab-plan" tabindex="0"></div>
+      <div id="panel-errors" role="tabpanel" aria-labelledby="tab-errors" tabindex="0" hidden></div>
+      <div id="panel-saved" role="tabpanel" aria-labelledby="tab-saved" tabindex="0" hidden></div>
+      <div id="panel-testday" role="tabpanel" aria-labelledby="tab-testday" tabindex="0" hidden></div>
+
+      <details class="ms-settings">
+        <summary>Settings &amp; your data</summary>
+        <div class="ms-settings-body">
+          <p>Everything in My Study is stored only in this browser on this device. Nothing is uploaded, and clearing your browser data removes it.</p>
+          <p class="ms-settings-actions">
+            <button type="button" class="button-secondary" data-export>Export data</button>
+            <label class="button-secondary ms-import-label">Import data<input type="file" accept="application/json" data-import class="visually-hidden" /></label>
+            <button type="button" class="button-secondary" data-clear>Clear my data</button>
+          </p>
+        </div>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<script src="/assets/js/my-study.js" defer></script>

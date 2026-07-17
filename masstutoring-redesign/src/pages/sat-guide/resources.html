@@ -1,0 +1,112 @@
+<!--meta {
+  "title": "Browse All SAT Resources | Mass Tutoring",
+  "description": "Search and filter every reviewed SAT resource in the Mass Tutoring guide: official College Board tools, videos, books, websites, practice tests, and more.",
+  "path": "/sat-guide/resources/",
+  "nav": "search"
+} -->
+
+<section class="page-hero">
+  <div class="wrap">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="/sat-guide/">SAT Guide</a></li>
+        <li aria-current="page">All resources</li>
+      </ol>
+    </nav>
+    <h1 class="page-title">Browse all resources</h1>
+    <p class="section-lede">Every reviewed resource in one place. Use the search and filters, save anything to <a href="/my-study/">My Study</a> with the bookmark, or open the info icon for the full review.</p>
+  </div>
+</section>
+
+<section class="section" id="directory" aria-labelledby="directory-heading">
+  <div class="wrap">
+    <h2 id="directory-heading">Search all resources</h2>
+    <p class="section-lede">Search and filter every resource in the guide. Filters within a group broaden your search; filters across groups narrow it.</p>
+
+    <div class="guide-tools" data-guide-tools>
+      <div class="search-row" role="search">
+        <label for="guide-search">Search resources</label>
+        <input class="search-input" type="search" id="guide-search" name="q"
+          placeholder="Try &quot;Desmos&quot;, &quot;grammar&quot;, or &quot;practice test&quot;" autocomplete="off" />
+      </div>
+
+      <fieldset class="filter-group">
+        <legend>Subject</legend>
+        <div class="filter-chips">
+          <label class="filter-chip"><input type="checkbox" data-filter-key="subject" value="math" /> Math</label>
+          <label class="filter-chip"><input type="checkbox" data-filter-key="subject" value="reading-writing" /> Reading &amp; Writing</label>
+          <label class="filter-chip"><input type="checkbox" data-filter-key="subject" value="desmos" /> Desmos</label>
+          <label class="filter-chip"><input type="checkbox" data-filter-key="subject" value="general" /> Both sections</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="filter-group">
+        <legend>Type</legend>
+        <div class="filter-chips">
+          <label class="filter-chip"><input type="checkbox" data-filter-key="type" value="channel" /> Videos</label>
+          <label class="filter-chip"><input type="checkbox" data-filter-key="type" value="website" /> Websites</label>
+          <label class="filter-chip"><input type="checkbox" data-filter-key="type" value="book" /> Books</label>
+          <label class="filter-chip"><input type="checkbox" data-filter-key="type" value="question-bank" /> Question banks</label>
+          <label class="filter-chip"><input type="checkbox" data-filter-key="type" value="practice-test" /> Practice tests</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="filter-group">
+        <legend>Cost and source</legend>
+        <div class="filter-chips">
+          <label class="filter-chip"><input type="checkbox" data-filter-key="cost" value="completely-free" /> Completely free</label>
+          <label class="filter-chip"><input type="checkbox" data-filter-key="cost" value="freemium" /> Free with paid options</label>
+          <label class="filter-chip"><input type="checkbox" data-filter-key="cost" value="paid" /> Paid</label>
+          <label class="filter-chip"><input type="checkbox" data-filter-key="official" value="yes" /> Official resources</label>
+        </div>
+      </fieldset>
+
+      <button type="button" class="clear-filters">Clear search and filters</button>
+      <p class="results-count" id="results-status" role="status" aria-live="polite"></p>
+    </div>
+
+    <div class="empty-state" data-empty-state hidden>
+      <span class="empty-mascot" aria-hidden="true">{{brand-logo-mascot}}</span>
+      <p><strong>No resources match your search.</strong></p>
+      <p>Try fewer filters or a shorter search term — or <a href="/sat-guide/start-here/">start from the Start Here guide</a> and we'll point you to the right category.</p>
+      <button type="button" class="button-secondary clear-filters">Clear search and filters</button>
+    </div>
+
+    <section data-resource-section aria-labelledby="dir-official">
+      <h3 id="dir-official">Official College Board</h3>
+      <div class="resource-grid">
+        <!-- resources: category=official | h4 -->
+      </div>
+    </section>
+
+    <section data-resource-section aria-labelledby="dir-practice">
+      <h3 id="dir-practice">Practice platforms and websites</h3>
+      <div class="resource-grid">
+        <!-- resources: category=practice | h4 -->
+        <!-- resources: category=desmos | h4 -->
+      </div>
+    </section>
+
+    <section data-resource-section aria-labelledby="dir-videos">
+      <h3 id="dir-videos">Videos and creators</h3>
+      <div class="resource-grid">
+        <!-- resources: category=videos | h4 -->
+      </div>
+    </section>
+
+    <section data-resource-section aria-labelledby="dir-books">
+      <h3 id="dir-books">Books</h3>
+      <div class="resource-grid">
+        <!-- resources: category=books | h4 -->
+      </div>
+    </section>
+
+    <section data-resource-section aria-labelledby="dir-logistics">
+      <h3 id="dir-logistics">Registration and test-day logistics</h3>
+      <div class="resource-grid">
+        <!-- resources: category=test-day | h4 -->
+      </div>
+    </section>
+  </div>
+</section>
+

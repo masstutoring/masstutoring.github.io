@@ -1,0 +1,56 @@
+{
+  "_readme": "Weekend SAT administrations. MAINTENANCE: verify every entry against the official College Board dates page (officialDatesUrl) before relying on it, fill registration deadlines from that page when published, set lastVerified to the date you checked, and add next year's dates when announced. The site shows a maintenance notice automatically when no future date remains. Times are handled in America/New_York by the countdown script.",
+  "officialDatesUrl": "https://satsuite.collegeboard.org/sat/registration/dates-deadlines",
+  "registrationUrl": "https://satsuite.collegeboard.org/sat/registration",
+  "administrations": [
+    {
+      "id": "sat-2026-08",
+      "testDate": "2026-08-29",
+      "regularRegistrationDeadline": null,
+      "lateRegistrationDeadline": null,
+      "lastVerified": "UNVERIFIED — announced date; confirm at officialDatesUrl before trusting deadlines"
+    },
+    {
+      "id": "sat-2026-10",
+      "testDate": "2026-10-03",
+      "regularRegistrationDeadline": null,
+      "lateRegistrationDeadline": null,
+      "lastVerified": "UNVERIFIED — announced date; confirm at officialDatesUrl before trusting deadlines"
+    },
+    {
+      "id": "sat-2026-11",
+      "testDate": "2026-11-07",
+      "regularRegistrationDeadline": null,
+      "lateRegistrationDeadline": null,
+      "lastVerified": "UNVERIFIED — announced date; confirm at officialDatesUrl before trusting deadlines"
+    },
+    {
+      "id": "sat-2026-12",
+      "testDate": "2026-12-05",
+      "regularRegistrationDeadline": null,
+      "lateRegistrationDeadline": null,
+      "lastVerified": "UNVERIFIED — announced date; confirm at officialDatesUrl before trusting deadlines"
+    },
+    {
+      "id": "sat-2027-03",
+      "testDate": "2027-03-13",
+      "regularRegistrationDeadline": null,
+      "lateRegistrationDeadline": null,
+      "lastVerified": "UNVERIFIED — announced date; confirm at officialDatesUrl before trusting deadlines"
+    },
+    {
+      "id": "sat-2027-05",
+      "testDate": "2027-05-01",
+      "regularRegistrationDeadline": null,
+      "lateRegistrationDeadline": null,
+      "lastVerified": "UNVERIFIED — announced date; confirm at officialDatesUrl before trusting deadlines"
+    },
+    {
+      "id": "sat-2027-06",
+      "testDate": "2027-06-05",
+      "regularRegistrationDeadline": null,
+      "lateRegistrationDeadline": null,
+      "lastVerified": "UNVERIFIED — announced date; confirm at officialDatesUrl before trusting deadlines"
+    }
+  ]
+}

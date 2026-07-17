@@ -14,7 +14,7 @@
       <p class="lede">Explore trusted videos, official practice tools, books, study plans, and advice — or request free SAT tutoring when you need additional support.</p>
       <div class="hero-actions">
         <a class="button-primary" href="/sat-guide/">Explore the SAT Guide</a>
-        <a class="button-secondary" href="/tutoring/">Get Free SAT Tutoring</a>
+        <a class="text-link" href="/tutoring/">Learn about free tutoring <span class="arr" aria-hidden="true">→</span></a>
       </div>
       <ul class="hero-points">
         <li><span class="pt" aria-hidden="true">✓</span> Every resource verified by students</li>
@@ -23,6 +23,14 @@
       </ul>
     </div>
 
+<!-- if-logo -->
+    <div class="hero-mascot-wrap">
+      <span class="hero-mascot-halo" aria-hidden="true"></span>
+      {{brand-mascot-hero}}
+      <span class="hero-mascot-badge" aria-hidden="true">Completely Free</span>
+    </div>
+<!-- end-if-logo -->
+<!-- if-no-logo -->
     <div class="hero-preview" aria-hidden="true">
       <div class="hp-panel hp-main">
         <div class="hp-search"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> Search 30+ curated SAT resources…</div>
@@ -41,6 +49,27 @@
           <span><span class="t">Every SAT Grammar Rule You Need</span><br /><span class="s">Pratik Vangal · 18:57 · Verified video</span></span>
         </div>
         <p class="hp-footer">Start Here → Diagnose → Drill → Retest</p>
+      </div>
+    </div>
+<!-- end-if-no-logo -->
+  </div>
+</section>
+
+<section class="section-tight">
+  <div class="wrap">
+    <div class="sat-countdown" data-sat-countdown hidden>
+      <div class="sc-main">
+        <p class="sc-label">Next weekend SAT</p>
+        <p class="sc-days"><span data-sc-days>–</span></p>
+        <p class="sc-date"><time data-sc-date datetime=""></time></p>
+      </div>
+      <div class="sc-side">
+        <p class="sc-status" data-sc-status></p>
+        <details class="sc-details">
+          <summary>Registration &amp; deadlines</summary>
+          <div class="sc-details-body" data-sc-detail></div>
+        </details>
+        <p class="sc-source"><a href="https://satsuite.collegeboard.org/sat/registration/dates-deadlines" target="_blank" rel="noopener">View official dates<span class="visually-hidden"> (College Board, opens in a new tab)</span> ↗</a></p>
       </div>
     </div>
   </div>
@@ -74,6 +103,28 @@
     <p class="section-lede">For most students, these cover the first month of prep. Provided by College Board and Khan Academy — Mass Tutoring is independent and not affiliated with or endorsed by either.</p>
     <div class="resource-grid essential-grid">
       <!-- resources: ids=cb-question-bank,bluebook,khan-academy-sat | h3 essential -->
+    </div>
+  </div>
+</section>
+
+<section class="section section-white">
+  <div class="wrap">
+    <div class="mystudy-promo">
+      <div>
+        <p class="eyebrow">My Study</p>
+        <h2>Your plan, your errors, your next step.</h2>
+        <p class="section-lede">Build a free study plan around the next SAT, get one clear task each day, log the questions you miss, and keep your saved resources in one place. Everything stays on your device — no account needed.</p>
+        <p style="margin-bottom:0"><a class="button-primary" href="/my-study/" data-mystudy-cta>Build your free study plan</a></p>
+      </div>
+      <div class="mystudy-snapshot" data-mystudy-snapshot hidden>
+        <p class="ms-snap-label">Today</p>
+        <p class="ms-snap-task" data-ms-task></p>
+        <ul class="ms-snap-stats">
+          <li><strong data-ms-days>–</strong> days to test</li>
+          <li><strong data-ms-done>0</strong> tasks this week</li>
+          <li><strong data-ms-saved>0</strong> saved</li>
+        </ul>
+      </div>
     </div>
   </div>
 </section>
