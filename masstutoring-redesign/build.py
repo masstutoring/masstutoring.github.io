@@ -117,17 +117,17 @@ LOGO_FILE = ROOT / "assets" / "logo" / "mass-tutoring-logo.png"
 LOGO_PRESENT = LOGO_FILE.exists()
 
 INTERIM_MARK = '''<svg class="brand-mark" width="{s}" height="{s}" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
-  <circle cx="32" cy="32" r="30" fill="#FFFFFF" stroke="#347FC4" stroke-width="3" />
-  <path d="M18 20 L24 30 L20 30 Z" fill="#16283A" />
-  <path d="M46 20 L40 30 L44 30 Z" fill="#16283A" />
-  <ellipse cx="32" cy="36" rx="15" ry="13" fill="#E3EEFB" />
-  <circle cx="26" cy="33" r="2.4" fill="#16283A" />
-  <circle cx="38" cy="33" r="2.4" fill="#16283A" />
-  <path d="M30 40 Q32 42 34 40" stroke="#16283A" stroke-width="1.8" fill="none" stroke-linecap="round" />
-  <line x1="14" y1="37" x2="22" y2="36" stroke="#16283A" stroke-width="1.4" />
-  <line x1="14" y1="40" x2="22" y2="40" stroke="#16283A" stroke-width="1.4" />
-  <line x1="50" y1="37" x2="42" y2="36" stroke="#16283A" stroke-width="1.4" />
-  <line x1="50" y1="40" x2="42" y2="40" stroke="#16283A" stroke-width="1.4" />
+  <circle cx="32" cy="32" r="30" fill="#FFFFFF" stroke="#1769AA" stroke-width="3" />
+  <path d="M18 20 L24 30 L20 30 Z" fill="#101820" />
+  <path d="M46 20 L40 30 L44 30 Z" fill="#101820" />
+  <ellipse cx="32" cy="36" rx="15" ry="13" fill="#DCEAF6" />
+  <circle cx="26" cy="33" r="2.4" fill="#101820" />
+  <circle cx="38" cy="33" r="2.4" fill="#101820" />
+  <path d="M30 40 Q32 42 34 40" stroke="#101820" stroke-width="1.8" fill="none" stroke-linecap="round" />
+  <line x1="14" y1="37" x2="22" y2="36" stroke="#101820" stroke-width="1.4" />
+  <line x1="14" y1="40" x2="22" y2="40" stroke="#101820" stroke-width="1.4" />
+  <line x1="50" y1="37" x2="42" y2="36" stroke="#101820" stroke-width="1.4" />
+  <line x1="50" y1="40" x2="42" y2="40" stroke="#101820" stroke-width="1.4" />
 </svg>'''
 
 def brand_logo(size):
@@ -221,7 +221,7 @@ def data_attrs(r):
 
 def fallback_media(r, kind_label):
     """Designed branded preview panel for resources without a verified image."""
-    color = (r.get("visual") or {}).get("dominantColor", "#2F609B")
+    color = (r.get("visual") or {}).get("dominantColor", "#1D4E79")
     dom = domain_of(r.get("url"))
     return f'''<span class="media-fallback" style="--fb:{esc(color)}" aria-hidden="true">
         <span class="fb-mark">{esc(initials(r.get("creator") or r["name"]))}</span>
@@ -280,7 +280,7 @@ def book_card(r, h):
     if v.get("thumbnailUrl"):
         cover = f'<a class="book-cover" data-media href="{esc(r["url"])}" target="_blank" rel="noopener" aria-label="{esc(aria)}" tabindex="-1">{media_img(v, cls="cover-img")}<span class="media-cta" aria-hidden="true">View book ↗</span></a>'
     else:
-        color = v.get("dominantColor", "#946A2E")
+        color = v.get("dominantColor", "#37444F")
         cover = f'''<a class="book-cover cover-designed" data-media href="{esc(r["url"])}" target="_blank" rel="noopener" aria-label="{esc(aria)}" tabindex="-1" style="--fb:{esc(color)}">
         <span aria-hidden="true" class="cover-text"><span class="cover-title">{esc(r["name"])}</span><span class="cover-author">{esc(r.get("author", ""))}</span><span class="cover-note">Designed preview — see current cover at the source</span></span>
         <span class="media-cta" aria-hidden="true">View book ↗</span></a>'''
@@ -348,7 +348,7 @@ def website_card(r, h, variant="default"):
 
 def compact_card(r, h):
     aria = f"Open {r['name']} (opens in a new tab)"
-    color = (r.get("visual") or {}).get("dominantColor", "#2F609B")
+    color = (r.get("visual") or {}).get("dominantColor", "#1D4E79")
     return f'''
     <article class="rcard compact-card" {data_attrs(r)}>
       <span class="compact-mark" style="--fb:{esc(color)}" aria-hidden="true">{esc(initials(r.get("creator") or r["name"]))}</span>
