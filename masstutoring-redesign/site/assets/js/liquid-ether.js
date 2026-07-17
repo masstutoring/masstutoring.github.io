@@ -54,6 +54,7 @@
     precision highp float;
     uniform sampler2D velocity;
     uniform float dt;
+    uniform float decay;
     uniform bool isBFECC;
     uniform vec2 fboSize;
     uniform vec2 px;
@@ -64,7 +65,7 @@
         vec2 vel = texture2D(velocity, uv).xy;
         vec2 uv2 = uv - vel * dt * ratio;
         vec2 newVel = texture2D(velocity, uv2).xy;
-        gl_FragColor = vec4(newVel, 0.0, 0.0);
+        gl_FragColor = vec4(newVel * decay, 0.0, 0.0);
       } else {
         vec2 spot_new = uv;
         vec2 vel_old = texture2D(velocity, uv).xy;
@@ -76,7 +77,7 @@
         vec2 vel_2 = texture2D(velocity, spot_new3).xy;
         vec2 spot_old2 = spot_new3 - vel_2 * dt * ratio;
         vec2 newVel2 = texture2D(velocity, spot_old2).xy;
-        gl_FragColor = vec4(newVel2, 0.0, 0.0);
+        gl_FragColor = vec4(newVel2 * decay, 0.0, 0.0);
       }
     }
   `;
@@ -91,9 +92,11 @@
       vec2 vel = texture2D(velocity, uv).xy;
       float lenv = clamp(length(vel), 0.0, 1.0);
       vec3 c = texture2D(palette, vec2(lenv, 0.5)).rgb;
-      vec3 outRGB = mix(bgColor.rgb, c, lenv);
-      float outA = mix(bgColor.a, 1.0, lenv);
-      gl_FragColor = vec4(outRGB, outA);
+      // Premultiplied output with a small floor: velocities below the
+      // threshold render fully transparent, so the page background shows
+      // through cleanly instead of a lingering grey haze.
+      float a = smoothstep(0.04, 1.0, lenv);
+      gl_FragColor = vec4(c * a, a);
     }
   `;
 
@@ -291,7 +294,14 @@
       calcSize();
       renderer.setSize(W, H, false);
       if (fbos) {
-        Object.values(fbos).forEach(fbo => fbo.setSize(fboW, fboH));
+        // setSize reallocates the float textures, which may come back with
+        // garbage on some drivers — clear them just like at creation.
+        Object.values(fbos).forEach(fbo => {
+          fbo.setSize(fboW, fboH);
+          renderer.setRenderTarget(fbo);
+          renderer.clear(true, false, false);
+        });
+        renderer.setRenderTarget(null);
       }
     }
 
@@ -304,6 +314,14 @@
       const keys = ["vel_0","vel_1","vel_vis0","vel_vis1","div","pres_0","pres_1"];
       fbos = {};
       keys.forEach(k => { fbos[k] = makeFBO(THREE, renderer, fboW, fboH); });
+      // Float render targets are not guaranteed to start zeroed on every
+      // GPU/driver; leftover garbage reads as a permanent grey "silk"
+      // pattern in the velocity field. Clear each one explicitly.
+      keys.forEach(k => {
+        renderer.setRenderTarget(fbos[k]);
+        renderer.clear(true, false, false);
+      });
+      renderer.setRenderTarget(null);
     }
     createFBOs();
 
@@ -341,6 +359,7 @@
       fboSize:       { value: fboSize },
       velocity:      { value: fbos.vel_0.texture },
       dt:            { value: cfg.dt },
+      decay:         { value: 0.975 },
       isBFECC:       { value: cfg.BFECC },
     });
     // boundary line segments
@@ -607,9 +626,12 @@
         runPass(presPass, fbos.vel_0);
       }
 
-      // output render
+      // output render — clear the canvas first (autoClear is off for the
+      // additive force pass, so stale frames would otherwise linger as a
+      // grey residue wherever the flow has faded)
       outMat.uniforms.velocity.value = fbos.vel_0.texture;
       renderer.setRenderTarget(null);
+      renderer.clear(true, false, false);
       renderer.render(outScene, cam);
     }
 
