@@ -320,7 +320,7 @@ FB_ART = {
 }
 
 def art_kind(r):
-    if r["id"] == "desmos-calculator" or "desmos" in (r.get("topics") or []):
+    if r["id"] == "desmos-calculator":
         return "graph"
     if r["resourceType"] == "official-tool":
         return "testing"
@@ -368,7 +368,7 @@ def expand_brand(html):
             .replace("{{brand-logo-mascot}}", brand_logo(64)))
 
 
-def badges_html(r):
+def badges_html(r, limit=3):
     # Max three badges on a card (spec: reduce badge overload). Account
     # requirements and other metadata live in the card's details disclosure.
     out = []
@@ -380,7 +380,7 @@ def badges_html(r):
     out.append(f'<span class="badge {cls}">{esc(label)}</span>')
     if r.get("recommendationLabel"):
         out.append(f'<span class="badge badge-recommended">{esc(r["recommendationLabel"])}</span>')
-    return "\n        ".join(out[:3])
+    return "\n        ".join(out[:limit])
 
 
 def details_block(r, include_book=False):
@@ -584,7 +584,33 @@ def compact_card(r, h):
     </article>'''
 
 
+def essential_card(r, h):
+    """Compact homepage card: image, title, provider, description, two badges."""
+    v = r.get("visual", {})
+    verb = "Open" if r["resourceType"] in ("official-tool", "website", "question-bank") else "Visit"
+    aria = f"{verb} {r['name']} (opens in a new tab)"
+    kind = TYPE_LABELS.get(r["resourceType"], "Website")
+    media_inner = media_img(v) if v.get("thumbnailUrl") else fallback_media(r, kind)
+    return f'''
+    <article class="rcard site-card essential-card" {data_attrs(r)}>
+      <a class="card-media ratio-16x10" data-media href="{esc(r["url"])}" target="_blank" rel="noopener"
+         aria-label="{esc(aria)}" tabindex="-1">
+        {media_inner}
+        <span class="media-cta" aria-hidden="true">{esc(verb)} resource ↗</span>
+      </a>
+      <div class="card-body">
+        <h{h} class="card-title"><a href="{esc(r["url"])}" target="_blank" rel="noopener">{new_tab(r["name"])}</a></h{h}>
+        <p class="card-creator">{esc(r.get("creator", ""))}</p>
+        <div class="card-badges">{badges_html(r, limit=2)}</div>
+        <p class="card-desc">{esc(r["description"].split(". ")[0].rstrip(".") + ".")}</p>
+        <p class="card-reviewed"><a href="/sat-guide/official/">Details in the guide</a></p>
+      </div>
+    </article>'''
+
+
 def card_html(r, h=3, variant="default"):
+    if variant == "essential":
+        return essential_card(r, h)
     if variant == "compact":
         return compact_card(r, h)
     t = r["resourceType"]
