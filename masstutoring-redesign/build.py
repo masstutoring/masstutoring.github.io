@@ -414,7 +414,7 @@ def build_brand_derivatives():
 
     # favicon: head-and-glasses crop from the top of the artwork (no redraw)
     cw, ch = crop.size
-    head = crop.crop((int(cw*0.18), 0, int(cw*0.88), int(ch*0.52)))
+    head = crop.crop((int(cw*0.24), 0, int(cw*0.92), int(ch*0.52)))
     side = max(head.size)
     sq = Image.new("RGBA", (side, side), (255, 255, 255, 0))
     sq.paste(head, ((side - head.size[0]) // 2, (side - head.size[1]) // 2), head)
@@ -457,6 +457,19 @@ def expand_brand(html):
     keep, drop = ("if-logo", "if-no-logo") if BRAND_READY else ("if-no-logo", "if-logo")
     html = re.sub(rf"<!--\s*{drop}\s*-->[\s\S]*?<!--\s*end-{drop}\s*-->", "", html)
     html = re.sub(rf"<!--\s*(end-)?{keep}\s*-->", "", html)
+    if BRAND_READY:
+        og = ""
+        if (BRANDING / "og-image.png").exists():
+            og = (f'<meta property="og:image" content="{SITE_ORIGIN}/assets/branding/og-image.png" />\n'
+                  f'<meta property="og:image:width" content="1200" />\n'
+                  f'<meta property="og:image:height" content="630" />\n'
+                  f'<meta name="twitter:card" content="summary_large_image" />\n')
+        html = html.replace(
+            '<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />',
+            og +
+            '<link rel="icon" href="/assets/branding/mass-tutoring-cat-favicon-32.png" sizes="32x32" type="image/png" />\n'
+            '<link rel="icon" href="/assets/branding/mass-tutoring-cat-favicon-192.png" sizes="192x192" type="image/png" />\n'
+            '<link rel="apple-touch-icon" href="/assets/branding/mass-tutoring-cat-favicon-180.png" />')
     return html
 
 
