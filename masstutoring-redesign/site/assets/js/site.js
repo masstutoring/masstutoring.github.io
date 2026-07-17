@@ -328,8 +328,12 @@
     var rest = sched.administrations.filter(function (a) { return a.testDate > adm.testDate; }).slice(0, 3);
     detailEl.innerHTML = "<p>Upcoming weekend SATs:</p><ul>" +
       [adm].concat(rest).map(function (a) {
-        return "<li><time datetime=\"" + a.testDate + "\">" + window.MT.fmtDate(a.testDate) + "</time></li>";
-      }).join("") + "</ul><p>Register and confirm deadlines on the official College Board page.</p>";
+        var dl = a.regularRegistrationDeadline
+          ? " — register by " + window.MT.fmtDate(a.regularRegistrationDeadline) +
+            (a.lateRegistrationDeadline ? " (late/changes until " + window.MT.fmtDate(a.lateRegistrationDeadline) + ", fees apply)" : "")
+          : "";
+        return "<li><time datetime=\"" + a.testDate + "\">" + window.MT.fmtDate(a.testDate) + "</time>" + dl + "</li>";
+      }).join("") + "</ul><p>Borrowing a device from College Board? Register and request it at least 30 days before test day. Confirm everything on the official page.</p>";
     el.hidden = false;
   }
   render();
