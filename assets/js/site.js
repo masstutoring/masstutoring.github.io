@@ -369,3 +369,24 @@
     d.saved.nextUp.length + d.saved.later.length + d.saved.completed.length;
   snap.hidden = false;
 })();
+
+// ============================================================
+// In-guide tutoring nudge — per-session dismissal (Task 2.1)
+// ============================================================
+(function () {
+  "use strict";
+  var nudges = document.querySelectorAll("[data-tutoring-nudge]");
+  if (!nudges.length) return;
+  var KEY = "mtTutoringNudgeDismissed";
+  var dismissed = false;
+  try { dismissed = sessionStorage.getItem(KEY) === "1"; } catch (e) {}
+  nudges.forEach(function (n) {
+    if (dismissed) return;            // stays hidden this session
+    n.hidden = false;
+    var btn = n.querySelector("[data-tn-dismiss]");
+    if (btn) btn.addEventListener("click", function () {
+      n.hidden = true;
+      try { sessionStorage.setItem(KEY, "1"); } catch (e) {}
+    });
+  });
+})();

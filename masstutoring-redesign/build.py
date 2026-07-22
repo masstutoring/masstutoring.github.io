@@ -234,6 +234,21 @@ def expand_catviz(content):
                   lambda m: CAT_VIZ.get(m.group(1), ""), content)
 
 
+# --------------------------------------------- in-guide tutoring nudge
+# Reusable dismissible callout (Task 2.1). Pages drop <!-- tutoring-nudge -->
+# at the end of their content; JS handles per-session dismissal.
+TUTORING_NUDGE = '''<aside class="tutoring-nudge" data-tutoring-nudge hidden>
+      <p class="tn-text">Still stuck on this? A free tutor can walk you through it one-on-one.</p>
+      <a class="tn-link" href="/tutoring/">Request a free tutor <span class="arr" aria-hidden="true">&rarr;</span></a>
+      <button type="button" class="tn-dismiss" data-tn-dismiss aria-label="Dismiss this suggestion">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </aside>'''
+
+def expand_nudge(content):
+    return content.replace("<!-- tutoring-nudge -->", TUTORING_NUDGE)
+
+
 # --------------------------------------------- fallback preview art
 # Interface-style motifs for resources without a verified image (spec:
 # "official logo on a designed preview" / "designed interface graphics").
@@ -826,7 +841,7 @@ def build_page(src_file, layout):
     if not m:
         raise SystemExit(f"Missing <!--meta ...--> front matter in {src_file}")
     meta = json.loads(m.group(1))
-    content = expand_icons(expand_catviz(expand_markers(raw[m.end():].strip(), meta["path"])))
+    content = expand_icons(expand_nudge(expand_catviz(expand_markers(raw[m.end():].strip(), meta["path"]))))
 
     page = (layout
             .replace("{{title}}", esc(meta["title"]))

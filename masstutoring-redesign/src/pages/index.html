@@ -75,6 +75,69 @@
   </div>
 </section>
 
+<section class="section" aria-labelledby="start-quiz-heading">
+  <div class="wrap">
+    <div class="start-quiz" data-start-quiz>
+      <div class="sq-intro" data-sq-intro>
+        <p class="eyebrow">New here?</p>
+        <h2 id="start-quiz-heading">Find your starting point in about 90 seconds.</h2>
+        <p class="section-lede">Three quick questions, no sign-up, nothing saved or sent — just a pointer to the right next step.</p>
+        <div class="hero-actions">
+          <button type="button" class="button-primary" data-sq-start>Find my starting point</button>
+          <a class="text-link" href="/sat-guide/">Skip, I'll browse myself <span class="arr" aria-hidden="true">&rarr;</span></a>
+        </div>
+      </div>
+
+      <form class="sq-flow" data-sq-flow hidden>
+        <p class="sq-progress" data-sq-progress aria-live="polite">Question 1 of 3</p>
+
+        <fieldset class="sq-step" data-sq-step="0">
+          <legend>What grade are you in?</legend>
+          <div class="sq-options">
+            <button type="button" class="sq-opt" data-sq-answer="q1:9-10">9th or 10th</button>
+            <button type="button" class="sq-opt" data-sq-answer="q1:11">11th</button>
+            <button type="button" class="sq-opt" data-sq-answer="q1:12">12th</button>
+            <button type="button" class="sq-opt" data-sq-answer="q1:other">Other / not in school</button>
+          </div>
+        </fieldset>
+
+        <fieldset class="sq-step" data-sq-step="1" hidden>
+          <legend>When's your next SAT?</legend>
+          <div class="sq-options">
+            <button type="button" class="sq-opt" data-sq-answer="q2:soon">Within 2 months</button>
+            <button type="button" class="sq-opt" data-sq-answer="q2:mid">3–6 months</button>
+            <button type="button" class="sq-opt" data-sq-answer="q2:unsure">Not sure yet</button>
+          </div>
+        </fieldset>
+
+        <fieldset class="sq-step" data-sq-step="2" hidden>
+          <legend>How's SAT prep going so far?</legend>
+          <div class="sq-options">
+            <button type="button" class="sq-opt" data-sq-answer="q3:new">Haven't started</button>
+            <button type="button" class="sq-opt" data-sq-answer="q3:solo">Studying on my own</button>
+            <button type="button" class="sq-opt" data-sq-answer="q3:stuck">Stuck and need help</button>
+          </div>
+        </fieldset>
+
+        <div class="sq-nav">
+          <button type="button" class="ms-mini-btn" data-sq-back hidden>&larr; Back</button>
+          <a class="text-link" href="/sat-guide/" data-sq-skip>Skip, I'll browse myself</a>
+        </div>
+      </form>
+
+      <div class="sq-result" data-sq-result hidden aria-live="polite">
+        <p class="eyebrow">Your next step</p>
+        <h2 data-sq-result-title></h2>
+        <p class="section-lede" data-sq-result-body></p>
+        <div class="hero-actions">
+          <a class="button-primary" data-sq-result-cta href="/sat-guide/">Go</a>
+          <button type="button" class="text-link" data-sq-restart>Start over</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="section section-white">
   <div class="wrap">
     <div class="overview-grid">
@@ -149,3 +212,4 @@
 <script src="/assets/vendor/three.min.js" defer></script>
 <script src="/assets/js/liquid-ether.js" defer></script>
 <script src="/assets/js/hero-fluid.js" defer></script>
+<script src="/assets/js/start-quiz.js" defer></script>
