@@ -1676,3 +1676,55 @@ fieldset.ms-field label { display: inline-flex; gap: 0.4rem; margin-right: 1.2re
 .edu-confirm { max-width: 34rem; }
 .edu-confirm h2 { margin-top: 0.75rem; }
 .edu-confirm-mascot img { display: block; }
+
+/* ============================== print / Save-as-PDF (Task 3.1) ============================== */
+
+@media print {
+  :root { --page-background: #fff; }
+  body { background: #fff; color: #000; font-size: 12pt; }
+  .site-header, .site-footer, .skip-link, .nav-toggle,
+  .hero > canvas, .hero-mascot-wrap, .hero-mascot-halo, .hero-preview,
+  .sat-countdown, .start-quiz, .tutoring-nudge, .qv-root, .mt-toast,
+  .ms-tabs, .ms-settings, .ms-today-actions, .hero-illus,
+  [data-print], .cta-mascot, .tutoring-mascot, .mystudy-snapshot { display: none !important; }
+  .section, .section-tight, .page-hero { padding-block: 0.6rem !important; }
+  .rcard, .ms-week, .callout, .guide-card, .feature-card, .mission-card,
+  .ms-err, .book-card, .video-card, .site-card { break-inside: avoid; box-shadow: none !important; border-color: #999 !important; }
+  a { color: #000 !important; text-decoration: underline; }
+  a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 0.85em; color: #444; }
+  a[href^="/"]::after, a[href^="#"]::after, a[href^="mailto"]::after { content: ""; }
+  /* force collapsed disclosures open so nothing is missing from the PDF */
+  details > *:not(summary) { display: revert !important; }
+  [role="tabpanel"][hidden] { display: block !important; }
+  .print-only { display: block !important; }
+}
+.print-only { display: none; }
+
+/* ============================== My Study welcome-back + opt-in (Tasks 3.3, 3.4) ============================== */
+
+.ms-welcome {
+  display: flex; align-items: center; justify-content: space-between; gap: 1.25rem; flex-wrap: wrap;
+  background: var(--surface-secondary);
+  border: 1px solid var(--border-light);
+  border-left: 3px solid var(--primary);
+  border-radius: var(--radius-medium);
+  padding: 1.1rem 1.35rem;
+  margin-bottom: 1.25rem;
+}
+.ms-welcome h2 { margin: 0.1rem 0 0.3rem; font-size: 1.25rem; }
+.ms-welcome .section-lede { margin: 0; font-size: 0.98rem; }
+.ms-welcome .button-secondary { flex-shrink: 0; }
+.ms-optin {
+  display: flex; gap: 0.6rem; align-items: flex-start;
+  background: var(--surface-secondary); border: 1px solid var(--border-light);
+  border-radius: var(--radius-small); padding: 0.85rem 1rem; margin: 0 0 1rem;
+  font-size: 0.92rem; color: var(--text-primary); font-weight: 400;
+}
+.ms-optin input { margin-top: 0.15rem; width: 18px; height: 18px; flex-shrink: 0; }
+.ms-optin em { color: var(--text-secondary); font-style: normal; }
+@media (max-width: 560px) { .ms-welcome .button-secondary { width: 100%; } }
+
+/* educator radio rows: comfortable tap targets (Task 3.2) */
+.edu-form fieldset.ms-field label { min-height: 44px; align-items: center; padding: 0.25rem 0; }
+
+.guide-pdf-row { margin-top: 1rem; }

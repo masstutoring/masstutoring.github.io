@@ -390,3 +390,26 @@
     });
   });
 })();
+
+// ============================================================
+// "Download as PDF" — native print-to-PDF, no dependency (Task 3.1)
+// ============================================================
+(function () {
+  "use strict";
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest("[data-print]");
+    if (!btn) return;
+    e.preventDefault();
+    // Expand My Study plan/log details so they print in full.
+    document.querySelectorAll(".ms-week, .ms-err, .ms-addform").forEach(function (d) {
+      if (d.tagName === "DETAILS") { d.dataset.printPrev = d.open ? "1" : "0"; d.open = true; }
+    });
+    window.print();
+  });
+  window.addEventListener("afterprint", function () {
+    document.querySelectorAll("[data-print-prev]").forEach(function (d) {
+      d.open = d.dataset.printPrev === "1";
+      delete d.dataset.printPrev;
+    });
+  });
+})();

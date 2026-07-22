@@ -30,6 +30,36 @@
     app.querySelector("[data-st-saved]").textContent =
       state.saved.nextUp.length + state.saved.later.length + state.saved.completed.length;
   }
+  // Optional study check-in reminder (Task 3.4). On-device only: builds a
+  // weekly recurring calendar file and downloads it. Nothing is sent to us
+  // and no contact info is collected.
+  function downloadReminder() {
+    var adm = selectedAdm();
+    var until = adm ? adm.testDate.replace(/-/g, "") + "T235900Z" : "";
+    function dt(iso) { return iso.replace(/-/g, "") + "T210000Z"; } // ~4pm ET-ish
+    var start = MT.nyToday();
+    var rrule = "RRULE:FREQ=WEEKLY;INTERVAL=1" + (until ? ";UNTIL=" + until : ";COUNT=12");
+    var ics = [
+      "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Mass Tutoring//My Study//EN",
+      "BEGIN:VEVENT",
+      "UID:mt-study-" + Date.now() + "@masstutoring.com",
+      "DTSTAMP:" + dt(start),
+      "DTSTART:" + dt(start),
+      "DURATION:PT30M",
+      rrule,
+      "SUMMARY:SAT study check-in",
+      "DESCRIPTION:Open My Study at masstutoring.com/my-study for today's task. Delete this event anytime to stop the reminders.",
+      "END:VEVENT", "END:VCALENDAR"
+    ].join("\r\n");
+    var blob = new Blob([ics], { type: "text/calendar" });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "mass-tutoring-study-checkin.ics";
+    a.click();
+    URL.revokeObjectURL(a.href);
+    MT.toast("Calendar reminder downloaded");
+  }
+
   var swapOffset = 0;
   function pickTask(offset) {
     if (!state.plan) return null;
@@ -138,12 +168,14 @@
       "<li>Diagnostic done: <strong>" + (wiz.diagnostic ? "yes" : "not yet — week 1 starts with one") + "</strong></li>" +
       "<li>Focus section: <strong>" + (wiz.weak === "math" ? "Math" : "Reading & Writing") + "</strong></li>" +
       "<li>Schedule: <strong>" + wiz.days + " days/week, ~" + wiz.session + " min</strong></li></ul>" +
+      '<label class="ms-optin"><input type="checkbox" data-w-reminder' + (wiz.reminder ? " checked" : "") + ' /> <span>Add a weekly study check-in to my calendar <em>(optional)</em>. Downloads a calendar file to this device — nothing is sent to us, and no email or phone number is collected. To stop, just delete the event from your calendar.</span></label>' +
       '<p class="ms-note">Plans use verified guide resources. No score is guaranteed — steady review is what moves results.</p>';
   }
   planPanel.addEventListener("change", function (e) {
     var w = e.target.getAttribute("data-w");
     if (w) wiz[w] = e.target.type === "number" ? Number(e.target.value) : e.target.value || null;
     if (e.target.name === "diag") wiz.diagnostic = e.target.value === "yes";
+    if (e.target.hasAttribute("data-w-reminder")) wiz.reminder = e.target.checked;
   });
 
   var FOCUS = {
@@ -190,6 +222,7 @@
     // new date → fresh checklist
     if (state.checklistFor !== state.testDateId) { state.checklist = {}; state.checklistFor = state.testDateId; }
     persist(); renderPlan(); renderChecklist(); MT.toast("Study plan created");
+    if (wiz.reminder) downloadReminder();
   }
   function renderPlan() {
     if (!state.plan) { renderWizard(); return; }
@@ -377,6 +410,23 @@
   });
 
   // ---------------- boot ----------------
+  // Returning-student "welcome back" state (Task 3.3): only when a saved
+  // plan already exists; first-time visitors see the normal setup flow.
+  function renderWelcome() {
+    var wrap = app.querySelector("[data-ms-welcome]");
+    if (!wrap) return;
+    if (!state.plan) { wrap.hidden = true; return; }
+    var adm = selectedAdm();
+    var bits = [];
+    var cw = MT.currentWeekIndex(state) + 1;
+    bits.push("You're on week " + cw + " of your plan");
+    if (adm) bits.push(Math.max(0, MT.dayDiff(MT.nyToday(), adm.testDate)) + " days until the SAT");
+    if (state.errorLog.length) bits.push(state.errorLog.length + " error-log " + (state.errorLog.length === 1 ? "entry" : "entries"));
+    wrap.querySelector("[data-ms-welcome-sub]").textContent = bits.join(" · ") + ". Pick up your next task below.";
+    wrap.hidden = false;
+  }
+
+  renderWelcome();
   renderStatus(); renderToday(); renderPlan(); renderErrors(); renderSaved(); renderChecklist();
   app.hidden = false;
   }
