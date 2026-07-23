@@ -1744,3 +1744,26 @@ fieldset.ms-field label { display: inline-flex; gap: 0.4rem; margin-right: 1.2re
 .impact-metric .im-name { font-weight: 650; color: var(--text-heading); margin: 0.35rem 0 0.1rem; }
 .impact-metric .im-period { font-size: 0.85rem; color: var(--text-secondary); margin: 0; }
 .impact-example figcaption { font-size: 0.9rem; color: var(--text-secondary); border-top: 1px solid var(--border-light); margin-top: 1rem; padding-top: 0.8rem; }
+
+/* ============================== Access Corps proposal flag ============================== */
+
+.status-flag {
+  display: flex; gap: 0.6rem; align-items: baseline;
+  background: var(--warning-background); color: var(--warning-text);
+  border: 1px solid #E8D9A8; border-radius: var(--radius-medium);
+  padding: 0.85rem 1.1rem; margin-top: 1.1rem; font-size: 0.95rem; max-width: 60ch;
+}
+.status-flag .status-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--warning-text); flex-shrink: 0; align-self: center; }
+.status-flag strong { color: var(--warning-text); }
+
+/* ============================== My Study tutoring escalation ============================== */
+
+.ms-escalate { position: relative; margin: 1rem 0 0; }
+.ms-escalate p:first-of-type { margin-top: 0; }
+.ms-escalate-x {
+  position: absolute; top: 0.5rem; right: 0.6rem;
+  border: 0; background: transparent; cursor: pointer;
+  font-size: 1.5rem; line-height: 1; color: var(--text-secondary);
+  padding: 0.15rem 0.4rem; border-radius: var(--radius-small);
+}
+.ms-escalate-x:hover { color: var(--text-heading); background: var(--surface-secondary); }

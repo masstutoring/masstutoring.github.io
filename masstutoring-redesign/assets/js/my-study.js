@@ -259,6 +259,31 @@
   var MISTAKES = ["Content gap", "Misread question", "Misread answer choice", "Careless calculation",
                   "Timing problem", "Desmos-entry error", "Grammar-rule gap", "Vocabulary gap",
                   "Strategy problem", "Unsupported inference", "Guessing"];
+  function normSkill(s) { return (s || "").trim().toLowerCase(); }
+  function tutoringEscalation() {
+    // Suggest free tutoring when the same weak skill keeps coming up (3+ unmastered logs).
+    var counts = {}, labels = {};
+    state.errorLog.forEach(function (e) {
+      if (e.mastered || !e.skill) return;
+      var k = normSkill(e.skill);
+      if (!k) return;
+      counts[k] = (counts[k] || 0) + 1;
+      labels[k] = e.skill.trim();
+    });
+    var hot = Object.keys(counts).filter(function (k) { return counts[k] >= 3; })
+      .sort(function (a, b) { return counts[b] - counts[a]; })[0];
+    if (!hot) return "";
+    state.tutoringDismissed = state.tutoringDismissed || {};
+    if (state.tutoringDismissed[hot]) return "";
+    return '<div class="ms-escalate callout" role="note"><button type="button" class="ms-escalate-x" ' +
+      'data-escdismiss="' + escT(hot) + '" aria-label="Dismiss this suggestion">&times;</button>' +
+      "<p><strong>Stuck on " + escT(labels[hot]) + "?</strong> You've logged this skill " + counts[hot] +
+      " times without marking it mastered. A skill that keeps coming back is exactly what a free one-on-one " +
+      "session is good for.</p>" +
+      '<p style="margin-bottom:0"><a class="button-primary" href="/tutoring/">Request free tutoring</a> ' +
+      '<a class="text-link" href="/sat-guide/diagnose/" style="margin-left:0.8rem">Or work through the diagnose guide ' +
+      '<span class="arr" aria-hidden="true">&rarr;</span></a></p></div>';
+  }
   function renderErrors() {
     var ins = "";
     if (state.errorLog.length) {
@@ -272,6 +297,7 @@
         "<span>Top weak skill: <strong>" + escT(topOf("skill")) + "</strong></span>" +
         "<span>Common mistake: <strong>" + escT(topOf("mistakeType")) + "</strong></span>" +
         "<span>Mastered: <strong>" + mastered + "/" + state.errorLog.length + "</strong></span></div>";
+      ins += tutoringEscalation();
     }
     var rows = state.errorLog.slice().reverse().map(function (e, ri) {
       var i = state.errorLog.length - 1 - ri;
@@ -312,7 +338,9 @@
     if (form) { form.open = true; form.querySelector("input[name=skill]").focus(); }
   });
   errPanel.addEventListener("click", function (e) {
-    var m = e.target.closest("[data-master]"), del = e.target.closest("[data-delerr]");
+    var m = e.target.closest("[data-master]"), del = e.target.closest("[data-delerr]"),
+        esc = e.target.closest("[data-escdismiss]");
+    if (esc) { state.tutoringDismissed = state.tutoringDismissed || {}; state.tutoringDismissed[esc.dataset.escdismiss] = true; persist(); renderErrors(); }
     if (m) { var i = +m.dataset.master; state.errorLog[i].mastered = !state.errorLog[i].mastered; persist(); renderErrors(); }
     if (del && confirm("Delete this entry?")) { state.errorLog.splice(+del.dataset.delerr, 1); persist(); renderErrors(); }
   });
