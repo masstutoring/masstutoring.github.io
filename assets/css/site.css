@@ -1755,3 +1755,15 @@ fieldset.ms-field label { display: inline-flex; gap: 0.4rem; margin-right: 1.2re
 }
 .status-flag .status-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--warning-text); flex-shrink: 0; align-self: center; }
 .status-flag strong { color: var(--warning-text); }
+
+/* ============================== My Study tutoring escalation ============================== */
+
+.ms-escalate { position: relative; margin: 1rem 0 0; }
+.ms-escalate p:first-of-type { margin-top: 0; }
+.ms-escalate-x {
+  position: absolute; top: 0.5rem; right: 0.6rem;
+  border: 0; background: transparent; cursor: pointer;
+  font-size: 1.5rem; line-height: 1; color: var(--text-secondary);
+  padding: 0.15rem 0.4rem; border-radius: var(--radius-small);
+}
+.ms-escalate-x:hover { color: var(--text-heading); background: var(--surface-secondary); }
