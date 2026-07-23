@@ -44,6 +44,7 @@ COST_BADGES = {
     "completely-free": ("badge-free", "Completely Free"),
     "freemium": ("badge-paid", "Free with Paid Options"),
     "free-trial": ("badge-paid", "Free Trial"),
+    "free-trial-no-card": ("badge-paid", "Free Trial · No Card"),
     "paid": ("badge-paid", "Paid Resource"),
     "library-access": ("badge-free", "Library First"),
     "unknown": ("badge-paid", "Cost Unverified"),
@@ -634,6 +635,31 @@ def media_img(v, cls="", eager=False):
             f' onerror="this.closest(\'[data-media]\').classList.add(\'media-error\')" />')
 
 
+def logo_overlay(v):
+    """Official provider logo shown in a neutral white frame on top of the
+    designed fallback tile. If the logo ever fails to load, the tile beneath
+    shows through (graceful fallback — see docs/RESOURCE-EXPANSION.md).
+    Only rendered when a resource has a verified visual.logoUrl."""
+    w, h = v.get("logoWidth"), v.get("logoHeight")
+    dims = f' width="{w}" height="{h}"' if w and h else ""
+    return (f'<span class="resource-logo-frame" data-logo-overlay>'
+            f'<img src="{esc(v["logoUrl"])}" alt="{esc(v.get("logoAlt", ""))}"'
+            f' loading="lazy" decoding="async" referrerpolicy="no-referrer"{dims}'
+            f' onerror="this.closest(\'[data-media]\').classList.add(\'logo-error\')" /></span>')
+
+
+def media_with_logo(r, kind_label):
+    """Media slot for websites/tools: designed tile, with an official logo
+    frame layered on top when one is available."""
+    v = r.get("visual", {})
+    if v.get("thumbnailUrl"):
+        return media_img(v)
+    tile = fallback_media(r, kind_label)
+    if v.get("logoUrl"):
+        return tile + "\n        " + logo_overlay(v)
+    return tile
+
+
 def new_tab(label):
     return f'{esc(label)}<span class="visually-hidden"> (opens in a new tab)</span>'
 
@@ -717,7 +743,7 @@ def website_card(r, h, variant="default"):
     verb = "Open" if r["resourceType"] in ("official-tool", "website", "question-bank") else "Visit"
     aria = f"{verb} {r['name']} (opens in a new tab)"
     kind = TYPE_LABELS.get(r["resourceType"], "Website")
-    media_inner = media_img(v) if v.get("thumbnailUrl") else fallback_media(r, kind)
+    media_inner = media_with_logo(r, kind)
     feature_cls = " feature-card" if variant == "feature" else ""
     return f'''
     <article class="rcard site-card{feature_cls}" {data_attrs(r)}>
@@ -757,7 +783,7 @@ def essential_card(r, h):
     verb = "Open" if r["resourceType"] in ("official-tool", "website", "question-bank") else "Visit"
     aria = f"{verb} {r['name']} (opens in a new tab)"
     kind = TYPE_LABELS.get(r["resourceType"], "Website")
-    media_inner = media_img(v) if v.get("thumbnailUrl") else fallback_media(r, kind)
+    media_inner = media_with_logo(r, kind)
     return f'''
     <article class="rcard site-card essential-card" {data_attrs(r)}>
       <a class="card-media ratio-16x10" data-media href="{esc(r["url"])}" target="_blank" rel="noopener"
