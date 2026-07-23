@@ -483,6 +483,52 @@
     }
   },
   {
+    "id": "uworld-sat",
+    "slug": "uworld-digital-sat",
+    "name": "UWorld Digital SAT Prep",
+    "creator": "UWorld",
+    "url": "https://collegeprep.uworld.com/free-sat-exam-prep/",
+    "category": "practice",
+    "resourceType": "website",
+    "subject": "general",
+    "topics": [
+      "practice-questions",
+      "math",
+      "reading-writing",
+      "explanations"
+    ],
+    "difficulty": "all-levels",
+    "costType": "free-trial-no-card",
+    "officialStatus": "third-party",
+    "accountRequired": true,
+    "creditCardRequired": false,
+    "digitalSATCompatible": true,
+    "description": "A polished third-party question bank of 1,500+ digital-SAT-style questions with detailed, illustrated answer explanations, timed practice, and a study planner. UWorld offers a 7-day free trial with full access and no credit card required.",
+    "whyRecommended": "Its explanations are unusually thorough, which helps when official explanations feel too terse. The no-credit-card trial lets you use the full platform for a focused week at no cost and no payment details.",
+    "limitations": "Free access is a 7-day trial — after that it's a paid subscription. Questions are high-quality approximations, not real SAT questions, so keep official College Board practice as your primary source and treat scores as estimates. An account (email) is required.",
+    "bestFor": [
+      "A focused week of extra practice with deep explanations",
+      "Students who've exhausted the free official questions"
+    ],
+    "captionsAvailable": false,
+    "mobileFriendly": true,
+    "lowBandwidthFriendly": false,
+    "affiliateRelationship": false,
+    "dateLastReviewed": "2026-07-23",
+    "verificationStatus": "verified",
+    "published": true,
+    "visual": {
+      "thumbnailAlt": "",
+      "thumbnailType": "custom-fallback",
+      "aspectRatio": "16:9",
+      "previewLastVerified": "2026-07-23",
+      "dominantColor": "#12578F",
+      "imageType": "fallback",
+      "fallbackType": "",
+      "usageApproved": true
+    }
+  },
+  {
     "id": "desmos-calculator",
     "slug": "desmos-calculator",
     "name": "Desmos Graphing Calculator",
@@ -751,6 +797,145 @@
       "usageApproved": true,
       "imageSourceName": "YouTube",
       "dateLastVerified": "2026-07-15"
+    }
+  },
+  {
+    "id": "tutorllini",
+    "slug": "tutorllini-test-prep",
+    "name": "Tutorllini Test Prep",
+    "creator": "Tutorllini (YouTube)",
+    "url": "https://www.youtube.com/@Tutorllini",
+    "category": "videos",
+    "resourceType": "channel",
+    "subject": "desmos",
+    "topics": [
+      "desmos",
+      "calculator-strategies",
+      "math",
+      "problem-walkthroughs"
+    ],
+    "difficulty": "all-levels",
+    "costType": "completely-free",
+    "officialStatus": "third-party",
+    "accountRequired": false,
+    "creditCardRequired": false,
+    "digitalSATCompatible": true,
+    "description": "A free Digital SAT channel whose standout feature is a complete, free Desmos course for SAT Math — a full playlist that teaches the graphing calculator step by step, from solving equations and systems to regressions, tables, and shortcuts, alongside general question walkthroughs.",
+    "whyRecommended": "Our Desmos page has the calculator itself but little structured instruction — this fills that gap. Leaning on Desmos is one of the fastest ways to gain speed and accuracy on the digital Math section, and a genuinely free, start-to-finish course is rare.",
+    "limitations": "Video-based, so pair it with real practice in the Question Bank and Bluebook. Learn when a problem is faster by hand — don't force Desmos onto every question.",
+    "bestFor": [
+      "Learning the digital SAT Desmos calculator from scratch",
+      "Speeding up the Math section"
+    ],
+    "captionsAvailable": true,
+    "mobileFriendly": true,
+    "lowBandwidthFriendly": false,
+    "affiliateRelationship": false,
+    "dateLastReviewed": "2026-07-23",
+    "verificationStatus": "verified",
+    "published": true,
+    "visual": {
+      "thumbnailAlt": "",
+      "thumbnailType": "custom-fallback",
+      "aspectRatio": "1:1",
+      "previewLastVerified": "2026-07-23",
+      "dominantColor": "#12578F",
+      "imageType": "fallback",
+      "fallbackType": "",
+      "usageApproved": true
+    }
+  },
+  {
+    "id": "supertutortv",
+    "slug": "supertutortv",
+    "name": "SupertutorTV",
+    "creator": "SupertutorTV (YouTube)",
+    "url": "https://www.youtube.com/@supertutortv",
+    "category": "videos",
+    "resourceType": "channel",
+    "subject": "reading-writing",
+    "topics": [
+      "reading-writing",
+      "grammar",
+      "strategy",
+      "study-plans",
+      "problem-walkthroughs"
+    ],
+    "difficulty": "all-levels",
+    "costType": "completely-free",
+    "officialStatus": "third-party",
+    "accountRequired": false,
+    "creditCardRequired": false,
+    "digitalSATCompatible": true,
+    "description": "Brooke Hanson, a perfect-scoring SAT/ACT tutor, runs one of the most established free test-prep channels — strategy breakdowns, pacing, study schedules, and step-by-step Reading, Writing, and Math walkthroughs.",
+    "whyRecommended": "Reading & Writing strategy is thinner on video than Math; this channel covers it in depth alongside overall study planning. Good for students who want a clear game plan, not just content.",
+    "limitations": "A wide catalog, so use our guide to find the specific skill you need. SupertutorTV also sells paid courses, but the YouTube channel is free.",
+    "bestFor": [
+      "Reading & Writing strategy",
+      "Building a realistic study plan"
+    ],
+    "captionsAvailable": true,
+    "mobileFriendly": true,
+    "lowBandwidthFriendly": false,
+    "affiliateRelationship": false,
+    "dateLastReviewed": "2026-07-23",
+    "verificationStatus": "verified",
+    "published": true,
+    "visual": {
+      "thumbnailAlt": "",
+      "thumbnailType": "custom-fallback",
+      "aspectRatio": "1:1",
+      "previewLastVerified": "2026-07-23",
+      "dominantColor": "#1D4E79",
+      "imageType": "fallback",
+      "fallbackType": "",
+      "usageApproved": true
+    }
+  },
+  {
+    "id": "scalar-learning",
+    "slug": "scalar-learning",
+    "name": "Scalar Learning",
+    "creator": "Scalar Learning (YouTube)",
+    "url": "https://www.youtube.com/@ScalarLearning",
+    "category": "videos",
+    "resourceType": "channel",
+    "subject": "math",
+    "topics": [
+      "math",
+      "strategy",
+      "desmos",
+      "problem-walkthroughs"
+    ],
+    "difficulty": "all-levels",
+    "costType": "completely-free",
+    "officialStatus": "third-party",
+    "accountRequired": false,
+    "creditCardRequired": false,
+    "digitalSATCompatible": true,
+    "description": "Huzefa Kapadia, an 800-scoring math specialist, breaks SAT Math into fast, high-leverage strategies and clear walkthroughs of the trickier question types.",
+    "whyRecommended": "A strategy-first complement to content channels: when you know the math but lose points to speed or approach, these targeted tactics help. Strong for students already near the top of the Math range.",
+    "limitations": "Math-focused, so you'll need other resources for Reading and Writing. Some videos promote the creator's paid tutoring; the channel content itself is free.",
+    "bestFor": [
+      "Math strategy and speed",
+      "Advanced students chasing a top Math score"
+    ],
+    "captionsAvailable": true,
+    "mobileFriendly": true,
+    "lowBandwidthFriendly": false,
+    "affiliateRelationship": false,
+    "dateLastReviewed": "2026-07-23",
+    "verificationStatus": "verified",
+    "published": true,
+    "visual": {
+      "thumbnailAlt": "",
+      "thumbnailType": "custom-fallback",
+      "aspectRatio": "1:1",
+      "previewLastVerified": "2026-07-23",
+      "dominantColor": "#0E4776",
+      "imageType": "fallback",
+      "fallbackType": "",
+      "usageApproved": true
     }
   },
   {

@@ -521,6 +521,9 @@ a:hover { color: var(--text-heading); }
   overflow: hidden;
   transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
 }
+/* `display: flex` above would otherwise override the browser default
+   `[hidden] { display: none }`, leaving search/filter-hidden cards visible. */
+.rcard[hidden] { display: none !important; }
 .rcard:hover {
   border-color: #9EBED6;
   box-shadow: var(--shadow-hover);
@@ -1767,3 +1770,33 @@ fieldset.ms-field label { display: inline-flex; gap: 0.4rem; margin-right: 1.2re
   padding: 0.15rem 0.4rem; border-radius: var(--radius-small);
 }
 .ms-escalate-x:hover { color: var(--text-heading); background: var(--surface-secondary); }
+
+/* ============================== Official provider logo frame ============================== */
+/* Neutral white frame that overlays the designed fallback tile when a resource
+   has a verified official logo (visual.logoUrl). If the image fails, the
+   [data-media].logo-error rule hides the frame and the tile shows through. */
+
+.resource-logo-frame {
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  display: grid; place-items: center;
+  width: 116px; height: 72px;
+  max-width: 70%;
+  padding: 12px 16px;
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 6px 20px rgba(13, 23, 33, 0.16);
+  z-index: 2;
+}
+.resource-logo-frame img {
+  display: block;
+  max-width: 100%; max-height: 100%;
+  width: auto; height: auto;
+  object-fit: contain;
+  transition: none;
+}
+.rcard:hover .resource-logo-frame img,
+.rcard:focus-within .resource-logo-frame img { transform: none; }
+[data-media].logo-error .resource-logo-frame { display: none; }
