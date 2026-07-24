@@ -18,17 +18,21 @@
       return;
     }
     errEl.hidden = true;
-    var student = (form.student.value || "").trim();
-    var email = (form.email.value || "").trim();
+    var val = function (name) { return form[name] && form[name].value ? form[name].value.trim() : ""; };
+    var student = val("student");
+    var email = val("email");
     var lines = [
-      "Educator referral from masstutoring.com",
+      "Educator / partner inquiry from masstutoring.com",
       "",
-      "Needs: " + need.value,
-      "Student: " + (student || "(general referral — no name given)"),
-      "Educator email: " + (email || "(none provided)")
+      "Request: " + need.value,
+      "Organization: " + (val("org") || "(not given)"),
+      "Role: " + (val("role") || "(not given)"),
+      "Approx. students: " + (val("students") || "(not given)"),
+      "Student: " + (student || "(not about one student)"),
+      "Contact email: " + (email || "(none provided)")
     ];
     var mailto = "mailto:masstutoringea@gmail.com" +
-      "?subject=" + encodeURIComponent("Educator referral — " + need.value) +
+      "?subject=" + encodeURIComponent("Educator/partner inquiry — " + need.value) +
       "&body=" + encodeURIComponent(lines.join("\n"));
     // Open the user's email client. Do this before swapping the UI so the
     // click is still trusted; wrap in try so a blocked handler never

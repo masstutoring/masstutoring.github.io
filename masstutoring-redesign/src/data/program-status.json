@@ -1,0 +1,16 @@
+{
+  "_readme": "Controlled status for programs whose public description must match reality. Allowed status values: concept, seeking-pilot-partner, pilot-scheduled, pilot-active, pilot-completed, paused. Update the record here (not the page copy) and rebuild; the page renders the matching status flag automatically. When a pilot is scheduled or active, fill in the optional pilot fields — only include a partner name with written permission.",
+  "accessCorps": {
+    "status": "seeking-pilot-partner",
+    "lastUpdated": "2026-07-23",
+    "note": "This program is not yet operating. We're describing the model and looking for a first pilot partner. Nothing on this page describes an active service or an existing school endorsement.",
+    "pilot": {
+      "partnerName": null,
+      "generalLocation": null,
+      "programDates": null,
+      "placesAvailable": null,
+      "registrationMethod": null,
+      "adultSiteContact": null
+    }
+  }
+}

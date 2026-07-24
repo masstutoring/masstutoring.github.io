@@ -310,7 +310,16 @@
       dateEl.textContent = "New SAT dates are being confirmed.";
       statusEl.textContent = "Check the official College Board page for the latest schedule.";
       el.hidden = false;
+      console.warn("[Mass Tutoring] SAT countdown: no future administration in the schedule. " +
+        "Update src/data/sat-dates.json from the official College Board dates page.");
       return;
+    }
+    // Internal maintenance signal: if fewer than two future dates remain, the
+    // schedule is running low and needs the next administrations added.
+    var futureCount = (sched.administrations || []).filter(function (a) { return a.testDate >= today; }).length;
+    if (futureCount <= 2) {
+      console.warn("[Mass Tutoring] SAT countdown: only " + futureCount +
+        " future date(s) left in the schedule — add the next administrations to src/data/sat-dates.json soon.");
     }
     var days = window.MT.dayDiff(today, adm.testDate);
     var label = days === 0 ? "The SAT is today" : days === 1 ? "Tomorrow" : days + " days";

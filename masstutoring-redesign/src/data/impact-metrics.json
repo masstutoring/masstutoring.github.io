@@ -1,0 +1,4 @@
+{
+  "_readme": "Structured impact metrics. NOTHING renders publicly until approvedForPublication is true AND an adult advisor / qualified reviewer has verified it (verifiedBy set). Keep this list empty of approved entries until a real term of data exists — the Impact page keeps its honest empty state automatically. Each metric must define itself, state its reporting period and source, label self-reported outcomes, and (for surveys) give sampleSize and responseRate. Never equate visitors with students served; never claim causation from a pre/post change.",
+  "metrics": []
+}

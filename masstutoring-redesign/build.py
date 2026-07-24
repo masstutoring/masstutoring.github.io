@@ -37,6 +37,8 @@ SITE_ORIGIN = "https://www.masstutoring.com"
 
 RESOURCES = json.loads((SRC / "data" / "resources.json").read_text())
 PUBLISHED = [r for r in RESOURCES if r.get("published")]
+PROGRAM_STATUS = json.loads((SRC / "data" / "program-status.json").read_text())
+IMPACT_METRICS = json.loads((SRC / "data" / "impact-metrics.json").read_text()).get("metrics", [])
 
 esc = lambda s: html.escape(str(s), quote=True)
 
@@ -240,7 +242,7 @@ def expand_catviz(content):
 # at the end of their content; JS handles per-session dismissal.
 TUTORING_NUDGE = '''<aside class="tutoring-nudge" data-tutoring-nudge hidden>
       <p class="tn-text">Still stuck on this? A free tutor can walk you through it one-on-one.</p>
-      <a class="tn-link" href="/tutoring/">Request a free tutor <span class="arr" aria-hidden="true">&rarr;</span></a>
+      <a class="tn-link" href="/tutoring/request/">Request a free tutor <span class="arr" aria-hidden="true">&rarr;</span></a>
       <button type="button" class="tn-dismiss" data-tn-dismiss aria-label="Dismiss this suggestion">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
       </button>
@@ -248,6 +250,69 @@ TUTORING_NUDGE = '''<aside class="tutoring-nudge" data-tutoring-nudge hidden>
 
 def expand_nudge(content):
     return content.replace("<!-- tutoring-nudge -->", TUTORING_NUDGE)
+
+
+# ----------------------------------------------------- program status (data-driven)
+# Public program status must match reality and is controlled by
+# src/data/program-status.json — never by hand-edited marketing copy.
+PROGRAM_STATE_LABELS = {
+    "concept": "Status: concept",
+    "seeking-pilot-partner": "Status: proposal — seeking a pilot partner",
+    "pilot-scheduled": "Status: pilot scheduled",
+    "pilot-active": "Status: pilot active",
+    "pilot-completed": "Status: pilot completed",
+    "paused": "Status: paused",
+}
+
+def program_status_flag(key):
+    rec = PROGRAM_STATUS.get(key, {})
+    state = rec.get("status", "concept")
+    label = PROGRAM_STATE_LABELS.get(state, PROGRAM_STATE_LABELS["concept"])
+    note = rec.get("note", "")
+    upd = f" <span class=\"status-updated\">Last updated {esc(fmt_date(rec['lastUpdated']))}.</span>" if rec.get("lastUpdated") else ""
+    return (f'<p class="status-flag" role="note"><span class="status-dot" aria-hidden="true"></span> '
+            f'<strong>{esc(label)}.</strong> {esc(note)}{upd}</p>')
+
+def expand_program_status(content):
+    return re.sub(r"<!--\s*program-status:\s*(\w+)\s*-->",
+                  lambda m: program_status_flag(m.group(1)), content)
+
+
+# ----------------------------------------------------- impact metrics (data-driven)
+# Renders ONLY metrics that are approvedForPublication AND verified. When none
+# qualify, renders nothing so the Impact page keeps its honest empty state.
+IMPACT_CAT_LABELS = {"activity": "Activity", "engagement": "Engagement",
+                     "outcome": "Outcomes", "equity": "Equity"}
+
+def impact_metrics_html():
+    pub = [m for m in IMPACT_METRICS if m.get("approvedForPublication") and m.get("verifiedBy")]
+    if not pub:
+        return ""
+    cards = []
+    for m in pub:
+        period = ""
+        if m.get("periodStart") and m.get("periodEnd"):
+            period = f"{fmt_date(m['periodStart'])} – {fmt_date(m['periodEnd'])}"
+        notes = []
+        if m.get("selfReported"):
+            notes.append("Self-reported")
+        if m.get("sampleSize"):
+            rr = f", {m['responseRate']}% response" if m.get("responseRate") else ""
+            notes.append(f"n={esc(m['sampleSize'])}{rr}")
+        note_line = f'<p class="im-note">{esc(" · ".join(notes))}</p>' if notes else ""
+        cards.append(f'''<figure class="impact-example">
+      <div class="impact-metric">
+        <p class="im-value">{esc(m.get("value", "—"))}</p>
+        <p class="im-name">{esc(m.get("name", ""))}</p>
+        <p class="im-period">{esc(period)}</p>
+      </div>
+      <figcaption>{esc(m.get("definition", ""))} <span class="im-cat">{esc(IMPACT_CAT_LABELS.get(m.get("category"), ""))}</span>{note_line}</figcaption>
+    </figure>''')
+    return ('<h2>What we\'ve measured so far</h2>\n<div class="impact-grid">\n'
+            + "\n".join(cards) + "\n</div>")
+
+def expand_impact(content):
+    return content.replace("<!-- impact-metrics -->", impact_metrics_html())
 
 
 # --------------------------------------------- fallback preview art
@@ -867,7 +932,7 @@ def build_page(src_file, layout):
     if not m:
         raise SystemExit(f"Missing <!--meta ...--> front matter in {src_file}")
     meta = json.loads(m.group(1))
-    content = expand_icons(expand_nudge(expand_catviz(expand_markers(raw[m.end():].strip(), meta["path"]))))
+    content = expand_icons(expand_nudge(expand_program_status(expand_impact(expand_catviz(expand_markers(raw[m.end():].strip(), meta["path"]))))))
 
     page = (layout
             .replace("{{title}}", esc(meta["title"]))

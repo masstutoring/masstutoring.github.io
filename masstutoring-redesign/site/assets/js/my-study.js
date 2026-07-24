@@ -280,7 +280,7 @@
       "<p><strong>Stuck on " + escT(labels[hot]) + "?</strong> You've logged this skill " + counts[hot] +
       " times without marking it mastered. A skill that keeps coming back is exactly what a free one-on-one " +
       "session is good for.</p>" +
-      '<p style="margin-bottom:0"><a class="button-primary" href="/tutoring/">Request free tutoring</a> ' +
+      '<p style="margin-bottom:0"><a class="button-primary" href="/tutoring/request/">Request free tutoring</a> ' +
       '<a class="text-link" href="/sat-guide/diagnose/" style="margin-left:0.8rem">Or work through the diagnose guide ' +
       '<span class="arr" aria-hidden="true">&rarr;</span></a></p></div>';
   }
