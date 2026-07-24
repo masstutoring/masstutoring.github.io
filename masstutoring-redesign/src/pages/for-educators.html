@@ -20,7 +20,7 @@
         <strong>The SAT Guide</strong> — the best free, verified SAT resources (official College Board tools, videos, books, study plans), organized so a student always knows the next step. <a href="/sat-guide/">See the guide</a>.
       </li>
       <li>
-        <strong>Free tutoring</strong> — one-on-one help from trained student tutors who recently scored 1530+. No cost, and we never ask about a family's finances. <a href="/tutoring/">How tutoring works</a>.
+        <strong>Free tutoring</strong> — one-on-one help from selected, trained student tutors (chosen for teaching ability, with a recent 1530+ digital-SAT score as one factor). No cost, and we never ask about a family's finances. <a href="/tutoring/">How tutoring works</a>.
       </li>
     </ul>
     <p>Nothing here costs money, asks for payment information, or requires an account. If a student only has a phone, the whole site works on it.</p>
@@ -41,15 +41,30 @@
       <fieldset class="ms-field">
         <legend>What does the student need? <span class="req" aria-hidden="true">(required)</span></legend>
         <label><input type="radio" name="need" value="SAT Guide" required /> The SAT Guide (self-study resources)</label>
-        <label><input type="radio" name="need" value="Tutoring match" /> A free tutoring match</label>
-        <label><input type="radio" name="need" value="Information session or workshop" /> An information session or SAT workshop</label>
-        <label><input type="radio" name="need" value="Access Corps pilot" /> A group pilot (SAT Access Corps)</label>
-        <label><input type="radio" name="need" value="Partnership discussion" /> Discuss a partnership</label>
+        <label><input type="radio" name="need" value="Tutoring match" /> A free tutoring match for a student</label>
+        <label><input type="radio" name="need" value="One-time workshop" /> A one-time SAT workshop</label>
+        <label><input type="radio" name="need" value="Digital SAT orientation" /> A Digital SAT orientation session</label>
+        <label><input type="radio" name="need" value="Diagnostic-review clinic" /> A diagnostic-review clinic</label>
+        <label><input type="radio" name="need" value="Access Corps pilot" /> A six-week Access Corps pilot</label>
+        <label><input type="radio" name="need" value="Printable materials" /> Printable materials to hand out</label>
+        <label><input type="radio" name="need" value="Ongoing partnership" /> Discuss an ongoing partnership</label>
         <label><input type="radio" name="need" value="Not sure — general info" /> Not sure — send general info</label>
       </fieldset>
 
-      <label class="ms-field" for="edu-student">Student's first name or initial <span class="edu-optional">(optional — leave blank to refer generally)</span>
+      <label class="ms-field" for="edu-student">Student's first name or initial <span class="edu-optional">(optional — leave blank if this isn't about one student)</span>
         <input type="text" id="edu-student" name="student" autocomplete="off" />
+      </label>
+
+      <label class="ms-field" for="edu-org">Your school, library, or organization <span class="edu-optional">(optional)</span>
+        <input type="text" id="edu-org" name="org" autocomplete="organization" />
+      </label>
+
+      <label class="ms-field" for="edu-role">Your role <span class="edu-optional">(optional — e.g. counselor, teacher, librarian)</span>
+        <input type="text" id="edu-role" name="role" autocomplete="organization-title" />
+      </label>
+
+      <label class="ms-field" for="edu-students">Approximate number of students <span class="edu-optional">(optional — for workshops, clinics, or a pilot)</span>
+        <input type="text" id="edu-students" name="students" inputmode="numeric" autocomplete="off" />
       </label>
 
       <label class="ms-field" for="edu-email">Your email <span class="edu-optional">(optional — only if you'd like a reply)</span>

@@ -1800,3 +1800,15 @@ fieldset.ms-field label { display: inline-flex; gap: 0.4rem; margin-right: 1.2re
 .rcard:hover .resource-logo-frame img,
 .rcard:focus-within .resource-logo-frame img { transform: none; }
 [data-media].logo-error .resource-logo-frame { display: none; }
+
+/* ============================== Data-driven status + impact metrics ============================== */
+
+.status-flag .status-updated { color: var(--warning-text); font-weight: 400; opacity: 0.85; }
+.impact-grid { display: grid; gap: 1.1rem; grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr)); margin: 1rem 0 1.5rem; }
+.impact-grid .impact-example { margin: 0; }
+.impact-metric .im-note { font-size: 0.82rem; color: var(--text-secondary); margin: 0.3rem 0 0; }
+.impact-example .im-cat {
+  display: inline-block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.03em;
+  text-transform: uppercase; color: var(--primary); background: var(--surface-secondary);
+  padding: 0.1rem 0.5rem; border-radius: 999px; margin-left: 0.3rem;
+}
